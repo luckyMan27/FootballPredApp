@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.fortunato.sportstatsodds.Activities.MainActivity">
+
+    <item
+        android:id="@+id/searchButton"
+        android:icon="@drawable/ic_search_white_24dp"
+        android:title="Search"
+        app:showAsAction="always"/>
+
+    <item
+        android:id="@+id/bookBets"
+        android:icon="@drawable/ic_shopping_basket_white_24dp"
+        android:title="Events"
+        app:showAsAction="always"/>
+</menu>
