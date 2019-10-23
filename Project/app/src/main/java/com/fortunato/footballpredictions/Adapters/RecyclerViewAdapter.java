@@ -1,7 +1,6 @@
 package com.fortunato.footballpredictions.Adapters;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,12 +16,9 @@ import java.util.List;
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
 
     private List<String> list;
-    private Context context;
 
-    public RecyclerViewAdapter(List<String> list, Context context) {
+    public RecyclerViewAdapter(List<String> list) {
         this.list = list;
-        Log.d("tView", String.valueOf(this.list.size()));
-        this.context = context;
     }
 
     @NonNull

@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -25,10 +26,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private DrawerLayout drawer = null;
 
+    private static final String FRAGMENT_USED = "selectedFragment";
+    private Fragment selectedFragment = null;
+    private HomeFragment home_frag = null;
+    private FavoriteFragment fav_frag = null;
+    private LiveFragment live_frag = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Log.d("Debug", Thread.currentThread().getName());
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -42,34 +50,69 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        if(savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container, new FavoriteFragment()).commit();
-            navigationView.setCheckedItem(R.id.nav_favorites);
-        }
-
         BottomNavigationView bottomNav = findViewById(R.id.bottom_nav);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                new FavoriteFragment()).commit();
 
+        if(savedInstanceState != null){
+            selectedFragment = getSupportFragmentManager().getFragment(savedInstanceState, FRAGMENT_USED);
+            if(selectedFragment != null){
+                if(selectedFragment instanceof HomeFragment){
+                    home_frag = (HomeFragment)selectedFragment;
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.fragment_container, home_frag).commit();
+                    navigationView.setCheckedItem(R.id.nav_home);
+                }
+                if(selectedFragment instanceof FavoriteFragment) {
+                    fav_frag = (FavoriteFragment)selectedFragment;
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.fragment_container, fav_frag).commit();
+                    navigationView.setCheckedItem(R.id.nav_favorites);
+                }
+                if(selectedFragment instanceof LiveFragment) {
+                    live_frag = (LiveFragment)selectedFragment;
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.fragment_container, live_frag).commit();
+                    navigationView.setCheckedItem(R.id.nav_live);
+                }
+            }
+        } else {
+            fav_frag = new FavoriteFragment();
+            selectedFragment = fav_frag;
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container, fav_frag).commit();
+            navigationView.setCheckedItem(R.id.nav_favorites);
+        }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        getSupportFragmentManager().putFragment(outState, FRAGMENT_USED, selectedFragment);
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
             new BottomNavigationView.OnNavigationItemSelectedListener() {
                 @Override
                 public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                    Fragment selectedFragment = null;
 
                     switch (menuItem.getItemId()){
                         case R.id.nav_home:
-                            selectedFragment = new HomeFragment(getApplicationContext());
+                            if(home_frag == null) home_frag = new HomeFragment();
+                            selectedFragment = home_frag;
                             break;
                         case R.id.nav_favorites:
-                            selectedFragment = new FavoriteFragment();
+                            if(fav_frag == null) fav_frag = new FavoriteFragment();
+                            selectedFragment = fav_frag;
                             break;
                         case R.id.nav_live:
-                            selectedFragment = new LiveFragment();
+                            if(live_frag == null) live_frag = new LiveFragment();
+                            selectedFragment = live_frag;
                             break;
                     }
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
