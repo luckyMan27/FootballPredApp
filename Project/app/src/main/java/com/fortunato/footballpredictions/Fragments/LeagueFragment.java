@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -14,16 +15,18 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.fortunato.footballpredictions.Adapters.CountyRecyclerView;
+import com.fortunato.footballpredictions.Adapters.LeagueRecyclerView;
 import com.fortunato.footballpredictions.DataStructures.BaseType;
 import com.fortunato.footballpredictions.Networks.NetworkHome;
 import com.fortunato.footballpredictions.R;
+
+import org.w3c.dom.Text;
 
 import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 
-public class HomeFragment extends BaseFragment {
-
+public class LeagueFragment extends BaseFragment {
     private static final String STATE_ITEMS = "items";
     private static final String RECYCLER_LAYOUT = "recLayout";
     private static final String NETFLAG = "netFlag";
@@ -33,15 +36,24 @@ public class HomeFragment extends BaseFragment {
     private ProgressBar progBar = null;
 
     private RecyclerView recyclerView = null;
-    private CountyRecyclerView countyRecyclerView = null;
+    private LeagueRecyclerView leagueRecyclerView = null;
     private Parcelable recyclerLayout = null;
 
     private ViewGroup container = null;
 
-    private LeagueFragment lFragment = null;
-    private String nextUrl = null;
+    private String url;
+    private int requestType;
+    private String leagueId;
 
-    public HomeFragment() { }
+    private String reqLigueId = "";
+    private MatchFragment mFragment = null;
+
+
+    public LeagueFragment(String url, int requestType, String leagueId) {
+        this.url = url;
+        this.requestType = requestType;
+        this.leagueId = leagueId;
+    }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -77,6 +89,8 @@ public class HomeFragment extends BaseFragment {
 
         recyclerView = container.findViewById(R.id.recView);
         progBar = container.findViewById(R.id.progBar);
+        TextView titleText = container.findViewById(R.id.sportSelected);
+        titleText.setText("Leagues");
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         layoutManager.setOrientation(RecyclerView.VERTICAL);
@@ -88,13 +102,13 @@ public class HomeFragment extends BaseFragment {
 
         recyclerView.setHasFixedSize(true);
 
-        countyRecyclerView = new CountyRecyclerView(items, HomeFragment.this);
-        recyclerView.setAdapter(countyRecyclerView);
+        leagueRecyclerView = new LeagueRecyclerView(items, LeagueFragment.this);
+        recyclerView.setAdapter(leagueRecyclerView);
 
         if(flagNetwork){
             progBar.setVisibility(View.VISIBLE);
-            NetworkHome networkHome = new NetworkHome("countries", 0,
-                    null, HomeFragment.this, getActivity());
+            NetworkHome networkHome = new NetworkHome(url, requestType,
+                    leagueId, LeagueFragment.this, getActivity());
             Thread tNet = new Thread(networkHome);
             tNet.start();
             flagNetwork = false;
@@ -110,22 +124,22 @@ public class HomeFragment extends BaseFragment {
     }
 
     public void flush(){
-        countyRecyclerView.notifyDataSetChanged();
+        leagueRecyclerView.notifyDataSetChanged();
     }
 
     public void modifyContent(String url, int requestType, String leagueId){
-        if(url!=null && !url.equals(nextUrl)) {
-            nextUrl = url;
-            lFragment = new LeagueFragment(url, requestType, leagueId);
+        if(!reqLigueId.equals(leagueId)) {
+            reqLigueId = leagueId;
+            mFragment = new MatchFragment(url, requestType, leagueId);
             getFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.fragment_container, lFragment)
+                    .replace(R.id.fragment_container, mFragment)
                     .addToBackStack(null)
                     .commit();
-        } else if(url.equals(nextUrl)){
+        } else {
             getFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.fragment_container, lFragment)
+                    .replace(R.id.fragment_container, mFragment)
                     .addToBackStack(null)
                     .commit();
         }

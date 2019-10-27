@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:elevation="5dp"
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <RelativeLayout
+            android:id="@+id/layoutRelPredStat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:id="@+id/layoutPredStat"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/titlePred"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="title prediction"
+                    android:textAlignment="textStart"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Small"/>
+
+                <TextView
+                    android:id="@+id/textPred"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="prediction"
+                    android:paddingLeft="10dp"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layoutPredStat1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_below="@+id/layoutPredStat">
+
+                <TextView
+                    android:id="@+id/titlePred1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="title prediction"
+                    android:textAlignment="textStart"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Small"/>
+
+                <TextView
+                    android:id="@+id/textPred1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="prediction"
+                    android:paddingLeft="10dp"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layoutPredStat2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_below="@+id/layoutPredStat1">
+
+                <TextView
+                    android:id="@+id/titlePred2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="title prediction"
+                    android:textAlignment="textStart"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Small"/>
+
+                <TextView
+                    android:id="@+id/textPred2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="prediction"
+                    android:paddingLeft="10dp"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layoutPredStat3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_below="@+id/layoutPredStat2">
+
+                <TextView
+                    android:id="@+id/titlePred3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="title prediction"
+                    android:textAlignment="textStart"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Small"/>
+
+                <TextView
+                    android:id="@+id/textPred3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="prediction"
+                    android:paddingLeft="10dp"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/layoutPredStat4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_below="@+id/layoutPredStat3">
+
+                <TextView
+                    android:id="@+id/titlePred4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="title prediction"
+                    android:textAlignment="textStart"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Small"/>
+
+                <TextView
+                    android:id="@+id/textPred4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="prediction"
+                    android:paddingLeft="10dp"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layoutPredStat5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_below="@+id/layoutPredStat4">
+
+                <TextView
+                    android:id="@+id/titlePred5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="title prediction"
+                    android:textAlignment="textStart"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Small"/>
+
+                <TextView
+                    android:id="@+id/textPred5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="prediction"
+                    android:paddingLeft="10dp"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
+
+                <ProgressBar
+                    android:id="@+id/progressBar5"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:max="100"
+                    android:layout_weight="1"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layoutPredStat6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_below="@+id/layoutPredStat5">
+
+                <TextView
+                    android:id="@+id/titlePred6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="title prediction"
+                    android:textAlignment="textStart"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Small"/>
+
+                <TextView
+                    android:id="@+id/textPred6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="prediction"
+                    android:paddingLeft="10dp"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
+
+                <ProgressBar
+                    android:id="@+id/progressBar6"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:max="100"
+                    android:layout_weight="1"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layoutPredStat7"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_below="@+id/layoutPredStat6">
+
+                <TextView
+                    android:id="@+id/titlePred7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="title prediction"
+                    android:textAlignment="textStart"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Small"/>
+
+                <TextView
+                    android:id="@+id/textPred7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="prediction"
+                    android:paddingLeft="10dp"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
+
+                <ProgressBar
+                    android:id="@+id/progressBar7"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:max="100"
+                    android:layout_weight="1"/>
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -58,20 +58,26 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             if(selectedFragment != null){
                 if(selectedFragment instanceof HomeFragment){
                     home_frag = (HomeFragment)selectedFragment;
-                    getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.fragment_container, home_frag).commit();
+                    getSupportFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.fragment_container, home_frag)
+                            .commit();
                     navigationView.setCheckedItem(R.id.nav_home);
                 }
                 if(selectedFragment instanceof FavoriteFragment) {
                     fav_frag = (FavoriteFragment)selectedFragment;
-                    getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.fragment_container, fav_frag).commit();
+                    getSupportFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.fragment_container, fav_frag)
+                            .commit();
                     navigationView.setCheckedItem(R.id.nav_favorites);
                 }
                 if(selectedFragment instanceof LiveFragment) {
                     live_frag = (LiveFragment)selectedFragment;
-                    getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.fragment_container, live_frag).commit();
+                    getSupportFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.fragment_container, live_frag)
+                            .commit();
                     navigationView.setCheckedItem(R.id.nav_live);
                 }
             }
