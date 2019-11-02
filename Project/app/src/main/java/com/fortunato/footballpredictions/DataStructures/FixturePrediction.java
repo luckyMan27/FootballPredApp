@@ -27,7 +27,7 @@ public class FixturePrediction extends BaseType{
             underOver = jsonObject.getString("under_over").replace("-", "under ").replace("+", "over ");
             goalsHome = jsonObject.getString("goals_home").replace("-", "under ").replace("+", "over ");
             goalsAway = jsonObject.getString("goals_away").replace("-", "under ").replace("+", "over ");
-            advice = jsonObject.getString("advice");
+            advice = jsonObject.getString("advice").replace("-", "under ").replace("+", "over ");
 
             app = jsonObject.getJSONObject("winning_percent");
             winPercHome = app.getString("home");

@@ -9,10 +9,4 @@
         android:icon="@drawable/ic_search_white_24dp"
         android:title="Search"
         app:showAsAction="always"/>
-
-    <item
-        android:id="@+id/bookBets"
-        android:icon="@drawable/ic_shopping_basket_white_24dp"
-        android:title="Events"
-        app:showAsAction="always"/>
 </menu>

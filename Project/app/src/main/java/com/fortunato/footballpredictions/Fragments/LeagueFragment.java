@@ -10,17 +10,13 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.fortunato.footballpredictions.Adapters.CountyRecyclerView;
 import com.fortunato.footballpredictions.Adapters.LeagueRecyclerView;
 import com.fortunato.footballpredictions.DataStructures.BaseType;
 import com.fortunato.footballpredictions.Networks.NetworkHome;
 import com.fortunato.footballpredictions.R;
-
-import org.w3c.dom.Text;
 
 import java.io.Serializable;
 import java.util.LinkedList;
@@ -48,6 +44,8 @@ public class LeagueFragment extends BaseFragment {
     private String reqLigueId = "";
     private MatchFragment mFragment = null;
 
+
+    public LeagueFragment() { }
 
     public LeagueFragment(String url, int requestType, String leagueId) {
         this.url = url;

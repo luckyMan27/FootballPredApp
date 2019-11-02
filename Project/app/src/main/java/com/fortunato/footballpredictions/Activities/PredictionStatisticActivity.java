@@ -2,7 +2,6 @@ package com.fortunato.footballpredictions.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TabHost;
@@ -12,11 +11,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.fortunato.footballpredictions.Adapters.CountyRecyclerView;
 import com.fortunato.footballpredictions.Adapters.PredictionStatisticRecyclerView;
 import com.fortunato.footballpredictions.DataStructures.BaseType;
-import com.fortunato.footballpredictions.Fragments.HomeFragment;
-import com.fortunato.footballpredictions.Networks.NetworkHome;
 import com.fortunato.footballpredictions.Networks.NetworkPredStat;
 import com.fortunato.footballpredictions.R;
 
@@ -37,9 +33,9 @@ public class PredictionStatisticActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pred_stat);
-        setTitle("Predictions & Statistics");
         Intent intent = getIntent();
         fixtureId = intent.getStringExtra("fixture_id");
+        setTitle(intent.getStringExtra("teams_match"));
 
         if(items == null) items = new LinkedList<BaseType>();
 

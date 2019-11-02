@@ -2,4 +2,7 @@
     <string name="app_name">Football Predictions</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="facebook_application_id">705914939914142</string>
+    <string name="fb_login_protocol_scheme">fb705914939914142</string>
 </resources>

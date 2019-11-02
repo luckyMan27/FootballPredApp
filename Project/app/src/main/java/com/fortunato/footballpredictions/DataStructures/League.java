@@ -2,6 +2,7 @@ package com.fortunato.footballpredictions.DataStructures;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 
@@ -22,10 +23,12 @@ public class League extends BaseType implements Serializable {
     private String name;
     private transient Bitmap logo;
     private String country;
+    private transient LoadImage loadImage;
     /*
     private String country_code = null;
     private String season_start = null;
     private String season_end = null;*/
+    private Boolean predictions;
 
     public League(JSONObject jsonObject){
         JSONObject app;
@@ -36,10 +39,8 @@ public class League extends BaseType implements Serializable {
 
             String urlLogo = jsonObject.getString("logo");
             if(urlLogo != null && !urlLogo.equals("null")){
-                LoadImage loadImg = new LoadImage(urlLogo, null,League.this);
-                loadImg.run();
+                loadImage = new LoadImage(urlLogo, null,League.this);
             }
-
 
             country = jsonObject.getString("country");
             /*
@@ -47,6 +48,8 @@ public class League extends BaseType implements Serializable {
             season_start = jsonObject.getString("season_start");
             season_end = jsonObject.getString("season_end");
             */
+            app = jsonObject.getJSONObject("coverage");
+            predictions = app.getBoolean("predictions");
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -113,6 +116,14 @@ public class League extends BaseType implements Serializable {
     public String getSeason_end() {
         return season_end;
     }*/
+
+    public Boolean getPredictions() {
+        return predictions;
+    }
+
+    public LoadImage getLoadImage() {
+        return loadImage;
+    }
 
     public void setLogo(Bitmap logo) {
         this.logo = logo;

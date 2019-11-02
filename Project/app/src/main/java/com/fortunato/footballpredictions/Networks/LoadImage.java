@@ -5,24 +5,22 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Picture;
-import android.graphics.drawable.Drawable;
 import android.graphics.drawable.PictureDrawable;
 import android.util.Log;
 
 import com.caverock.androidsvg.SVG;
 import com.caverock.androidsvg.SVGParseException;
-import com.fortunato.footballpredictions.DataStructures.BaseType;
+import com.fortunato.footballpredictions.Activities.MainActivity;
 import com.fortunato.footballpredictions.DataStructures.Country;
 import com.fortunato.footballpredictions.DataStructures.League;
 import com.fortunato.footballpredictions.DataStructures.LeagueFixture;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
 import java.net.URL;
-import java.util.concurrent.TimeUnit;
 
-import okhttp3.CacheControl;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -32,7 +30,7 @@ public class LoadImage extends Thread{
     private String urlAway;
     private Object obj;
 
-    public LoadImage(String urlHome, String urlAway, BaseType obj) {
+    public LoadImage(String urlHome, String urlAway, Object obj) {
         this.urlHome = urlHome;
         this.urlAway = urlAway;
         this.obj = obj;
@@ -42,25 +40,36 @@ public class LoadImage extends Thread{
     public void run() {
         if(urlHome != null) {
             if (obj instanceof Country ) {
-                Response response = getData();
-                if (response.isSuccessful()) {
-                    parseSVGImg(response);
-                }
+                    parseSVGImg();
             } else if(obj instanceof League){
                 parsePNGLeague();
             } else if(obj instanceof LeagueFixture && urlAway!=null && !urlAway.isEmpty()){
                 parsePNGMatch();
+            } else if(obj instanceof MainActivity){
+                parsePNG();
             }
         }
+    }
+
+    private void parsePNG() {
+        Log.d("Debug-LoadImage", urlHome);
+        InputStream is;
+        Bitmap bmapImg = null;
+        try {
+            is = (InputStream) new URL(urlHome).getContent();
+            bmapImg = BitmapFactory.decodeStream(is);
+            is.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        MainActivity mainActivity = (MainActivity) obj;
+        mainActivity.setUserBitmap(bmapImg);
     }
 
     private Response getData(){
         OkHttpClient client = new OkHttpClient();
 
         Request request = new Request.Builder()
-                .cacheControl(new CacheControl.Builder()
-                        .maxAge(1, TimeUnit.DAYS)
-                        .build())
                 .url(urlHome)
                 .build();
         Response response = null;
@@ -74,34 +83,42 @@ public class LoadImage extends Thread{
         return response;
     }
 
-    private void parseSVGImg(Response response){
-        InputStream stream = response.body().byteStream();
+    private void parseSVGImg(){
+        Response response = getData();
+        if (response != null && response.isSuccessful()) {
+            InputStream stream = response.body().byteStream();
+            Bitmap bmap = null;
 
-        Bitmap bmap = null;
-        try {
-            SVG svg = SVG.getFromInputStream(stream);
-            svg.setDocumentHeight(100);
-            svg.setDocumentWidth(100);
-            Picture pic = svg.renderToPicture();
-            PictureDrawable drawable = new PictureDrawable(pic);
-            bmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
-            Canvas canvas = new Canvas(bmap);
-            canvas.drawPicture(drawable.getPicture());
-        } catch (SVGParseException e) {
+            try {
+                SVG svg = SVG.getFromInputStream(stream);
+                svg.setDocumentHeight(100);
+                svg.setDocumentWidth(100);
+                Picture pic = svg.renderToPicture();
+                PictureDrawable drawable = new PictureDrawable(pic);
+                bmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+                Canvas canvas = new Canvas(bmap);
+                canvas.drawPicture(drawable.getPicture());
+                try {
+                    stream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            } catch (SVGParseException e) {
+                e.printStackTrace();
+            }
 
-            e.printStackTrace();
+            Country country = (Country) obj;
+            country.setflag(bmap);
         }
-
-        Country country = (Country) obj;
-        country.setflag(bmap);
     }
     
-    private void parsePNGLeague(){
-        InputStream is = null;
+    private void parsePNGLeague() {
+        InputStream is;
         Bitmap bmap = null;
         try {
             is = (InputStream) new URL(urlHome).getContent();
             bmap = BitmapFactory.decodeStream(is);
+            is.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -116,6 +133,7 @@ public class LoadImage extends Thread{
         try {
             is = (InputStream) new URL(urlHome).getContent();
             bmap = BitmapFactory.decodeStream(is);
+            is.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -126,6 +144,7 @@ public class LoadImage extends Thread{
         try {
             is = (InputStream) new URL(urlAway).getContent();
             bmap = BitmapFactory.decodeStream(is);
+            is.close();
         } catch (IOException e) {
             e.printStackTrace();
         }

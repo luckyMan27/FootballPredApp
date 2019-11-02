@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:id="@+id/layoutLinearPred"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    android:layout_alignParentLeft="true">
+
+    <LinearLayout
+        android:id="@+id/layoutPredStat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/border"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/titlePred"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="title prediction"
+            android:textAlignment="center"
+            android:background="@drawable/border"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
+
+        <TextView
+            android:id="@+id/textPred"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="prediction"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layoutPredStat1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/border"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/titlePred1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="title prediction"
+            android:textAlignment="center"
+            android:background="@drawable/border"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
+
+        <TextView
+            android:id="@+id/textPred1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="prediction"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layoutPredStat2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/border"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/titlePred2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="title prediction"
+            android:textAlignment="center"
+            android:background="@drawable/border"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
+
+        <TextView
+            android:id="@+id/textPred2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="prediction"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layoutPredStat3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/border"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/titlePred3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="title prediction"
+            android:textAlignment="center"
+            android:background="@drawable/border"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
+
+        <TextView
+            android:id="@+id/textPred3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="prediction"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layoutPredStat4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:background="@drawable/border">
+
+        <TextView
+            android:id="@+id/titlePred4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="title prediction"
+            android:textAlignment="center"
+            android:background="@drawable/border"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
+
+        <TextView
+            android:id="@+id/textPred4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="prediction"
+            android:textAlignment="center"
+            android:paddingLeft="10dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
+    </LinearLayout>
+
+    <!--<LinearLayout
+        android:id="@+id/layoutPredStat5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@android:color/white"
+        android:gravity="center"
+        android:paddingTop="10dp">
+
+        <TextView
+            android:id="@+id/titlePred5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="title prediction"
+            android:textAlignment="center"
+            android:background="@drawable/border"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
+
+        <TextView
+            android:id="@+id/textPred5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="prediction"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
+
+        <ProgressBar
+            android:id="@+id/progressBar5"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:max="100"
+            android:layout_weight="1"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layoutPredStat6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:background="@android:color/white">
+
+        <TextView
+            android:id="@+id/titlePred6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="title prediction"
+            android:textAlignment="center"
+            android:background="@drawable/border"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
+
+        <TextView
+            android:id="@+id/textPred6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="prediction"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
+
+        <ProgressBar
+            android:id="@+id/progressBar6"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:max="100"
+            android:layout_weight="1"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layoutPredStat7"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:background="@android:color/white">
+
+        <TextView
+            android:id="@+id/titlePred7"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="title prediction"
+            android:textAlignment="center"
+            android:background="@drawable/border"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
+
+        <TextView
+            android:id="@+id/textPred7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="prediction"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
+
+        <ProgressBar
+            android:id="@+id/progressBar7"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:max="100"
+            android:layout_weight="1"/>
+    </LinearLayout>-->
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/border">
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/border">
+            <TextView
+                android:id="@+id/titlePred5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1"
+                android:textAlignment="center"
+                android:background="@drawable/border"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                android:layout_weight="1"/>
+
+            <TextView
+                android:id="@+id/titlePred6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="X"
+                android:textAlignment="center"
+                android:background="@drawable/border"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                android:layout_weight="1"/>
+
+            <TextView
+                android:id="@+id/titlePred7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2"
+                android:textAlignment="center"
+                android:background="@drawable/border"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                android:layout_weight="1"/>
+        </TableRow>
+        <TableRow android:layout_gravity="center"
+            >
+            <TextView
+                android:id="@+id/textPred5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="prediction"
+                android:textAlignment="center"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:layout_weight="1"/>
+            <TextView
+                android:id="@+id/textPred6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="prediction"
+                android:textAlignment="center"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:layout_weight="1"/>
+            <TextView
+                android:id="@+id/textPred7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="prediction"
+                android:textAlignment="center"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:layout_weight="1"/>
+        </TableRow>
+        <TableRow android:layout_gravity="center">
+            <ProgressBar
+                android:id="@+id/progressBar5"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:max="100"
+                android:layout_weight="1"/>
+            <ProgressBar
+                android:id="@+id/progressBar6"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:max="100"
+                android:layout_weight="1"
+                android:layout_below="@+id/textPred5"/>
+            <ProgressBar
+                android:id="@+id/progressBar7"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:max="100"
+                android:layout_weight="1"/>
+        </TableRow>
+    </TableLayout>
+</LinearLayout>

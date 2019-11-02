@@ -2,7 +2,6 @@ package com.fortunato.footballpredictions.Adapters;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,10 +10,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.fortunato.footballpredictions.Activities.PredictionStatisticActivity;
 import com.fortunato.footballpredictions.DataStructures.BaseType;
 import com.fortunato.footballpredictions.DataStructures.FixturePrediction;
 import com.fortunato.footballpredictions.R;
@@ -36,7 +33,7 @@ public class PredictionStatisticRecyclerView extends RecyclerView.Adapter<Predic
     public PredictionStatisticRecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.recview_pred_stat, parent, false);
+        View view = inflater.inflate(R.layout.prediction_tab, parent, false);
         PredictionStatisticRecyclerView.ViewHolder viewHolder = new PredictionStatisticRecyclerView.ViewHolder(view);
 
         return viewHolder;
@@ -54,13 +51,10 @@ public class PredictionStatisticRecyclerView extends RecyclerView.Adapter<Predic
         TextView tPred3 = holder.textPred3;
         TextView tTitle4 = holder.titlePred4;
         TextView tPred4 = holder.textPred4;
-        TextView tTitle5 = holder.titlePred5;
         TextView tPred5 = holder.textPred5;
         ProgressBar progPred5 = holder.progPred5;
-        TextView tTitle6 = holder.titlePred6;
         TextView tPred6 = holder.textPred6;
         ProgressBar progPred6 = holder.progPred6;
-        TextView tTitle7 = holder.titlePred7;
         TextView tPred7 = holder.textPred7;
         ProgressBar progPred7 = holder.progPred7;
 
@@ -79,18 +73,16 @@ public class PredictionStatisticRecyclerView extends RecyclerView.Adapter<Predic
             tPred3.setText(prediction.getGoalsAway());
             tTitle4.setText("Advice");
             tPred4.setText(prediction.getAdvice());
-            tTitle5.setText("Win Home");
             tPred5.setText(prediction.getWinPercHome());
             int i = Integer.parseInt(prediction.getWinPercHome().replace("%", ""));
             progPred5.setProgress(i);
-            tTitle6.setText("Win Away");
-            tPred6.setText(prediction.getWinPercAway());
-            i = Integer.parseInt(prediction.getWinPercAway().replace("%", ""));
-            progPred6.setProgress(i);
-            tTitle7.setText("Draws");
-            tPred7.setText(prediction.getWinPercDraws());
+            tPred6.setText(prediction.getWinPercDraws());
             i = Integer.parseInt(prediction.getWinPercDraws().replace("%", ""));
+            progPred6.setProgress(i);
+            tPred7.setText(prediction.getWinPercAway());
+            i = Integer.parseInt(prediction.getWinPercAway().replace("%", ""));
             progPred7.setProgress(i);
+
         }
     }
 
@@ -110,19 +102,16 @@ public class PredictionStatisticRecyclerView extends RecyclerView.Adapter<Predic
         private TextView textPred3;
         private TextView titlePred4;
         private TextView textPred4;
-        private TextView titlePred5;
         private TextView textPred5;
         private ProgressBar progPred5;
-        private TextView titlePred6;
         private TextView textPred6;
         private ProgressBar progPred6;
-        private TextView titlePred7;
         private TextView textPred7;
         private ProgressBar progPred7;
 
         public ViewHolder(@NonNull View view) {
             super(view);
-            view.findViewById(R.id.layoutRelPredStat).setOnClickListener(this);
+            view.findViewById(R.id.layoutLinearPred).setOnClickListener(this);
             this.titlePred = view.findViewById(R.id.titlePred);
             this.textPred = view.findViewById(R.id.textPred);
             this.titlePred1 = view.findViewById(R.id.titlePred1);
@@ -133,13 +122,10 @@ public class PredictionStatisticRecyclerView extends RecyclerView.Adapter<Predic
             this.textPred3 = view.findViewById(R.id.textPred3);
             this.titlePred4 = view.findViewById(R.id.titlePred4);
             this.textPred4 = view.findViewById(R.id.textPred4);
-            this.titlePred5 = view.findViewById(R.id.titlePred5);
             this.textPred5 = view.findViewById(R.id.textPred5);
             this.progPred5 = view.findViewById(R.id.progressBar5);
-            this.titlePred6 = view.findViewById(R.id.titlePred6);
             this.textPred6 = view.findViewById(R.id.textPred6);
             this.progPred6 = view.findViewById(R.id.progressBar6);
-            this.titlePred7 = view.findViewById(R.id.titlePred7);
             this.textPred7 = view.findViewById(R.id.textPred7);
             this.progPred7 = view.findViewById(R.id.progressBar7);
         }

@@ -5,6 +5,7 @@ import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -41,7 +42,8 @@ public class MatchFragment extends BaseFragment {
     private String url;
     private int requestType;
     private String leagueId;
-    private String nextUrl;
+
+    public MatchFragment() { }
 
     public MatchFragment(String url, int requestType, String leagueId) {
         this.url = url;
@@ -66,7 +68,9 @@ public class MatchFragment extends BaseFragment {
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putSerializable(STATE_ITEMS, (Serializable) items);
-        outState.putParcelable(RECYCLER_LAYOUT, recyclerView.getLayoutManager().onSaveInstanceState());
+        if(recyclerView.getLayoutManager()!=null)
+            outState.putParcelable(RECYCLER_LAYOUT, recyclerView.getLayoutManager().onSaveInstanceState());
+        else outState.putParcelable(RECYCLER_LAYOUT, null);
         outState.putBoolean(NETFLAG, flagNetwork);
     }
 
@@ -96,7 +100,7 @@ public class MatchFragment extends BaseFragment {
 
         recyclerView.setHasFixedSize(true);
 
-        matchRecyclerView = new MatchRecyclerView(items, MatchFragment.this);
+        matchRecyclerView = new MatchRecyclerView(items);
         recyclerView.setAdapter(matchRecyclerView);
 
         if(flagNetwork){

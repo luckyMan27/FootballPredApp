@@ -13,10 +13,46 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <RelativeLayout
-            android:id="@+id/layoutRelMatch"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/LeagueText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Testo bello"
+                    android:textSize="20dp"
+                    android:textAlignment="center"
+                    android:layout_centerVertical="true"
+                    android:visibility="visible"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+
+                <ToggleButton
+                    android:id="@+id/favToogle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:minWidth="20dp"
+                    android:minHeight="20dp"
+                    android:textAlignment="viewEnd"
+                    android:focusable="true"
+                    android:textOff=""
+                    android:textOn=""
+                    android:background="@drawable/fav_checked"/>
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/layoutRelMatch"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
             <ImageView
                 android:id="@+id/homeImg"
@@ -84,7 +120,9 @@
                 android:layout_alignParentRight="true"
                 android:src="@mipmap/ic_launcher_round" />
 
-        </RelativeLayout>
+            </RelativeLayout>
+
+        </LinearLayout>
 
     </androidx.cardview.widget.CardView>
 

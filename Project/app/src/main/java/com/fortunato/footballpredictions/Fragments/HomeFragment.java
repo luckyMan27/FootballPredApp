@@ -9,11 +9,10 @@ import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.fortunato.footballpredictions.Adapters.CountyRecyclerView;
+import com.fortunato.footballpredictions.Adapters.CountryRecyclerView;
 import com.fortunato.footballpredictions.DataStructures.BaseType;
 import com.fortunato.footballpredictions.Networks.NetworkHome;
 import com.fortunato.footballpredictions.R;
@@ -33,7 +32,7 @@ public class HomeFragment extends BaseFragment {
     private ProgressBar progBar = null;
 
     private RecyclerView recyclerView = null;
-    private CountyRecyclerView countyRecyclerView = null;
+    private CountryRecyclerView countryRecyclerView = null;
     private Parcelable recyclerLayout = null;
 
     private ViewGroup container = null;
@@ -88,8 +87,8 @@ public class HomeFragment extends BaseFragment {
 
         recyclerView.setHasFixedSize(true);
 
-        countyRecyclerView = new CountyRecyclerView(items, HomeFragment.this);
-        recyclerView.setAdapter(countyRecyclerView);
+        countryRecyclerView = new CountryRecyclerView(items, HomeFragment.this);
+        recyclerView.setAdapter(countryRecyclerView);
 
         if(flagNetwork){
             progBar.setVisibility(View.VISIBLE);
@@ -110,7 +109,7 @@ public class HomeFragment extends BaseFragment {
     }
 
     public void flush(){
-        countyRecyclerView.notifyDataSetChanged();
+        countryRecyclerView.notifyDataSetChanged();
     }
 
     public void modifyContent(String url, int requestType, String leagueId){
