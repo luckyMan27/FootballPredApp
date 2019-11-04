@@ -21,11 +21,9 @@ import java.util.List;
 public class PredictionStatisticRecyclerView extends RecyclerView.Adapter<PredictionStatisticRecyclerView.ViewHolder> {
 
     private List<BaseType> list;
-    private Activity activity;
 
-    public PredictionStatisticRecyclerView(List<BaseType> list, Activity activity) {
+    public PredictionStatisticRecyclerView(List<BaseType> list) {
         this.list = list;
-        this.activity = activity;
     }
 
     @NonNull
@@ -34,9 +32,7 @@ public class PredictionStatisticRecyclerView extends RecyclerView.Adapter<Predic
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.prediction_tab, parent, false);
-        PredictionStatisticRecyclerView.ViewHolder viewHolder = new PredictionStatisticRecyclerView.ViewHolder(view);
-
-        return viewHolder;
+        return new PredictionStatisticRecyclerView.ViewHolder(view);
     }
 
     @Override

@@ -1,12 +1,11 @@
 package com.fortunato.footballpredictions.Networks;
 
 import android.app.Activity;
-import android.util.Log;
 import android.view.View;
 
+import com.fortunato.footballpredictions.Activities.MainActivity;
 import com.fortunato.footballpredictions.DataStructures.BaseType;
 import com.fortunato.footballpredictions.DataStructures.Country;
-import com.fortunato.footballpredictions.DataStructures.FixturePrediction;
 import com.fortunato.footballpredictions.DataStructures.League;
 import com.fortunato.footballpredictions.DataStructures.LeagueFixture;
 import com.fortunato.footballpredictions.Fragments.BaseFragment;
@@ -16,7 +15,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
@@ -49,13 +47,16 @@ public class NetworkHome implements Runnable {
 
     @Override
     public void run() {
+        if(MainActivity.NETWORK_CONNECTION == false) return;
+
         Response response;
         switch (requestType){
             case 0:
                 try {
                     response = doRequest(null);
-                    if(response.isSuccessful()) {
+                    if(response != null && response.isSuccessful()) {
                         parseResponseCountry(Objects.requireNonNull(response.body()).string());
+                        response.close();
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -64,8 +65,9 @@ public class NetworkHome implements Runnable {
             case 1:
                 try {
                     response = doRequest(null);
-                    if(response.isSuccessful()) {
+                    if(response != null && response.isSuccessful()) {
                         parseResponseLigue(Objects.requireNonNull(response.body()).string());
+                        response.close();
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -75,14 +77,16 @@ public class NetworkHome implements Runnable {
                 try {
                     response = doRequest(BASE_URL+"fixtures/rounds/"+id+"/current");
                     String regSeason = null;
-                    if(response.isSuccessful()) {
+                    if(response != null && response.isSuccessful()) {
                         regSeason = parseResponseRegSeason(
                                 Objects.requireNonNull(response.body()).string());
+                        response.close();
                     }
 
                     response = doRequest(BASE_URL+"fixtures/league/"+id+"/"+regSeason);
-                    if(response.isSuccessful()) {
+                    if(response != null && response.isSuccessful()) {
                         parseResponseFixture(Objects.requireNonNull(response.body()).string());
+                        response.close();
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -97,15 +101,16 @@ public class NetworkHome implements Runnable {
         String urlReq = (passUrl != null) ? passUrl : fullString;
 
         Request request = new Request.Builder()
-                //.header("X-RapidAPI-Key", "4e09d9f0ee3c6a1777a1ed192fe1437d") // Account 4
+                .header("X-RapidAPI-Key", "4e09d9f0ee3c6a1777a1ed192fe1437d") // Account 4
                 //.header("X-RapidAPI-Key", "c2ebe78de8a3c018cac16ba29d278c6f") // Account 3
-                .header("X-RapidAPI-Key", "e28ec9b1e641f085727d792f16e41271") // Account 2
+                //.header("X-RapidAPI-Key", "e28ec9b1e641f085727d792f16e41271") // Account 2
                 //.header("X-RapidAPI-Key", "1c9263f72d96f81d03f5f55009ac668d") // Account 1
                 .header("Accept", "application/json")
                 .cacheControl(new CacheControl.Builder()
                         .maxAge(1, TimeUnit.DAYS)
                         .build())
                 .url(urlReq)
+                .get()
                 .build();
         Response response = null;
         try {
@@ -131,7 +136,7 @@ public class NetworkHome implements Runnable {
     }
 
     private void parseResponseCountry(String body){
-        list = new LinkedList<BaseType>();
+        list = new LinkedList<>();
         try {
             JSONObject jsonObject = new JSONObject(body);
             jsonObject = jsonObject.getJSONObject("api");
@@ -140,7 +145,7 @@ public class NetworkHome implements Runnable {
 
                 Country country;
                 for(int i=0; i<countries.length(); i++){
-                    country = new Country(countries.getJSONObject(i), activity.getApplicationContext());
+                    country = new Country(countries.getJSONObject(i));
                     if(!country.isEmpty() && !list.contains(country)){
                         list.add(country);
                         if(country.getLoadImage()!=null)
@@ -158,7 +163,7 @@ public class NetworkHome implements Runnable {
     }
 
     private void parseResponseLigue(String body){
-        list = new LinkedList<BaseType>();
+        list = new LinkedList<>();
         try {
             JSONObject jsonObject = new JSONObject(body);
             jsonObject = jsonObject.getJSONObject("api");
@@ -168,7 +173,7 @@ public class NetworkHome implements Runnable {
                 League league;
                 for (int i = 0; i<leagues.length(); i++) {
                     league = new League(leagues.getJSONObject(i));
-                    if (!league.isEmpty() && league.getPredictions()==true) {
+                    if (!league.isEmpty() && league.getPredictions()) {
                         list.add(league);
                         if(league.getLoadImage()!=null)
                             league.getLoadImage().start();
@@ -184,7 +189,7 @@ public class NetworkHome implements Runnable {
     }
 
     private void parseResponseFixture(String body){
-        list = new LinkedList<BaseType>();
+        list = new LinkedList<>();
         try {
             JSONObject jsonObject = new JSONObject(body);
             jsonObject = jsonObject.getJSONObject("api");
@@ -219,7 +224,6 @@ public class NetworkHome implements Runnable {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
 
         return result;
     }

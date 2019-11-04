@@ -37,7 +37,7 @@ public class PredictionStatisticActivity extends AppCompatActivity {
         fixtureId = intent.getStringExtra("fixture_id");
         setTitle(intent.getStringExtra("teams_match"));
 
-        if(items == null) items = new LinkedList<BaseType>();
+        if(items == null) items = new LinkedList<>();
 
         TabHost tabHost = findViewById(R.id.tabPredStat);
         tabHost.setup();
@@ -62,7 +62,7 @@ public class PredictionStatisticActivity extends AppCompatActivity {
         layoutManager.setOrientation(RecyclerView.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
 
-        recyclerViewAdp = new PredictionStatisticRecyclerView(items, PredictionStatisticActivity.this);
+        recyclerViewAdp = new PredictionStatisticRecyclerView(items);
         recyclerView.setAdapter(recyclerViewAdp);
 
         recyclerView.setHasFixedSize(true);

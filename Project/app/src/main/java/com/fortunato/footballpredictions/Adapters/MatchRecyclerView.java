@@ -3,7 +3,6 @@ package com.fortunato.footballpredictions.Adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +17,6 @@ import com.fortunato.footballpredictions.DataStructures.BaseType;
 import com.fortunato.footballpredictions.DataStructures.LeagueFixture;
 import com.fortunato.footballpredictions.R;
 
-import java.util.HashSet;
 import java.util.List;
 
 public class MatchRecyclerView extends RecyclerView.Adapter<MatchRecyclerView.ViewHolder> {
@@ -86,7 +84,7 @@ public class MatchRecyclerView extends RecyclerView.Adapter<MatchRecyclerView.Vi
         private TextView resultText;
         private TextView time;
 
-        public ViewHolder(@NonNull View view) {
+        private ViewHolder(@NonNull View view) {
             super(view);
             view.findViewById(R.id.layoutRelMatch).setOnClickListener(this);
             this.homeText = view.findViewById(R.id.homeText);

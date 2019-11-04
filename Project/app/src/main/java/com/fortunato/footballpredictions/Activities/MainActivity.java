@@ -9,8 +9,11 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -28,9 +31,6 @@ import com.fortunato.footballpredictions.Fragments.HomeFragment;
 import com.fortunato.footballpredictions.Fragments.LiveFragment;
 import com.fortunato.footballpredictions.Networks.LoadImage;
 import com.fortunato.footballpredictions.R;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -40,6 +40,8 @@ import java.util.Arrays;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+
+    public static boolean NETWORK_CONNECTION = false;
 
     private DrawerLayout drawer = null;
 
@@ -64,7 +66,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Log.d("Debug", Thread.currentThread().getName());
+
+        isNetworkAvailable();
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -87,9 +90,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
         logoutB = navigationView.getHeaderView(0).findViewById(R.id.logoutButton);
-        //loginB = findViewById(R.id.loginButton);
         loginB = navigationView.getHeaderView(0).findViewById(R.id.loginButton);
-        Log.d("Debug-main", loginB.toString());
+
         loginB.setOnClickListener( new View.OnClickListener(){
             @Override
             public void onClick(View v) {
@@ -107,6 +109,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         });
 
         if(savedInstanceState != null){
+            isNetworkAvailable();
             selectedFragment = getSupportFragmentManager().getFragment(savedInstanceState, FRAGMENT_USED);
             if(selectedFragment != null){
                 if(selectedFragment instanceof HomeFragment){
@@ -154,6 +157,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void showSigninOptions() {
+        if(isNetworkAvailable() == false){
+            Toast.makeText(MainActivity.this, "Network Connection is unavailable!", Toast.LENGTH_SHORT).show();
+            return;
+        }
         providers = Arrays.asList(
                 new AuthUI.IdpConfig.FacebookBuilder().build(),
                 new AuthUI.IdpConfig.GoogleBuilder().build());
@@ -187,6 +194,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void showUserInfos() {
+        if(isNetworkAvailable() == false){
+            Toast.makeText(MainActivity.this, "Network Connection is unavailable!", Toast.LENGTH_SHORT).show();
+            return;
+        }
         LoadImage loadImage = new LoadImage(user.getPhotoUrl().toString(), null, MainActivity.this);
         loadImage.start();
         try {
@@ -219,7 +230,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             new BottomNavigationView.OnNavigationItemSelectedListener() {
                 @Override
                 public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-
+                    isNetworkAvailable();
                     switch (menuItem.getItemId()){
                         case R.id.nav_home:
                             if(home_frag == null) home_frag = new HomeFragment();
@@ -265,6 +276,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             default:
                 break;
             case R.id.draw_menu_account:
+                isNetworkAvailable();
                 showSigninOptions();
                 break;
             case R.id.draw_menu_share:
@@ -280,5 +292,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        NETWORK_CONNECTION = activeNetworkInfo != null && activeNetworkInfo.isConnected();
+        return NETWORK_CONNECTION;
     }
 }

@@ -15,7 +15,6 @@ import com.fortunato.footballpredictions.DataStructures.Country;
 import com.fortunato.footballpredictions.DataStructures.League;
 import com.fortunato.footballpredictions.DataStructures.LeagueFixture;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -38,6 +37,9 @@ public class LoadImage extends Thread{
 
     @Override
     public void run() {
+
+        if(MainActivity.NETWORK_CONNECTION == false) return;
+
         if(urlHome != null) {
             if (obj instanceof Country ) {
                     parseSVGImg();

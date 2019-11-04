@@ -3,7 +3,6 @@ package com.fortunato.footballpredictions.DataStructures;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
 
 import androidx.annotation.NonNull;
 
@@ -25,7 +24,7 @@ public class Country extends BaseType implements Serializable {
     private transient Bitmap flag = null;
     private transient LoadImage loadImage;
 
-    public Country(JSONObject jsonObject, Context context){
+    public Country(JSONObject jsonObject){
         try {
             country = jsonObject.getString("country");
             code = jsonObject.getString("code");

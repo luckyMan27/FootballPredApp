@@ -6,12 +6,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.fortunato.footballpredictions.Activities.MainActivity;
 import com.fortunato.footballpredictions.Adapters.CountryRecyclerView;
 import com.fortunato.footballpredictions.DataStructures.BaseType;
 import com.fortunato.footballpredictions.Networks.NetworkHome;
@@ -89,6 +91,11 @@ public class HomeFragment extends BaseFragment {
 
         countryRecyclerView = new CountryRecyclerView(items, HomeFragment.this);
         recyclerView.setAdapter(countryRecyclerView);
+
+        if(MainActivity.NETWORK_CONNECTION == false){
+            Toast.makeText(getContext(), "Network Connection is unavailable!", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         if(flagNetwork){
             progBar.setVisibility(View.VISIBLE);

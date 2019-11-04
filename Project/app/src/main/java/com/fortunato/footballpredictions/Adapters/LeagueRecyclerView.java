@@ -1,7 +1,6 @@
 package com.fortunato.footballpredictions.Adapters;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,13 +14,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.fortunato.footballpredictions.DataStructures.BaseType;
 import com.fortunato.footballpredictions.DataStructures.League;
-import com.fortunato.footballpredictions.DataStructures.LeagueFixture;
 import com.fortunato.footballpredictions.DataStructures.SingletonFavorite;
 import com.fortunato.footballpredictions.Fragments.LeagueFragment;
 import com.fortunato.footballpredictions.R;
 
 import java.util.List;
-import java.util.TooManyListenersException;
 
 public class LeagueRecyclerView extends RecyclerView.Adapter<LeagueRecyclerView.ViewHolder> {
 
@@ -39,9 +36,7 @@ public class LeagueRecyclerView extends RecyclerView.Adapter<LeagueRecyclerView.
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.recview_league, parent, false);
-        LeagueRecyclerView.ViewHolder viewHolder = new LeagueRecyclerView.ViewHolder(view);
-
-        return viewHolder;
+        return new LeagueRecyclerView.ViewHolder(view);
     }
 
     @Override
@@ -76,7 +71,7 @@ public class LeagueRecyclerView extends RecyclerView.Adapter<LeagueRecyclerView.
         private ImageView img_item;
         private ToggleButton favB;
 
-        public ViewHolder(@NonNull View itemView) {
+        private ViewHolder(@NonNull View itemView) {
             super(itemView);
             this.item = itemView.findViewById(R.id.item);
             this.item.setOnClickListener(this);

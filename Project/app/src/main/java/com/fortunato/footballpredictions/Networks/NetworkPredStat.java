@@ -1,13 +1,11 @@
 package com.fortunato.footballpredictions.Networks;
 
-import android.app.Activity;
-import android.util.Log;
 import android.view.View;
 
+import com.fortunato.footballpredictions.Activities.MainActivity;
 import com.fortunato.footballpredictions.Activities.PredictionStatisticActivity;
 import com.fortunato.footballpredictions.DataStructures.BaseType;
 import com.fortunato.footballpredictions.DataStructures.FixturePrediction;
-import com.fortunato.footballpredictions.Fragments.BaseFragment;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -40,12 +38,16 @@ public class NetworkPredStat implements Runnable {
 
     @Override
     public void run() {
+
+        if(MainActivity.NETWORK_CONNECTION == false) return;
+
         switch (requestType) {
             case 0:
                 try {
                     Response response = doRequest(null);
-                    if (response.isSuccessful()) {
+                    if (response != null && response.isSuccessful()) {
                         parseResponsePredictions(Objects.requireNonNull(response.body()).string());
+                        response.close();
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -62,9 +64,9 @@ public class NetworkPredStat implements Runnable {
         String urlReq = (passUrl != null) ? passUrl : fullString;
 
         Request request = new Request.Builder()
-                //.header("X-RapidAPI-Key", "4e09d9f0ee3c6a1777a1ed192fe1437d") // Account 4
+                .header("X-RapidAPI-Key", "4e09d9f0ee3c6a1777a1ed192fe1437d") // Account 4
                 //.header("X-RapidAPI-Key", "c2ebe78de8a3c018cac16ba29d278c6f") // Account 3
-                .header("X-RapidAPI-Key", "e28ec9b1e641f085727d792f16e41271") // Account 2
+                //.header("X-RapidAPI-Key", "e28ec9b1e641f085727d792f16e41271") // Account 2
                 //.header("X-RapidAPI-Key", "1c9263f72d96f81d03f5f55009ac668d") // Account 1
                 .header("Accept", "application/json")
                 .cacheControl(new CacheControl.Builder()
@@ -96,7 +98,7 @@ public class NetworkPredStat implements Runnable {
     }
 
     private void parseResponsePredictions(String body){
-        list = new LinkedList<BaseType>();
+        list = new LinkedList<>();
         try {
             JSONObject jsonObject = new JSONObject(body);
             jsonObject = jsonObject.getJSONObject("api");

@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -13,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.fortunato.footballpredictions.Activities.MainActivity;
 import com.fortunato.footballpredictions.Adapters.FavoriteRecyclerView;
 import com.fortunato.footballpredictions.DataStructures.BaseType;
 import com.fortunato.footballpredictions.R;
@@ -70,6 +72,7 @@ public class FavoriteFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+
         progBar = container.findViewById(R.id.progBarFav);
         recyclerView = container.findViewById(R.id.recViewFav);
 
@@ -85,5 +88,10 @@ public class FavoriteFragment extends Fragment {
 
         favoriteRecyclerView = new FavoriteRecyclerView(items);
         recyclerView.setAdapter(favoriteRecyclerView);
+
+        if(MainActivity.NETWORK_CONNECTION == false){
+            Toast.makeText(getContext(), "Network Connection is unavailable!", Toast.LENGTH_SHORT).show();
+            return;
+        }
     }
 }

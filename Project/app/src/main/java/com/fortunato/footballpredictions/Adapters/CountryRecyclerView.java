@@ -34,9 +34,7 @@ public class CountryRecyclerView extends RecyclerView.Adapter<CountryRecyclerVie
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.recview_country, parent, false);
-        ViewHolder viewHolder = new ViewHolder(view);
-
-        return viewHolder;
+        return new ViewHolder(view);
     }
 
     @Override
@@ -70,7 +68,7 @@ public class CountryRecyclerView extends RecyclerView.Adapter<CountryRecyclerVie
         private TextView item;
         private ImageView img_item;
 
-        public ViewHolder(@NonNull View itemView) {
+        private ViewHolder(@NonNull View itemView) {
             super(itemView);
             this.item = itemView.findViewById(R.id.item);
             this.item.setOnClickListener(this);

@@ -107,7 +107,7 @@ public class FavoriteRecyclerView extends RecyclerView.Adapter<FavoriteRecyclerV
         private TextView time;
         private ToggleButton favB;
 
-        public ViewHolder(@NonNull View view) {
+        private ViewHolder(@NonNull View view) {
             super(view);
             view.findViewById(R.id.layoutRelMatch).setOnClickListener(this);
             this.titleLeague = view.findViewById(R.id.LeagueText);
