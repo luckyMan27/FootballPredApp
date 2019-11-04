@@ -148,8 +148,10 @@ public class NetworkHome implements Runnable {
                     country = new Country(countries.getJSONObject(i));
                     if(!country.isEmpty() && !list.contains(country)){
                         list.add(country);
-                        if(country.getLoadImage()!=null)
+                        if(country.getUrlImg()!=null && !country.getUrlImg().equals("null")){
+                            country.setLoadImage( new LoadImage(country.getUrlImg(), null, country));
                             country.getLoadImage().start();
+                        }
                     }
                 }
             } else {

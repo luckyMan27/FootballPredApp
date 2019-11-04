@@ -2,6 +2,7 @@ package com.fortunato.footballpredictions.Fragments;
 
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,11 +17,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.fortunato.footballpredictions.Activities.MainActivity;
 import com.fortunato.footballpredictions.Adapters.CountryRecyclerView;
 import com.fortunato.footballpredictions.DataStructures.BaseType;
+import com.fortunato.footballpredictions.DataStructures.Country;
+import com.fortunato.footballpredictions.Networks.LoadImage;
 import com.fortunato.footballpredictions.Networks.NetworkHome;
 import com.fortunato.footballpredictions.R;
+import com.fortunato.footballpredictions.tools.SaveData;
 
 import java.io.Serializable;
-import java.util.LinkedList;
 import java.util.List;
 
 public class HomeFragment extends BaseFragment {
@@ -29,7 +32,7 @@ public class HomeFragment extends BaseFragment {
     private static final String RECYCLER_LAYOUT = "recLayout";
     private static final String NETFLAG = "netFlag";
 
-    private List<BaseType> items = null;
+    private List<Country> items = null;
     private Boolean flagNetwork = true;
     private ProgressBar progBar = null;
 
@@ -42,18 +45,21 @@ public class HomeFragment extends BaseFragment {
     private LeagueFragment lFragment = null;
     private String nextUrl = null;
 
+    private SaveData handleData;
+
     public HomeFragment() { }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        handleData = new SaveData(getContext());
         if(savedInstanceState != null){
             flagNetwork = savedInstanceState.getBoolean(NETFLAG);
-            items = (List<BaseType>)savedInstanceState.get(STATE_ITEMS);
+            items = (List<Country>)savedInstanceState.get(STATE_ITEMS);
             recyclerLayout = savedInstanceState.getParcelable(RECYCLER_LAYOUT);
         }
         if(items == null) {
-            items = new LinkedList<BaseType>();
+            items = handleData.loadCountries();
         }
     }
 
@@ -92,23 +98,27 @@ public class HomeFragment extends BaseFragment {
         countryRecyclerView = new CountryRecyclerView(items, HomeFragment.this);
         recyclerView.setAdapter(countryRecyclerView);
 
-        if(MainActivity.NETWORK_CONNECTION == false){
+        if(!MainActivity.NETWORK_CONNECTION){
             Toast.makeText(getContext(), "Network Connection is unavailable!", Toast.LENGTH_SHORT).show();
             return;
         }
 
         if(flagNetwork){
-            progBar.setVisibility(View.VISIBLE);
-            NetworkHome networkHome = new NetworkHome("countries", 0,
-                    null, HomeFragment.this, getActivity());
-            Thread tNet = new Thread(networkHome);
-            tNet.start();
+            if(items.size()==0) {
+                progBar.setVisibility(View.VISIBLE);
+                NetworkHome networkHome = new NetworkHome("countries", 0,
+                        null, HomeFragment.this, getActivity());
+                Thread tNet = new Thread(networkHome);
+                tNet.start();
+            } else{
+                loadImage();
+            }
             flagNetwork = false;
         }
     }
 
     public void addItem(BaseType object){
-        items.add(object);
+        items.add((Country) object);
     }
 
     public ProgressBar getProgBar() {
@@ -116,13 +126,25 @@ public class HomeFragment extends BaseFragment {
     }
 
     public void flush(){
+        handleData.saveCountries(items);
         countryRecyclerView.notifyDataSetChanged();
     }
 
-    public void modifyContent(String url, int requestType, String leagueId){
+    private void loadImage(){
+        for(Country country : items){
+            if(country.getLoadImage()!=null) country.getLoadImage().run();
+            else if(country.getUrlImg()!=null && !country.getUrlImg().equals("null")){
+                country.setLoadImage( new LoadImage(country.getUrlImg(), null, country));
+                country.getLoadImage().start();
+            }
+        }
+        countryRecyclerView.notifyDataSetChanged();
+    }
+
+    public void modifyContent(String url, int requestType, String leagueId, String countryName){
         if(url!=null && !url.equals(nextUrl)) {
             nextUrl = url;
-            lFragment = new LeagueFragment(url, requestType, leagueId);
+            lFragment = new LeagueFragment(url, requestType, leagueId, countryName);
             getFragmentManager()
                     .beginTransaction()
                     .replace(R.id.fragment_container, lFragment)

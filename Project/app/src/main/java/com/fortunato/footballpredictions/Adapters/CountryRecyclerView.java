@@ -20,10 +20,10 @@ import java.util.List;
 
 public class CountryRecyclerView extends RecyclerView.Adapter<CountryRecyclerView.ViewHolder> {
 
-    private List<BaseType> list;
+    private List<Country> list;
     private HomeFragment fragment;
 
-    public CountryRecyclerView(List<BaseType> list, HomeFragment fragment) {
+    public CountryRecyclerView(List<Country> list, HomeFragment fragment) {
         this.list = list;
         this.fragment = fragment;
     }
@@ -46,15 +46,10 @@ public class CountryRecyclerView extends RecyclerView.Adapter<CountryRecyclerVie
         if(obj instanceof Country){
             Country country = (Country) obj;
             tView.setText(country.getCountry());
-            try {
-                if(country.getLoadImage()!=null){
-                    country.getLoadImage().join();
-                    iView.setImageBitmap(country.getflag());
-                } else if(country.getCountry().equals("World")){
-                    iView.setImageResource(R.drawable.world_flags_android);
-                }
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+            if(country.getLoadImage()!=null){
+                iView.setImageBitmap(country.getflag());
+            } else if(country.getCountry().equals("World")){
+                iView.setImageResource(R.drawable.world_flags_android);
             }
         }
     }
@@ -84,7 +79,7 @@ public class CountryRecyclerView extends RecyclerView.Adapter<CountryRecyclerVie
                 Country country = (Country) obj;
                 String url = "leagues/country/"+country.getCountry()
                         +"/"+Calendar.getInstance().get(Calendar.YEAR);
-                fragment.modifyContent(url, 1, "");
+                fragment.modifyContent(url, 1, "", country.getCountry());
 
             }
         }

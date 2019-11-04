@@ -12,6 +12,4 @@ public abstract class BaseFragment extends Fragment {
     public abstract ProgressBar getProgBar();
 
     public abstract void flush();
-
-    public abstract void modifyContent(String url, int requestType, String ligueId);
 }

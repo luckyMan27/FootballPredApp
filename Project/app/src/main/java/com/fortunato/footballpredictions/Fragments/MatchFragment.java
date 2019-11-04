@@ -130,22 +130,4 @@ public class MatchFragment extends BaseFragment {
     public void flush(){
         matchRecyclerView.notifyDataSetChanged();
     }
-
-    public void modifyContent(String url, int requestType, String leagueId){
-        /*if(url!=null && !url.equals(nextUrl)) {
-            nextUrl = url;
-            lFragment = new LeagueFragment(url, requestType, leagueId);
-            getFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.fragment_container, lFragment)
-                    .addToBackStack(null)
-                    .commit();
-        } else if(url.equals(nextUrl)){
-            getFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.fragment_container, lFragment)
-                    .addToBackStack(null)
-                    .commit();
-        }*/
-    }
 }

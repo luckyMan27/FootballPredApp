@@ -22,10 +22,10 @@ import java.util.List;
 
 public class LeagueRecyclerView extends RecyclerView.Adapter<LeagueRecyclerView.ViewHolder> {
 
-    private List<BaseType> list;
+    private List<League> list;
     private Fragment fragment;
 
-    public LeagueRecyclerView(List<BaseType> list, Fragment fragment) {
+    public LeagueRecyclerView(List<League> list, Fragment fragment) {
         this.list = list;
         this.fragment = fragment;
     }

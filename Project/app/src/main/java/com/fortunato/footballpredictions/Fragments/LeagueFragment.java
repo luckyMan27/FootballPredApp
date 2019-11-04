@@ -17,11 +17,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.fortunato.footballpredictions.Activities.MainActivity;
 import com.fortunato.footballpredictions.Adapters.LeagueRecyclerView;
 import com.fortunato.footballpredictions.DataStructures.BaseType;
+import com.fortunato.footballpredictions.DataStructures.Country;
+import com.fortunato.footballpredictions.DataStructures.League;
+import com.fortunato.footballpredictions.Networks.LoadImage;
 import com.fortunato.footballpredictions.Networks.NetworkHome;
 import com.fortunato.footballpredictions.R;
+import com.fortunato.footballpredictions.tools.SaveData;
 
 import java.io.Serializable;
-import java.util.LinkedList;
 import java.util.List;
 
 public class LeagueFragment extends BaseFragment {
@@ -29,7 +32,7 @@ public class LeagueFragment extends BaseFragment {
     private static final String RECYCLER_LAYOUT = "recLayout";
     private static final String NETFLAG = "netFlag";
 
-    private List<BaseType> items = null;
+    private List<League> items = null;
     private Boolean flagNetwork = true;
     private ProgressBar progBar = null;
 
@@ -42,29 +45,33 @@ public class LeagueFragment extends BaseFragment {
     private String url;
     private int requestType;
     private String leagueId;
+    private String country;
 
     private String reqLigueId = "";
     private MatchFragment mFragment = null;
 
+    private SaveData handleData;
 
     public LeagueFragment() { }
 
-    public LeagueFragment(String url, int requestType, String leagueId) {
+    public LeagueFragment(String url, int requestType, String leagueId, String countryName) {
         this.url = url;
         this.requestType = requestType;
         this.leagueId = leagueId;
+        this.country = countryName;
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        handleData = new SaveData(getContext());
         if(savedInstanceState != null){
             flagNetwork = savedInstanceState.getBoolean(NETFLAG);
-            items = (List<BaseType>)savedInstanceState.get(STATE_ITEMS);
+            items = (List<League>)savedInstanceState.get(STATE_ITEMS);
             recyclerLayout = savedInstanceState.getParcelable(RECYCLER_LAYOUT);
         }
         if(items == null) {
-            items = new LinkedList<>();
+            items = handleData.loadLeagues(country);
         }
     }
 
@@ -111,17 +118,28 @@ public class LeagueFragment extends BaseFragment {
         }
 
         if(flagNetwork){
-            progBar.setVisibility(View.VISIBLE);
-            NetworkHome networkHome = new NetworkHome(url, requestType,
-                    leagueId, LeagueFragment.this, getActivity());
-            Thread tNet = new Thread(networkHome);
-            tNet.start();
-            flagNetwork = false;
+            if(items.size()==0) {
+                progBar.setVisibility(View.VISIBLE);
+                NetworkHome networkHome = new NetworkHome(url, requestType,
+                        leagueId, LeagueFragment.this, getActivity());
+                Thread tNet = new Thread(networkHome);
+                tNet.start();
+            } else {
+                for(League league : items){
+                    if(league.getLoadImage()!=null) league.getLoadImage().run();
+                    else if(league.getUrlImg()!=null && !league.getUrlImg().equals("null")){
+                        league.setLoadImage( new LoadImage(league.getUrlImg(), null, league));
+                        league.getLoadImage().start();
+                    }
+                }
+                leagueRecyclerView.notifyDataSetChanged();
+            }
         }
+        flagNetwork = false;
     }
 
     public void addItem(BaseType object){
-        items.add(object);
+        items.add((League) object);
     }
 
     public ProgressBar getProgBar() {
@@ -129,6 +147,8 @@ public class LeagueFragment extends BaseFragment {
     }
 
     public void flush(){
+        League league = items.get(0);
+        handleData.saveLeagues(items, league.getCountry());
         leagueRecyclerView.notifyDataSetChanged();
     }
 

@@ -13,114 +13,78 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
+        <RelativeLayout
+            android:id="@+id/layoutRelMatch"
             android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/homeImg"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:contentDescription="home image"
+            android:adjustViewBounds="true"
+            android:layout_alignParentLeft="true"
+            android:src="@mipmap/ic_launcher_round"/>
+
+        <TextView
+            android:id="@+id/homeText"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:padding="8dp"
+            android:text="Testo bello"
+            android:textAlignment="textStart"
+            android:layout_toRightOf="@+id/homeImg"
+            android:layout_toLeftOf="@+id/favHomeToogle"
+            android:layout_centerVertical="true"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center">
+        <TextView
+            android:id="@+id/textTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="NS"
+            android:textSize="8dp"
+            android:textAlignment="center"
+            android:layout_centerHorizontal="true"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"/>
 
-                <TextView
-                    android:id="@+id/LeagueText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Testo bello"
-                    android:textSize="25sp"
-                    android:textAlignment="center"
-                    android:visibility="visible"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+        <TextView
+            android:id="@+id/textSpace"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="12dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:paddingBottom="8dp"
+            android:text="-"
+            android:textSize="20dp"
+            android:textAlignment="center"
+            android:layout_centerHorizontal="true"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"/>
 
-                <ToggleButton
-                    android:id="@+id/favToogle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:minWidth="20dp"
-                    android:minHeight="20dp"
-                    android:focusable="true"
-                    android:textOff=""
-                    android:textOn=""
-                    android:background="@drawable/fav_checked"/>
+        <TextView
+            android:id="@+id/awayText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:text="Testo bello"
+            android:textAlignment="textStart"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/favAwayToogle"
+            android:layout_toLeftOf="@+id/awayImg"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 
-            </LinearLayout>
+        <ImageView
+            android:id="@+id/awayImg"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:adjustViewBounds="true"
+            android:contentDescription="away image"
+            android:layout_alignParentRight="true"
+            android:src="@mipmap/ic_launcher_round" />
 
-            <RelativeLayout
-                android:id="@+id/layoutRelMatch"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-            <ImageView
-                android:id="@+id/homeImg"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:contentDescription="home image"
-                android:adjustViewBounds="true"
-                android:layout_alignParentLeft="true"
-                android:src="@mipmap/ic_launcher_round"/>
-
-            <TextView
-                android:id="@+id/homeText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="8dp"
-                android:text="Testo bello"
-                android:textAlignment="textStart"
-                android:layout_toRightOf="@+id/homeImg"
-                android:layout_toLeftOf="@+id/favHomeToogle"
-                android:layout_centerVertical="true"
-                android:textAppearance="@style/TextAppearance.AppCompat.Small" />
-
-            <TextView
-                android:id="@+id/textTime"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="NS"
-                android:textSize="8dp"
-                android:textAlignment="center"
-                android:layout_centerHorizontal="true"
-                android:textAppearance="@style/TextAppearance.AppCompat.Small"/>
-
-            <TextView
-                android:id="@+id/textSpace"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingTop="12dp"
-                android:paddingLeft="8dp"
-                android:paddingRight="8dp"
-                android:paddingBottom="8dp"
-                android:text="-"
-                android:textSize="20dp"
-                android:textAlignment="center"
-                android:layout_centerHorizontal="true"
-                android:textAppearance="@style/TextAppearance.AppCompat.Small"/>
-
-            <TextView
-                android:id="@+id/awayText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="8dp"
-                android:text="Testo bello"
-                android:textAlignment="textStart"
-                android:layout_centerVertical="true"
-                android:layout_toRightOf="@+id/favAwayToogle"
-                android:layout_toLeftOf="@+id/awayImg"
-                android:textAppearance="@style/TextAppearance.AppCompat.Small" />
-
-            <ImageView
-                android:id="@+id/awayImg"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:adjustViewBounds="true"
-                android:contentDescription="away image"
-                android:layout_alignParentRight="true"
-                android:src="@mipmap/ic_launcher_round" />
-
-            </RelativeLayout>
-
-        </LinearLayout>
+        </RelativeLayout>
 
     </androidx.cardview.widget.CardView>
 

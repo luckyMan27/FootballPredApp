@@ -21,6 +21,7 @@ import java.util.Objects;
 public class League extends BaseType implements Serializable {
     private String league_id;
     private String name;
+    private String urlImg;
     private transient Bitmap logo;
     private String country;
     private transient LoadImage loadImage;
@@ -37,9 +38,9 @@ public class League extends BaseType implements Serializable {
             league_id = jsonObject.getString("league_id");
             name = jsonObject.getString("name");
 
-            String urlLogo = jsonObject.getString("logo");
-            if(urlLogo != null && !urlLogo.equals("null")){
-                loadImage = new LoadImage(urlLogo, null,League.this);
+            urlImg = jsonObject.getString("logo");
+            if(urlImg != null && !urlImg.equals("null")){
+                loadImage = new LoadImage(urlImg, null,League.this);
             }
 
             country = jsonObject.getString("country");
@@ -95,6 +96,18 @@ public class League extends BaseType implements Serializable {
 
     public String getName() {
         return name;
+    }
+
+    public String getUrlImg() {
+        return urlImg;
+    }
+
+    public void setUrlImg(String urlImg) {
+        this.urlImg = urlImg;
+    }
+
+    public void setLoadImage(LoadImage loadImage) {
+        this.loadImage = loadImage;
     }
 
     public Bitmap getLogo() {

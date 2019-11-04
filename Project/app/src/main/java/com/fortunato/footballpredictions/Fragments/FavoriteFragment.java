@@ -2,6 +2,7 @@ package com.fortunato.footballpredictions.Fragments;
 
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,20 +11,22 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.fortunato.footballpredictions.Activities.MainActivity;
 import com.fortunato.footballpredictions.Adapters.FavoriteRecyclerView;
 import com.fortunato.footballpredictions.DataStructures.BaseType;
+import com.fortunato.footballpredictions.DataStructures.League;
+import com.fortunato.footballpredictions.DataStructures.SingletonFavorite;
+import com.fortunato.footballpredictions.Networks.NetworkHome;
 import com.fortunato.footballpredictions.R;
 
 import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 
-public class FavoriteFragment extends Fragment {
+public class FavoriteFragment extends BaseFragment {
 
     private static final String STATE_ITEMS = "itemsFav";
     private static final String RECYCLER_LAYOUT = "recLayoutFav";
@@ -93,5 +96,31 @@ public class FavoriteFragment extends Fragment {
             Toast.makeText(getContext(), "Network Connection is unavailable!", Toast.LENGTH_SHORT).show();
             return;
         }
+
+        items.clear();
+        progBar.setVisibility(View.VISIBLE);
+        List<BaseType> favoriteList = SingletonFavorite.getInstance();
+        Thread tNet;
+        for(BaseType obj : favoriteList){
+            if(obj instanceof League) {
+                League fixture = (League) obj;
+                NetworkHome networkHome = new NetworkHome("", 2,
+                        fixture.getLeague_id(), FavoriteFragment.this, getActivity());
+                tNet = new Thread(networkHome);
+                tNet.start();
+            }
+        }
+    }
+
+    public void addItem(BaseType object){
+        items.add(object);
+    }
+
+    public ProgressBar getProgBar() {
+        return progBar;
+    }
+
+    public void flush(){
+        favoriteRecyclerView.notifyDataSetChanged();
     }
 }

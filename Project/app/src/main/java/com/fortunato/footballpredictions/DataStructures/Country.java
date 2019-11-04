@@ -21,17 +21,15 @@ import java.util.Objects;
 public class Country extends BaseType implements Serializable {
     private String country;
     private String code;
+    private String urlImg;
     private transient Bitmap flag = null;
-    private transient LoadImage loadImage;
+    private transient LoadImage loadImage = null;
 
     public Country(JSONObject jsonObject){
         try {
             country = jsonObject.getString("country");
             code = jsonObject.getString("code");
-            String urlFlag = jsonObject.getString("flag");
-            if(urlFlag != null && !urlFlag.equals("null")){
-                loadImage = new LoadImage(urlFlag, null,Country.this);
-            }
+            urlImg = jsonObject.getString("flag");
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -61,7 +59,7 @@ public class Country extends BaseType implements Serializable {
         return "Country = {" +
                 "country='" + country + '\'' +
                 ", code='" + code + '\'' +
-                ", flag='" + flag + '\'' +
+                ", urlImg='" + urlImg + '\'' +
                 '}';
     }
 
@@ -71,6 +69,14 @@ public class Country extends BaseType implements Serializable {
 
     public String getCode() {
         return code;
+    }
+
+    public String getUrlImg() {
+        return urlImg;
+    }
+
+    public void setUrlImg(String urlImg) {
+        this.urlImg = urlImg;
     }
 
     public void setflag(Bitmap flag) {
@@ -83,6 +89,10 @@ public class Country extends BaseType implements Serializable {
 
     public LoadImage getLoadImage() {
         return loadImage;
+    }
+
+    public void setLoadImage(LoadImage loadImage) {
+        this.loadImage = loadImage;
     }
 
     private void writeObject(ObjectOutputStream os){

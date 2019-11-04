@@ -11,14 +11,17 @@ import android.util.Log;
 import com.caverock.androidsvg.SVG;
 import com.caverock.androidsvg.SVGParseException;
 import com.fortunato.footballpredictions.Activities.MainActivity;
+import com.fortunato.footballpredictions.DataStructures.BaseType;
 import com.fortunato.footballpredictions.DataStructures.Country;
 import com.fortunato.footballpredictions.DataStructures.League;
 import com.fortunato.footballpredictions.DataStructures.LeagueFixture;
+import com.fortunato.footballpredictions.Fragments.HomeFragment;
 
 import java.io.IOException;
 import java.io.InputStream;
 
 import java.net.URL;
+import java.util.List;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -40,9 +43,9 @@ public class LoadImage extends Thread{
 
         if(MainActivity.NETWORK_CONNECTION == false) return;
 
-        if(urlHome != null) {
+        if(urlHome != null && urlHome.contains("http")) {
             if (obj instanceof Country ) {
-                    parseSVGImg();
+                parseSVGImg();
             } else if(obj instanceof League){
                 parsePNGLeague();
             } else if(obj instanceof LeagueFixture && urlAway!=null && !urlAway.isEmpty()){
@@ -54,7 +57,6 @@ public class LoadImage extends Thread{
     }
 
     private void parsePNG() {
-        Log.d("Debug-LoadImage", urlHome);
         InputStream is;
         Bitmap bmapImg = null;
         try {

@@ -15,7 +15,6 @@ import android.graphics.Bitmap;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -34,8 +33,6 @@ import com.fortunato.footballpredictions.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-
 import java.util.Arrays;
 import java.util.List;
 
@@ -56,7 +53,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private List<AuthUI.IdpConfig> providers;
     private Button loginB;
     private Button logoutB;
-    private FirebaseUser user;
+    private FirebaseAuth userAuth;
     private Bitmap userBitmap;
     private TextView userEmail = null;
     private TextView userName = null;
@@ -88,9 +85,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         userName = navigationView.getHeaderView(0).findViewById(R.id.userName);
         userImg = navigationView.getHeaderView(0).findViewById(R.id.userImg);
 
-
         logoutB = navigationView.getHeaderView(0).findViewById(R.id.logoutButton);
         loginB = navigationView.getHeaderView(0).findViewById(R.id.loginButton);
+
+        userAuth = FirebaseAuth.getInstance();
+        if(userAuth.getCurrentUser()!=null) showUserInfos();
 
         loginB.setOnClickListener( new View.OnClickListener(){
             @Override
@@ -103,7 +102,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onClick(View v) {
                 FirebaseAuth.getInstance().signOut();
-                user = null;
+                userAuth = null;
                 logoutUser();
             }
         });
@@ -164,8 +163,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         providers = Arrays.asList(
                 new AuthUI.IdpConfig.FacebookBuilder().build(),
                 new AuthUI.IdpConfig.GoogleBuilder().build());
-
-        if(user == null)
+        if(userAuth.getCurrentUser()==null)
             startActivityForResult(
                 AuthUI.getInstance().createSignInIntentBuilder()
                         .setAvailableProviders(providers)
@@ -179,13 +177,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == MY_REQUEST_CODE){
             if(resultCode == RESULT_OK){
-                user = FirebaseAuth.getInstance().getCurrentUser();
+                userAuth = FirebaseAuth.getInstance();
                 showUserInfos();
-                Toast.makeText(this, user.getDisplayName(), Toast.LENGTH_SHORT).show();
-                loginB.setEnabled(false);
-                loginB.setVisibility(View.INVISIBLE);
-                logoutB.setEnabled(true);
-                logoutB.setVisibility(View.VISIBLE);
+                Toast.makeText(this, userAuth.getCurrentUser().getDisplayName(), Toast.LENGTH_SHORT).show();
             } else {
                 IdpResponse response = IdpResponse.fromResultIntent(data);
                 if(response!=null) Toast.makeText(this, response.getError().getMessage(), Toast.LENGTH_SHORT).show();
@@ -198,13 +192,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Toast.makeText(MainActivity.this, "Network Connection is unavailable!", Toast.LENGTH_SHORT).show();
             return;
         }
-        LoadImage loadImage = new LoadImage(user.getPhotoUrl().toString(), null, MainActivity.this);
+        LoadImage loadImage = new LoadImage(userAuth.getCurrentUser().getPhotoUrl().toString(), null, MainActivity.this);
         loadImage.start();
         try {
             loadImage.join();
-            userEmail.setText(user.getEmail());
-            userName.setText(user.getDisplayName());
+            userEmail.setText(userAuth.getCurrentUser().getEmail());
+            userName.setText(userAuth.getCurrentUser().getDisplayName());
             userImg.setImageBitmap(userBitmap);
+            loginB.setEnabled(false);
+            loginB.setVisibility(View.INVISIBLE);
+            logoutB.setEnabled(true);
+            logoutB.setVisibility(View.VISIBLE);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -217,7 +215,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onStart() {
         super.onStart();
-
     }
 
     @Override
