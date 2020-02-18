@@ -25,9 +25,9 @@ import android.widget.Toast;
 
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.IdpResponse;
+import com.fortunato.footballpredictions.Fragments.BetFragment;
 import com.fortunato.footballpredictions.Fragments.FavoriteFragment;
 import com.fortunato.footballpredictions.Fragments.HomeFragment;
-import com.fortunato.footballpredictions.Fragments.LiveFragment;
 import com.fortunato.footballpredictions.Networks.LoadImage;
 import com.fortunato.footballpredictions.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private Fragment selectedFragment = null;
     private HomeFragment home_frag = null;
     private FavoriteFragment fav_frag = null;
-    private LiveFragment live_frag = null;
+    private BetFragment bet_frag = null;
 
     private static final int MY_REQUEST_CODE = 7777;
 
@@ -88,6 +88,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         logoutB = navigationView.getHeaderView(0).findViewById(R.id.logoutButton);
         loginB = navigationView.getHeaderView(0).findViewById(R.id.loginButton);
 
+
         userAuth = FirebaseAuth.getInstance();
         if(userAuth.getCurrentUser()!=null) showUserInfos();
 
@@ -102,10 +103,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onClick(View v) {
                 FirebaseAuth.getInstance().signOut();
-                userAuth = null;
+                userAuth = FirebaseAuth.getInstance();
                 logoutUser();
             }
         });
+
 
         if(savedInstanceState != null){
             isNetworkAvailable();
@@ -127,23 +129,33 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                             .commit();
                     navigationView.setCheckedItem(R.id.nav_favorites);
                 }
-                if(selectedFragment instanceof LiveFragment) {
-                    live_frag = (LiveFragment)selectedFragment;
+                if(selectedFragment instanceof BetFragment) {
+                    bet_frag = (BetFragment)selectedFragment;
                     getSupportFragmentManager()
                             .beginTransaction()
-                            .replace(R.id.fragment_container, live_frag)
+                            .replace(R.id.fragment_container, bet_frag)
                             .commit();
-                    navigationView.setCheckedItem(R.id.nav_live);
+                    navigationView.setCheckedItem(R.id.nav_bet);
                 }
             }
         } else {
-            live_frag = new LiveFragment();
-            selectedFragment = live_frag;
+
+            home_frag = new HomeFragment();
+            selectedFragment = home_frag;
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.fragment_container, selectedFragment).commit();
-            navigationView.setCheckedItem(R.id.nav_live);
+            navigationView.setCheckedItem(R.id.nav_home);
+
         }
     }
+
+    private void start_addBet(){
+
+        Intent intent = new Intent(this, AddBetActivity.class);
+        this.startActivity(intent);
+
+    }
+
 
     private void logoutUser() {
         logoutB.setEnabled(false);
@@ -153,6 +165,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         userName.setText("No name");
         userEmail.setText("No email");
         userImg.setImageResource(R.mipmap.ic_launcher);
+
     }
 
     private void showSigninOptions() {
@@ -237,9 +250,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                             if(fav_frag == null) fav_frag = new FavoriteFragment();
                             selectedFragment = fav_frag;
                             break;
-                        case R.id.nav_live:
-                            if(live_frag == null) live_frag = new LiveFragment();
-                            selectedFragment = live_frag;
+                        case R.id.nav_bet:
+                            if(bet_frag == null) bet_frag = new BetFragment();
+                            selectedFragment = bet_frag;
                             break;
                     }
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
@@ -256,7 +269,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
         return super.onOptionsItemSelected(item);
+
     }
 
     @Override
@@ -280,7 +295,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Toast.makeText(this, "Share", Toast.LENGTH_LONG).show();
                 break;
             case R.id.draw_menu_bets:
-                Toast.makeText(this, "Bets", Toast.LENGTH_LONG).show();
+                start_addBet();
+                //Toast.makeText(this, "Bets", Toast.LENGTH_LONG).show();
                 break;
             case R.id.draw_menu_info:
                 Toast.makeText(this, "Informations", Toast.LENGTH_LONG).show();

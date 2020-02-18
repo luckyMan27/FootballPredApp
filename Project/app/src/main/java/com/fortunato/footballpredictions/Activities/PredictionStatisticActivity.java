@@ -4,7 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.RadioButton;
 import android.widget.TabHost;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,6 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.fortunato.footballpredictions.Adapters.PredictionStatisticRecyclerView;
 import com.fortunato.footballpredictions.DataStructures.BaseType;
+import com.fortunato.footballpredictions.DataStructures.Bet_Item;
+import com.fortunato.footballpredictions.DataStructures.SingletonCurrentBet;
 import com.fortunato.footballpredictions.Networks.NetworkPredStat;
 import com.fortunato.footballpredictions.R;
 
@@ -25,6 +29,7 @@ public class PredictionStatisticActivity extends AppCompatActivity {
     private RecyclerView recyclerView = null;
     private PredictionStatisticRecyclerView recyclerViewAdp = null;
 
+
     private Boolean flagNetwork = true;
     private ProgressBar progBar = null;
     private String fixtureId;
@@ -36,6 +41,7 @@ public class PredictionStatisticActivity extends AppCompatActivity {
         Intent intent = getIntent();
         fixtureId = intent.getStringExtra("fixture_id");
         setTitle(intent.getStringExtra("teams_match"));
+
 
         if(items == null) items = new LinkedList<>();
 
@@ -52,6 +58,7 @@ public class PredictionStatisticActivity extends AppCompatActivity {
         tSpec.setContent(R.id.tab2);
         tSpec.setIndicator("Statistics");
         tabHost.addTab(tSpec);
+
     }
 
     private void tabPredictions(){
@@ -87,4 +94,5 @@ public class PredictionStatisticActivity extends AppCompatActivity {
     public ProgressBar getProgBar() {
         return progBar;
     }
+
 }

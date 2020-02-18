@@ -7,13 +7,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.fortunato.footballpredictions.Activities.PredictionStatisticActivity;
 import com.fortunato.footballpredictions.DataStructures.BaseType;
+import com.fortunato.footballpredictions.DataStructures.Bet_Item;
 import com.fortunato.footballpredictions.DataStructures.FixturePrediction;
+import com.fortunato.footballpredictions.DataStructures.SingletonCurrentBet;
 import com.fortunato.footballpredictions.R;
 
 import java.util.List;
@@ -21,6 +27,18 @@ import java.util.List;
 public class PredictionStatisticRecyclerView extends RecyclerView.Adapter<PredictionStatisticRecyclerView.ViewHolder> {
 
     private List<BaseType> list;
+
+    private String team1;
+    private String team2;
+
+    private List<Bet_Item> bets;
+    private Bet_Item it;
+
+    private boolean flag_1 = false;
+    private boolean flag_x = false;
+    private boolean flag_2 = false;
+
+
 
     public PredictionStatisticRecyclerView(List<BaseType> list) {
         this.list = list;
@@ -54,6 +72,10 @@ public class PredictionStatisticRecyclerView extends RecyclerView.Adapter<Predic
         TextView tPred7 = holder.textPred7;
         ProgressBar progPred7 = holder.progPred7;
 
+        final RadioButton btn_1 = holder.btn_1;
+        final RadioButton btn_x = holder.btn_x;
+        final RadioButton btn_2 = holder.btn_2;
+
 
         BaseType obj = list.get(position);
         if(obj instanceof FixturePrediction){
@@ -79,7 +101,66 @@ public class PredictionStatisticRecyclerView extends RecyclerView.Adapter<Predic
             i = Integer.parseInt(prediction.getWinPercAway().replace("%", ""));
             progPred7.setProgress(i);
 
+            team1 = prediction.getHome().getTeamName();
+            team2 = prediction.getAway().getTeamName();
+
         }
+
+
+        btn_1.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(flag_1){
+                    flag_1 = false;
+                    btn_1.setChecked(false);
+                    remove_elem_list(team1, team2, "1");
+                }
+                else{
+                    flag_1 = true;
+                    btn_1.setChecked(true);
+                    flag_x = false;
+                    flag_2 = false;
+                    add_elem_list(team1, team2, "1", view);
+                }
+            }
+
+        });
+        btn_x.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(flag_x){
+                    flag_x = false;
+                    btn_x.setChecked(false);
+                    remove_elem_list(team1, team2, "X");
+                }
+                else{
+                    flag_x = true;
+                    btn_x.setChecked(true);
+                    flag_1 = false;
+                    flag_2 = false;
+                    add_elem_list(team1, team2, "X", view);
+                }
+            }
+        });
+        btn_2.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(flag_2){
+                    flag_2 = false;
+                    btn_2.setChecked(false);
+                    //Toast.makeText(view.getContext(), "Falso", Toast.LENGTH_SHORT).show();
+                    remove_elem_list(team1, team2, "2");
+                }
+                else{
+                    flag_2 = true;
+                    btn_2.setChecked(true);
+                    //Toast.makeText(view.getContext(), "Vero", Toast.LENGTH_SHORT).show();
+                    flag_1 = false;
+                    flag_x = false;
+                    add_elem_list(team1, team2, "2", view);
+                }
+            }
+        });
     }
 
     @Override
@@ -105,6 +186,13 @@ public class PredictionStatisticRecyclerView extends RecyclerView.Adapter<Predic
         private TextView textPred7;
         private ProgressBar progPred7;
 
+        private RadioButton btn_1;
+        private RadioButton btn_x;
+        private RadioButton btn_2;
+
+
+
+
         public ViewHolder(@NonNull View view) {
             super(view);
             view.findViewById(R.id.layoutLinearPred).setOnClickListener(this);
@@ -124,6 +212,12 @@ public class PredictionStatisticRecyclerView extends RecyclerView.Adapter<Predic
             this.progPred6 = view.findViewById(R.id.progressBar6);
             this.textPred7 = view.findViewById(R.id.textPred7);
             this.progPred7 = view.findViewById(R.id.progressBar7);
+
+            this.btn_1 = view.findViewById(R.id.radio_1);
+            this.btn_x = view.findViewById(R.id.radio_x);
+            this.btn_2 = view.findViewById(R.id.radio_2);
+
+
         }
 
         @Override
@@ -139,6 +233,35 @@ public class PredictionStatisticRecyclerView extends RecyclerView.Adapter<Predic
                     //
                 }
             }*/
+        }
+    }
+
+    public void add_elem_list(String t1, String t2, String value, View view){
+        bets = SingletonCurrentBet.getInstance();
+        it = new Bet_Item(t1, t2, value);
+        if(bets.contains(it)) {
+            int index = bets.indexOf(it);
+            Bet_Item it2 = bets.get(index);
+            if (it.getValue() == it2.getValue()) {
+                return;
+            } else {
+                bets.remove(it2);
+                bets.add(it);
+            }
+        }
+        else {
+            bets.add(it);
+        }
+    }
+    public void remove_elem_list(String t1, String t2, String value){
+        bets = SingletonCurrentBet.getInstance();
+        it = new Bet_Item(t1, t2, value);
+        if(bets.contains(it)) {
+            int index = bets.indexOf(it);
+            Bet_Item it2 = bets.get(index);
+            if (it.getValue() == it2.getValue()) {
+                bets.remove(it2);
+            }
         }
     }
 }

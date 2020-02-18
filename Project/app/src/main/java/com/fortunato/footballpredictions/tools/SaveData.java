@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
+import com.fortunato.footballpredictions.DataStructures.Bet;
 import com.fortunato.footballpredictions.DataStructures.Country;
 import com.fortunato.footballpredictions.DataStructures.League;
 import com.fortunato.footballpredictions.DataStructures.LeagueFixture;
@@ -117,6 +118,38 @@ public class SaveData {
         Moshi moshi = new Moshi.Builder().build();
         Type listMyData = Types.newParameterizedType(List.class, LeagueFixture.class);
         JsonAdapter<List<LeagueFixture>> jsonAdapter = moshi.adapter(listMyData);
+
+        try {
+            list = jsonAdapter.fromJson(json);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return list;
+    }
+
+    public void saveBets(List<Bet> list){
+        Moshi moshi = new Moshi.Builder().build();
+        Type listMyData = Types.newParameterizedType(List.class, Bet.class);
+        JsonAdapter<List<Bet>> jsonAdapter = moshi.adapter(listMyData);
+        String json = jsonAdapter.toJson(list);
+
+        SharedPreferences sharedPreferences = context.getSharedPreferences(COUNTRY+"data", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(COUNTRY, json);
+        editor.commit();
+    }
+
+    public List<Bet> loadBets(){
+        List<Bet> list = new LinkedList<Bet>();
+
+        SharedPreferences sharedPreferences = context.getSharedPreferences(COUNTRY+"data", MODE_PRIVATE);
+        String json = sharedPreferences.getString(COUNTRY, "");
+        if(json.isEmpty()) return list;
+
+        Moshi moshi = new Moshi.Builder().build();
+        Type listMyData = Types.newParameterizedType(List.class, Country.class);
+        JsonAdapter<List<Bet>> jsonAdapter = moshi.adapter(listMyData);
 
         try {
             list = jsonAdapter.fromJson(json);
