@@ -223,10 +223,10 @@ public class LeagueFixture extends BaseType implements Serializable {
         try {
             os.defaultWriteObject();
             ByteArrayOutputStream byteOutStream = new ByteArrayOutputStream();
-            boolean success = hLogo.compress(Bitmap.CompressFormat.PNG, 100, byteOutStream);
+            boolean success = hLogo.compress(Bitmap.CompressFormat.PNG, 50, byteOutStream);
             if(success) os.writeObject(byteOutStream.toByteArray());
             byteOutStream.reset();
-            success = aLogo.compress(Bitmap.CompressFormat.PNG, 100, byteOutStream);
+            success = aLogo.compress(Bitmap.CompressFormat.PNG, 50, byteOutStream);
             if(success) os.writeObject(byteOutStream.toByteArray());
             byteOutStream.close();
         } catch (IOException e) {

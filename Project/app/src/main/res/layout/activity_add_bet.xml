@@ -25,8 +25,8 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recViewAddBet"
-        android:layout_width="416dp"
-        android:layout_height="548dp"
+        android:layout_width="match_parent"
+        android:layout_height="486dp"
         android:layout_below="@+id/title_fragmentBet"
         android:layout_marginTop="227dp"
         android:orientation="vertical"
@@ -36,7 +36,7 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edit_description"
-        app:layout_constraintVertical_bias="0.966" />
+        app:layout_constraintVertical_bias="1.0" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
@@ -56,6 +56,7 @@
         android:id="@+id/description_bet"
         android:layout_width="314dp"
         android:layout_height="30dp"
+        android:layout_marginTop="52dp"
         android:text="@string/insert_description"
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
@@ -67,11 +68,35 @@
         android:id="@+id/edit_description"
         android:layout_width="315dp"
         android:layout_height="41dp"
-        android:layout_marginTop="9dp"
+        android:layout_marginTop="52dp"
         android:ems="10"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/description_bet" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardbet"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbaradd"
+        app:layout_constraintVertical_bias="0.0">
+
+
+        <TextView
+            android:id="@+id/titlebet_add"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="8dp"
+            android:text="Add bet"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            app:layout_constraintTop_toBottomOf="parent"
+            tools:layout_editor_absoluteX="-3dp" />
+
+    </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

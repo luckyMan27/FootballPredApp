@@ -5,6 +5,7 @@
 
     <string name="facebook_application_id">705914939914142</string>
     <string name="fb_login_protocol_scheme">fb705914939914142</string>
-    <string name="title_activity_add_bet">Add Bet</string>
+    <string name="title_activity_add_bet">Football Predictions</string>
     <string name="insert_description">Insert Description</string>
+
 </resources>

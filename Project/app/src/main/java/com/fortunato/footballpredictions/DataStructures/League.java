@@ -147,7 +147,7 @@ public class League extends BaseType implements Serializable {
             os.defaultWriteObject();
             if(logo!=null) {
                 ByteArrayOutputStream byteOutStream = new ByteArrayOutputStream();
-                boolean success = logo.compress(Bitmap.CompressFormat.PNG, 100, byteOutStream);
+                boolean success = logo.compress(Bitmap.CompressFormat.PNG, 50, byteOutStream);
                 if (success) os.writeObject(byteOutStream.toByteArray());
             }
         } catch (IOException e) {

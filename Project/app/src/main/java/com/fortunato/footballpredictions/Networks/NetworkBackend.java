@@ -6,14 +6,7 @@ import android.view.View;
 import android.widget.Toast;
 
 
-import com.android.volley.AuthFailureError;
 
-import com.android.volley.RequestQueue;
-
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
-
-import com.android.volley.toolbox.Volley;
 import com.fortunato.footballpredictions.Activities.MainActivity;
 import com.fortunato.footballpredictions.DataStructures.BaseType;
 import com.fortunato.footballpredictions.DataStructures.Bet;
@@ -58,6 +51,8 @@ public class NetworkBackend implements Runnable {
     private String date;
     private String id;
 
+    private String body;
+
     public NetworkBackend(BetFragment f, List<BaseType> objlist, int type, String date, String description, String uid, Activity a, String id) {
         this.objlist = objlist;
         this.uid = uid;
@@ -83,7 +78,11 @@ public class NetworkBackend implements Runnable {
                 break;
             case 1:
 
-                getRequest(BASE_URL + "/bets", uid);
+                //getRequest(BASE_URL + "/bets", uid);
+                String body = getRequests(BASE_URL + "/bets", uid);
+                if(body != null){
+                    parseBets(body);
+                }
                 break;
             case 2:
                 response = removeBets(BASE_URL + "/bets", uid, id);
@@ -185,6 +184,7 @@ public class NetworkBackend implements Runnable {
         }
     }
 
+    /*
     public void getRequest(String url, final String uid) {
         RequestQueue queue = Volley.newRequestQueue(f.getContext());
         JsonArrayRequest getRequest = new JsonArrayRequest(com.android.volley.Request.Method.GET, url, null,
@@ -216,4 +216,28 @@ public class NetworkBackend implements Runnable {
 
     }
 
+     */
+    private String getRequests(String url, String uid){
+        OkHttpClient client = new OkHttpClient();
+        Response resp = null;
+        String body = null;
+        Request request = new Request.Builder()
+                .header("Content-Type", "application/json")
+                .header("uid",uid)
+                .url(url)
+                .get()
+                .build();
+        try (Response response = client.newCall(request).execute()) {
+            if (response != null && response.isSuccessful()) {
+                resp = response;
+                body = resp.body().string();
+                response.close();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return body;
+
+    }
 }

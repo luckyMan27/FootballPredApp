@@ -12,9 +12,6 @@
 
     <item android:title="Communicate">
         <menu>
-            <item android:id="@+id/draw_menu_share"
-                android:icon="@drawable/ic_share_black_24dp"
-                android:title="Share"/>
             <item android:id="@+id/draw_menu_info"
                 android:icon="@drawable/ic_info_black_24dp"
                 android:title="Info"/>

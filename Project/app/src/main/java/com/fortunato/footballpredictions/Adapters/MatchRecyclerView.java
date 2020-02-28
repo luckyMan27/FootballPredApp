@@ -105,6 +105,7 @@ public class MatchRecyclerView extends RecyclerView.Adapter<MatchRecyclerView.Vi
                 Intent intent = new Intent(v.getContext(), PredictionStatisticActivity.class);
                 intent.putExtra("fixture_id", fixture.getFixture_id());
                 intent.putExtra("teams_match", fixture.gethTeam_name()+" - "+fixture.getaTeam_name());
+                intent.putExtra("home_id", fixture.gethTeam_id());
                 v.getContext().startActivity(intent);
             }
         }

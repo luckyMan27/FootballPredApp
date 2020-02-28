@@ -2,11 +2,4 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.fortunato.sportstatsodds.Activities.MainActivity">
-
-    <item
-        android:id="@+id/searchButton"
-        android:icon="@drawable/ic_search_white_24dp"
-        android:title="Search"
-        app:showAsAction="always"/>
-</menu>
+    tools:context="com.fortunato.sportstatsodds.Activities.MainActivity"/>

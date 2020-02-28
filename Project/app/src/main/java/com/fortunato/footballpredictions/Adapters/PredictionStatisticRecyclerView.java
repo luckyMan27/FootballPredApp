@@ -1,16 +1,14 @@
 package com.fortunato.footballpredictions.Adapters;
 
-import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.TextView;
-import android.widget.Toast;
-import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -38,10 +36,14 @@ public class PredictionStatisticRecyclerView extends RecyclerView.Adapter<Predic
     private boolean flag_x = false;
     private boolean flag_2 = false;
 
+    private PredictionStatisticActivity parent;
 
 
-    public PredictionStatisticRecyclerView(List<BaseType> list) {
+
+    public PredictionStatisticRecyclerView(List<BaseType> list, PredictionStatisticActivity parent) {
+
         this.list = list;
+        this.parent = parent;
     }
 
     @NonNull
@@ -75,6 +77,8 @@ public class PredictionStatisticRecyclerView extends RecyclerView.Adapter<Predic
         final RadioButton btn_1 = holder.btn_1;
         final RadioButton btn_x = holder.btn_x;
         final RadioButton btn_2 = holder.btn_2;
+
+        Button stadio_btn = holder.stadio_btn;
 
 
         BaseType obj = list.get(position);
@@ -161,6 +165,13 @@ public class PredictionStatisticRecyclerView extends RecyclerView.Adapter<Predic
                 }
             }
         });
+
+        stadio_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                parent.modifyContent();
+            }
+        });
     }
 
     @Override
@@ -189,6 +200,7 @@ public class PredictionStatisticRecyclerView extends RecyclerView.Adapter<Predic
         private RadioButton btn_1;
         private RadioButton btn_x;
         private RadioButton btn_2;
+        private Button stadio_btn;
 
 
 
@@ -216,6 +228,8 @@ public class PredictionStatisticRecyclerView extends RecyclerView.Adapter<Predic
             this.btn_1 = view.findViewById(R.id.radio_1);
             this.btn_x = view.findViewById(R.id.radio_x);
             this.btn_2 = view.findViewById(R.id.radio_2);
+
+            this.stadio_btn = view.findViewById(R.id.stadium);
 
 
         }

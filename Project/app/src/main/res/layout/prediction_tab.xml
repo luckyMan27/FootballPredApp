@@ -8,6 +8,7 @@
     android:layout_margin="5dp"
     android:layout_alignParentLeft="true">
 
+    
     <LinearLayout
         android:id="@+id/layoutPredStat"
         android:layout_width="match_parent"
@@ -385,8 +386,25 @@
 
             </RadioGroup>
         </TableRow>
-
-
     </TableLayout>
 
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/border">
+        <TableRow
+            android:gravity="center">
+
+
+        </TableRow>
+    </TableLayout>
+
+    <Button
+        android:id="@+id/stadium"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Follow direction to stadium"
+        />
 </LinearLayout>

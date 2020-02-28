@@ -100,7 +100,7 @@ public class Country extends BaseType implements Serializable {
             os.defaultWriteObject();
             if(flag!=null) {
                 ByteArrayOutputStream byteOutStream = new ByteArrayOutputStream();
-                boolean success = flag.compress(Bitmap.CompressFormat.PNG, 100, byteOutStream);
+                boolean success = flag.compress(Bitmap.CompressFormat.PNG, 50, byteOutStream);
                 if(success) os.writeObject(byteOutStream.toByteArray());
             }
         } catch (IOException e) {

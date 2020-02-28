@@ -291,9 +291,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 isNetworkAvailable();
                 showSigninOptions();
                 break;
-            case R.id.draw_menu_share:
-                Toast.makeText(this, "Share", Toast.LENGTH_LONG).show();
-                break;
+
             case R.id.draw_menu_bets:
                 start_addBet();
                 //Toast.makeText(this, "Bets", Toast.LENGTH_LONG).show();

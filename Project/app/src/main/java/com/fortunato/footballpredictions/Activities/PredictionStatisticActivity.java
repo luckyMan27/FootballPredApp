@@ -4,9 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ProgressBar;
-import android.widget.RadioButton;
 import android.widget.TabHost;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,8 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.fortunato.footballpredictions.Adapters.PredictionStatisticRecyclerView;
 import com.fortunato.footballpredictions.DataStructures.BaseType;
-import com.fortunato.footballpredictions.DataStructures.Bet_Item;
-import com.fortunato.footballpredictions.DataStructures.SingletonCurrentBet;
 import com.fortunato.footballpredictions.Networks.NetworkPredStat;
 import com.fortunato.footballpredictions.R;
 
@@ -33,6 +29,7 @@ public class PredictionStatisticActivity extends AppCompatActivity {
     private Boolean flagNetwork = true;
     private ProgressBar progBar = null;
     private String fixtureId;
+    private String home;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -40,6 +37,7 @@ public class PredictionStatisticActivity extends AppCompatActivity {
         setContentView(R.layout.activity_pred_stat);
         Intent intent = getIntent();
         fixtureId = intent.getStringExtra("fixture_id");
+        home = intent.getStringExtra("home_id");
         setTitle(intent.getStringExtra("teams_match"));
 
 
@@ -54,10 +52,6 @@ public class PredictionStatisticActivity extends AppCompatActivity {
         tabHost.addTab(tSpec);
         tabPredictions();
 
-        tSpec = tabHost.newTabSpec("Statistics");
-        tSpec.setContent(R.id.tab2);
-        tSpec.setIndicator("Statistics");
-        tabHost.addTab(tSpec);
 
     }
 
@@ -69,7 +63,7 @@ public class PredictionStatisticActivity extends AppCompatActivity {
         layoutManager.setOrientation(RecyclerView.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
 
-        recyclerViewAdp = new PredictionStatisticRecyclerView(items);
+        recyclerViewAdp = new PredictionStatisticRecyclerView(items, this);
         recyclerView.setAdapter(recyclerViewAdp);
 
         recyclerView.setHasFixedSize(true);
@@ -95,4 +89,20 @@ public class PredictionStatisticActivity extends AppCompatActivity {
         return progBar;
     }
 
+    public void modifyContent() {
+        Intent intent = new Intent(this, StadiumActivity.class);
+        intent.putExtra("home_id", home);
+        this.startActivity(intent);
+
+        /*
+        StadiumFragment stadium = new StadiumFragment();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.layoutLinearPred, stadium)
+                .addToBackStack(null)
+                .commit();
+    }
+
+         */
+    }
 }
