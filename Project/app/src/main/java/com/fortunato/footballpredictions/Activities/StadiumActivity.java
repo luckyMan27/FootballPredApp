@@ -44,6 +44,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import static android.Manifest.permission.ACCESS_COARSE_LOCATION;
@@ -79,7 +80,6 @@ public class StadiumActivity extends AppCompatActivity implements SensorEventLis
 
     private String venue;
     LocationRequest locationRequest;
-    private boolean check = false;
 
     LocationCallback call;
 
@@ -134,17 +134,26 @@ public class StadiumActivity extends AppCompatActivity implements SensorEventLis
         });
     }
     /////////////////////////////////////////////////////
-    protected void createLocationRequest() {
-        locationRequest = LocationRequest.create();
-        locationRequest.setInterval(0);
-        locationRequest.setFastestInterval(0);
-        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-        locationRequest.setNumUpdates(1);
+    protected void createLocationRequest(int value) {
+        if(value == 0){
+            locationRequest = LocationRequest.create();
+            locationRequest.setInterval(0);
+            locationRequest.setFastestInterval(0);
+            locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+            locationRequest.setNumUpdates(1);
+        }
+        else if(value == 1){
+            locationRequest = LocationRequest.create();
+            locationRequest.setInterval(1000);
+            locationRequest.setFastestInterval(500);
+            locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        }
+
     }
 
     private void requestLocation(){
         final LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder();
-        createLocationRequest();
+        createLocationRequest(0);
         builder.addLocationRequest(locationRequest);
 
         Log.i("Location","request location");
@@ -155,7 +164,7 @@ public class StadiumActivity extends AppCompatActivity implements SensorEventLis
             @Override
             public void onSuccess(LocationSettingsResponse locationSettingsResponse) {
                 Log.i("Location", "location gained");
-                createLocationRequest();
+                createLocationRequest(1);
                 fusedLocationClient.requestLocationUpdates(locationRequest,
                         call,
                         Looper.getMainLooper());
@@ -172,13 +181,11 @@ public class StadiumActivity extends AppCompatActivity implements SensorEventLis
                     try {
                         // Show the dialog by calling startResolutionForResult(),
                         // and check the result in onActivityResult().
-                        Log.i("errore", "provo");
                         ResolvableApiException resolvable = (ResolvableApiException) e;
                         resolvable.startResolutionForResult(StadiumActivity.this,
                                 REQUEST_CHECK_SETTINGS);
                     } catch (IntentSender.SendIntentException sendEx) {
                         // Ignore the error.
-                        Log.i("errore grave", "fuori");
                     }
                 }
             }
@@ -211,7 +218,7 @@ public class StadiumActivity extends AppCompatActivity implements SensorEventLis
         if (requestCode == REQUEST_CHECK_SETTINGS) {
             // Make sure the request was successful
             if (resultCode == RESULT_OK) {
-                createLocationRequest();
+                createLocationRequest(1);
                 fusedLocationClient.requestLocationUpdates(locationRequest,
                         call,
                         Looper.getMainLooper());
@@ -274,43 +281,40 @@ public class StadiumActivity extends AppCompatActivity implements SensorEventLis
         final float alpha = 0.90f;
 
         synchronized(this){
-            /*if (event.sensor.getType() == Sensor.TYPE_ROTATION_VECTOR) {
-                SensorManager.getRotationMatrixFromVector(rMat, event.values);
-                //Log.i("only rotation", "sensore");
-                mAzimuth = (int) (Math.toDegrees(SensorManager.getOrientation(rMat, orientation)[0]) + 360) % 360;
-            }*/
 
             if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
-                //System.arraycopy(event.values, 0, mLastAccelerometer, 0, event.values.length);
+
                 mLastAccelerometer[0] = alpha * mLastAccelerometer[0] + (1-alpha) * event.values[0];
                 mLastAccelerometer[1] = alpha * mLastAccelerometer[1] + (1-alpha) * event.values[1];
                 mLastAccelerometer[2] = alpha * mLastAccelerometer[2] + (1-alpha) * event.values[2];
 
                 mLastAccelerometerSet = true;
-                //Log.i("accelerometer", String.valueOf(mLastAccelerometerSet));
+
             }
             if (event.sensor.getType() == Sensor.TYPE_MAGNETIC_FIELD) {
-                //System.arraycopy(event.values, 0, mLastMagnetometer, 0, event.values.length);
+
                 mLastMagnetometer[0] = alpha * mLastMagnetometer[0] + (1-alpha) * event.values[0];
                 mLastMagnetometer[1] = alpha * mLastMagnetometer[1] + (1-alpha) * event.values[1];
                 mLastMagnetometer[2] = alpha * mLastMagnetometer[2] + (1-alpha) * event.values[2];
                 mLastMagnetometerSet = true;
-                //Log.i("magnetic", String.valueOf(mLastMagnetometerSet));
+
             }
             if (mLastAccelerometerSet && mLastMagnetometerSet) {
                 SensorManager.getRotationMatrix(rMat, null, mLastAccelerometer, mLastMagnetometer);
                 SensorManager.getOrientation(rMat, orientation);
                 mAzimuth = (int) (Math.toDegrees(SensorManager.getOrientation(rMat, orientation)[0]) + 360) % 360;
-                //Log.i("errore", "azimuth "+ mAzimuth);
+
             }
 
             if(current != null && stadium != null){
                 rose.setRotation(-mAzimuth);
                 mAzimuth -= ((current.bearingTo(stadium) + 360)% 360);
                 mAzimuth = (mAzimuth + 360)%360;
-                //mAzimuth -= bearing(current.getLatitude(), current.getLongitude(), stadium.getLatitude(), stadium.getLongitude());
-                distance = String.valueOf(current.distanceTo(stadium) / 1000) + " km";
-                text_cmp.setText("The current displacement angle is: "+ String.valueOf(360-mAzimuth) + "° ");
+
+                DecimalFormat precision = new DecimalFormat("#.###");
+                distance = precision.format(current.distanceTo(stadium) / 1000) + " km";
+
+                text_cmp.setText("The current displacement angle is: \n"+ String.valueOf(360-mAzimuth) + "° ");
                 arrow.setRotation(-mAzimuth);
 
             }
@@ -322,13 +326,12 @@ public class StadiumActivity extends AppCompatActivity implements SensorEventLis
             }
             else{
                 mAzimuth = Math.round(mAzimuth);
-                text_cmp.setText("The current displacement angle is: "+mAzimuth + "° ");
+                text_cmp.setText("The current displacement angle is: \n"+mAzimuth + "° ");
                 arrow.setRotation(-mAzimuth);
                 rose.setRotation(-mAzimuth);
-                //Log.i("current_position", String.valueOf(current.getLatitude()) + " " + String.valueOf(current.getLongitude()));
             }
 
-            text_dist.setText("The current distance to stadium is: "+ distance);
+            text_dist.setText("The current distance to stadium is: \n"+ distance);
 
 
         }
@@ -341,7 +344,6 @@ public class StadiumActivity extends AppCompatActivity implements SensorEventLis
     }
 
     public void start() {
-       //if (mSensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR) == null) {
             if ((mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER) == null) || (mSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD) == null)) {
                 noSensorsAlert();
             }
@@ -351,11 +353,6 @@ public class StadiumActivity extends AppCompatActivity implements SensorEventLis
                 haveSensor = mSensorManager.registerListener(this, mAccelerometer, SensorManager.SENSOR_DELAY_UI);
                 haveSensor2 = mSensorManager.registerListener(this, mMagnetometer, SensorManager.SENSOR_DELAY_UI);
             }
-       // }
-       /*else{
-            mRotationV = mSensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR);
-            haveSensor = mSensorManager.registerListener(this, mRotationV, SensorManager.SENSOR_DELAY_UI);
-        }*/
     }
 
     public void noSensorsAlert(){
