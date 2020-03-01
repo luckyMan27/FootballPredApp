@@ -1,5 +1,6 @@
 package com.fortunato.footballpredictions.Activities;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -9,6 +10,7 @@ import android.app.AlertDialog;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -19,6 +21,7 @@ import android.location.Location;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Looper;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -26,21 +29,29 @@ import android.location.Geocoder;
 import android.widget.Toast;
 
 
-import com.fortunato.footballpredictions.Networks.NetworkStadium;
 import com.fortunato.footballpredictions.R;
+import com.google.android.gms.common.api.ResolvableApiException;
 import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.LocationSettingsRequest;
+import com.google.android.gms.location.LocationSettingsResponse;
+import com.google.android.gms.location.SettingsClient;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 import static android.Manifest.permission.ACCESS_COARSE_LOCATION;
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 
-public class StadiumActivity extends AppCompatActivity implements SensorEventListener {
 
+public class StadiumActivity extends AppCompatActivity implements SensorEventListener {
+    protected static final int REQUEST_CHECK_SETTINGS = 0x1;
     int mAzimuth;
     private SensorManager mSensorManager;
     private Sensor mRotationV, mAccelerometer, mMagnetometer;
@@ -66,8 +77,11 @@ public class StadiumActivity extends AppCompatActivity implements SensorEventLis
 
     private FusedLocationProviderClient fusedLocationClient;
 
+    private String venue;
+    LocationRequest locationRequest;
+    private boolean check = false;
 
-
+    LocationCallback call;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
@@ -75,11 +89,8 @@ public class StadiumActivity extends AppCompatActivity implements SensorEventLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stadium);
         Intent intent = getIntent();
-        String home = intent.getStringExtra("home_id");
 
-        NetworkStadium netTools = new NetworkStadium(this, 0, home, null);
-        Thread tNet = new Thread(netTools);
-        tNet.start();
+        venue = intent.getStringExtra("venue");
 
         arrow = (ImageView)  findViewById(R.id.arrow);
         rose = (ImageView) findViewById(R.id.imageView_compass);
@@ -87,8 +98,10 @@ public class StadiumActivity extends AppCompatActivity implements SensorEventLis
         text_dist = (TextView) findViewById(R.id.text_distance);
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
 
-
         setLocationList();
+        requestLocation();
+        setCallback();
+        notify_address(venue);
         start();
     }
 
@@ -99,6 +112,7 @@ public class StadiumActivity extends AppCompatActivity implements SensorEventLis
             ActivityCompat.requestPermissions(this, new String[]{ACCESS_FINE_LOCATION}, 1);
             ActivityCompat.requestPermissions(this, new String[]{ACCESS_COARSE_LOCATION}, 1);
         }
+
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
         if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -119,21 +133,94 @@ public class StadiumActivity extends AppCompatActivity implements SensorEventLis
             }
         });
     }
+    /////////////////////////////////////////////////////
+    protected void createLocationRequest() {
+        locationRequest = LocationRequest.create();
+        locationRequest.setInterval(0);
+        locationRequest.setFastestInterval(0);
+        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        locationRequest.setNumUpdates(1);
+    }
 
-    public void askPosition(){
-        fusedLocationClient.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
+    private void requestLocation(){
+        final LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder();
+        createLocationRequest();
+        builder.addLocationRequest(locationRequest);
+
+        Log.i("Location","request location");
+        SettingsClient client = LocationServices.getSettingsClient(this);
+        Task<LocationSettingsResponse> task = client.checkLocationSettings(builder.build());
+
+        task.addOnSuccessListener(this, new OnSuccessListener<LocationSettingsResponse>() {
             @Override
-            public void onSuccess(Location location) {
-                // Got last known location. In some rare situations this can be null.
-                if (location != null) {
-                    Log.i("location", location.toString());
-                    current = location;
+            public void onSuccess(LocationSettingsResponse locationSettingsResponse) {
+                Log.i("Location", "location gained");
+                createLocationRequest();
+                fusedLocationClient.requestLocationUpdates(locationRequest,
+                        call,
+                        Looper.getMainLooper());
+
+            }
+        });
+
+        task.addOnFailureListener(this, new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                if (e instanceof ResolvableApiException) {
+                    // Location settings are not satisfied, but this can be fixed
+                    // by showing the user a dialog.
+                    try {
+                        // Show the dialog by calling startResolutionForResult(),
+                        // and check the result in onActivityResult().
+                        Log.i("errore", "provo");
+                        ResolvableApiException resolvable = (ResolvableApiException) e;
+                        resolvable.startResolutionForResult(StadiumActivity.this,
+                                REQUEST_CHECK_SETTINGS);
+                    } catch (IntentSender.SendIntentException sendEx) {
+                        // Ignore the error.
+                        Log.i("errore grave", "fuori");
+                    }
                 }
             }
         });
+
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
+    ////////////////////////////////////////////////////
+
+    public void setCallback(){
+        call = new LocationCallback() {
+            @Override
+            public void onLocationResult(LocationResult locationResult) {
+                if (locationResult == null) {
+                    return;
+                }
+                for (Location location : locationResult.getLocations()) {
+                    current = location;
+                }
+            };
+        };
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // Check which request we're responding to
+        Log.i("on result","ok");
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CHECK_SETTINGS) {
+            // Make sure the request was successful
+            if (resultCode == RESULT_OK) {
+                createLocationRequest();
+                fusedLocationClient.requestLocationUpdates(locationRequest,
+                        call,
+                        Looper.getMainLooper());
+            }
+        }
+    }
+
+
+                @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
 
@@ -217,8 +304,6 @@ public class StadiumActivity extends AppCompatActivity implements SensorEventLis
                 //Log.i("errore", "azimuth "+ mAzimuth);
             }
 
-            askPosition();
-
             if(current != null && stadium != null){
                 rose.setRotation(-mAzimuth);
                 mAzimuth -= ((current.bearingTo(stadium) + 360)% 360);
@@ -228,7 +313,6 @@ public class StadiumActivity extends AppCompatActivity implements SensorEventLis
                 text_cmp.setText("The current displacement angle is: "+ String.valueOf(360-mAzimuth) + "° ");
                 arrow.setRotation(-mAzimuth);
 
-                Log.i("distance", distance);
             }
             else if(current != null && stadium == null){
                 mAzimuth = 0;
@@ -300,11 +384,15 @@ public class StadiumActivity extends AppCompatActivity implements SensorEventLis
     protected void onPause() {
         super.onPause();
         stop();
+        fusedLocationClient.removeLocationUpdates(call);
+
+
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         start();
+        fusedLocationClient.requestLocationUpdates(locationRequest, call, Looper.getMainLooper());
     }
 }

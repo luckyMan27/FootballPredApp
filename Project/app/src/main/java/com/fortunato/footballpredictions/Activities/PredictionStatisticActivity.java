@@ -30,6 +30,7 @@ public class PredictionStatisticActivity extends AppCompatActivity {
     private ProgressBar progBar = null;
     private String fixtureId;
     private String home;
+    private String venue;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -38,6 +39,7 @@ public class PredictionStatisticActivity extends AppCompatActivity {
         Intent intent = getIntent();
         fixtureId = intent.getStringExtra("fixture_id");
         home = intent.getStringExtra("home_id");
+        venue = intent.getStringExtra("venue");
         setTitle(intent.getStringExtra("teams_match"));
 
 
@@ -92,6 +94,7 @@ public class PredictionStatisticActivity extends AppCompatActivity {
     public void modifyContent() {
         Intent intent = new Intent(this, StadiumActivity.class);
         intent.putExtra("home_id", home);
+        intent.putExtra("venue", venue);
         this.startActivity(intent);
 
         /*

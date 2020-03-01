@@ -63,5 +63,8 @@ dependencies {
 
     // for save data
     implementation("com.squareup.moshi:moshi:1.9.1")
+
+
     implementation 'com.google.android.gms:play-services-location:17.0.0'
+
 }
