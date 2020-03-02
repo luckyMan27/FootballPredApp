@@ -156,6 +156,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
+    private void start_info(){
+        Intent intent = new Intent(this, InfoActivity.class);
+        this.startActivity(intent);
+    }
+
 
     private void logoutUser() {
         logoutB.setEnabled(false);
@@ -203,6 +208,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void showUserInfos() {
         if(isNetworkAvailable() == false){
             Toast.makeText(MainActivity.this, "Network Connection is unavailable!", Toast.LENGTH_SHORT).show();
+
             return;
         }
         LoadImage loadImage = new LoadImage(userAuth.getCurrentUser().getPhotoUrl().toString(), null, MainActivity.this);
@@ -297,7 +303,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 //Toast.makeText(this, "Bets", Toast.LENGTH_LONG).show();
                 break;
             case R.id.draw_menu_info:
-                Toast.makeText(this, "Informations", Toast.LENGTH_LONG).show();
+                //Toast.makeText(this, "Informations", Toast.LENGTH_LONG).show();
+                start_info();
                 break;
         }
 

@@ -40,9 +40,6 @@ public class AddBetActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_bet);
-        Toolbar toolbar = findViewById(R.id.toolbaradd);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(R.string.title_activity_add_bet);
 
         recyclerView = findViewById(R.id.recViewAddBet);
 
