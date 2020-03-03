@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -78,6 +79,8 @@ public class PredictionStatisticRecyclerView extends RecyclerView.Adapter<Predic
         final RadioButton btn_x = holder.btn_x;
         final RadioButton btn_2 = holder.btn_2;
 
+        final RadioGroup gr= holder.gr;
+
         Button stadio_btn = holder.stadio_btn;
 
 
@@ -116,11 +119,13 @@ public class PredictionStatisticRecyclerView extends RecyclerView.Adapter<Predic
             public void onClick(View view) {
                 if(flag_1){
                     flag_1 = false;
+                    gr.clearCheck();
                     btn_1.setChecked(false);
                     remove_elem_list(team1, team2, "1");
                 }
                 else{
                     flag_1 = true;
+                    gr.clearCheck();
                     btn_1.setChecked(true);
                     flag_x = false;
                     flag_2 = false;
@@ -134,11 +139,13 @@ public class PredictionStatisticRecyclerView extends RecyclerView.Adapter<Predic
             public void onClick(View view) {
                 if(flag_x){
                     flag_x = false;
+                    gr.clearCheck();
                     btn_x.setChecked(false);
                     remove_elem_list(team1, team2, "X");
                 }
                 else{
                     flag_x = true;
+                    gr.clearCheck();
                     btn_x.setChecked(true);
                     flag_1 = false;
                     flag_2 = false;
@@ -151,14 +158,14 @@ public class PredictionStatisticRecyclerView extends RecyclerView.Adapter<Predic
             public void onClick(View view) {
                 if(flag_2){
                     flag_2 = false;
+                    gr.clearCheck();
                     btn_2.setChecked(false);
-                    //Toast.makeText(view.getContext(), "Falso", Toast.LENGTH_SHORT).show();
                     remove_elem_list(team1, team2, "2");
                 }
                 else{
                     flag_2 = true;
+                    gr.clearCheck();
                     btn_2.setChecked(true);
-                    //Toast.makeText(view.getContext(), "Vero", Toast.LENGTH_SHORT).show();
                     flag_1 = false;
                     flag_x = false;
                     add_elem_list(team1, team2, "2", view);
@@ -202,6 +209,8 @@ public class PredictionStatisticRecyclerView extends RecyclerView.Adapter<Predic
         private RadioButton btn_2;
         private Button stadio_btn;
 
+        private RadioGroup gr;
+
 
 
 
@@ -231,6 +240,8 @@ public class PredictionStatisticRecyclerView extends RecyclerView.Adapter<Predic
 
             this.stadio_btn = view.findViewById(R.id.stadium);
 
+            this.gr = view.findViewById(R.id.radio_group);
+
 
         }
 
@@ -238,15 +249,6 @@ public class PredictionStatisticRecyclerView extends RecyclerView.Adapter<Predic
         public void onClick(View v) {
             int position = getAdapterPosition();
             Object obj = list.get(position);
-
-            /*MatchFragment matchFragment;
-
-            if(fragment instanceof MatchFragment){
-                matchFragment = (MatchFragment) fragment;
-                if(obj instanceof LeagueFixture){
-                    //
-                }
-            }*/
         }
     }
 
