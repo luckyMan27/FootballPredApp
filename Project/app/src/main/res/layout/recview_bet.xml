@@ -58,6 +58,7 @@
                 android:layout_height="49dp"
                 android:text="TextView"
                 android:textAlignment="textStart"
+                android:padding="8dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/button_remove"
                 app:layout_constraintHorizontal_bias="0.477"

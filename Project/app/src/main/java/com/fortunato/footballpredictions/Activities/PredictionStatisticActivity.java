@@ -96,16 +96,5 @@ public class PredictionStatisticActivity extends AppCompatActivity {
         intent.putExtra("home_id", home);
         intent.putExtra("venue", venue);
         this.startActivity(intent);
-
-        /*
-        StadiumFragment stadium = new StadiumFragment();
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.layoutLinearPred, stadium)
-                .addToBackStack(null)
-                .commit();
-    }
-
-         */
     }
 }

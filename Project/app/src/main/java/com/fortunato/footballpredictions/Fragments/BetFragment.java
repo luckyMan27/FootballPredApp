@@ -70,24 +70,8 @@ public class BetFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        handleData = new SaveData(getContext());
-        if(savedInstanceState != null){
-            flagNetwork = savedInstanceState.getBoolean(NETFLAG);
-            items = (List<Bet>)savedInstanceState.get(STATE_ITEMS);
-            recyclerLayout = savedInstanceState.getParcelable(RECYCLER_LAYOUT);
-        }
-        if(items == null) {
-            items = handleData.loadBets(); //need to set the user id to retrieve its bets
-        }
     }
 
-    @Override
-    public void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putSerializable(STATE_ITEMS, (Serializable) items);
-        outState.putParcelable(RECYCLER_LAYOUT, recyclerView.getLayoutManager().onSaveInstanceState());
-        outState.putBoolean(NETFLAG, flagNetwork);
-    }
 
     @Nullable
     @Override
@@ -140,7 +124,6 @@ public class BetFragment extends Fragment {
     }
 
     public void flush(){
-        handleData.saveBets(items);
         betRecyclerView.notifyDataSetChanged();
     }
 

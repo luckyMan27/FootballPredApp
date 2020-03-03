@@ -18,14 +18,12 @@ import com.fortunato.footballpredictions.Fragments.BetFragment;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.IOException;
 
-import java.util.HashMap;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -177,6 +175,9 @@ public class NetworkBackend implements Runnable {
                 Toast.makeText(a, "No items present", Toast.LENGTH_SHORT).show();;
             }
             Log.i("list",list.toString());
+
+            Collections.reverse(list);
+
             notifyUpdate();
         }
         catch (JSONException e) {
@@ -184,39 +185,6 @@ public class NetworkBackend implements Runnable {
         }
     }
 
-    /*
-    public void getRequest(String url, final String uid) {
-        RequestQueue queue = Volley.newRequestQueue(f.getContext());
-        JsonArrayRequest getRequest = new JsonArrayRequest(com.android.volley.Request.Method.GET, url, null,
-                new com.android.volley.Response.Listener<JSONArray>()
-                {
-                    @Override
-                    public void onResponse(JSONArray response) {
-                        parseBets(response.toString());
-                    }
-                },
-                new com.android.volley.Response.ErrorListener()
-                {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.d("ERROR","error => "+error.toString());
-                    }
-                }
-        ) {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String>  params = new HashMap<String, String>();
-                params.put("Content-Type", "application/json");
-                params.put("uid",uid);
-
-                return params;
-            }
-        };
-        queue.add(getRequest);
-
-    }
-
-     */
     private String getRequests(String url, String uid){
         OkHttpClient client = new OkHttpClient();
         Response resp = null;
@@ -240,4 +208,6 @@ public class NetworkBackend implements Runnable {
         return body;
 
     }
+
+
 }
