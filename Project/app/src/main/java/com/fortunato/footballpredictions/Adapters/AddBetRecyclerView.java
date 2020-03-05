@@ -36,6 +36,7 @@ public class AddBetRecyclerView extends RecyclerView.Adapter<AddBetRecyclerView.
         TextView home = holder.home;
         TextView away = holder.away;
         TextView value = holder.value;
+        TextView league = holder.league;
         Button remove = holder.remove;
         final int index = position;
 
@@ -46,6 +47,7 @@ public class AddBetRecyclerView extends RecyclerView.Adapter<AddBetRecyclerView.
             home.setText(bet.getHome());
             away.setText(bet.getAway());
             value.setText(bet.getValue());
+            league.setText(bet.getLeague());
         }
 
         remove.setOnClickListener(new View.OnClickListener() {
@@ -67,6 +69,7 @@ public class AddBetRecyclerView extends RecyclerView.Adapter<AddBetRecyclerView.
         private TextView home;
         private TextView away;
         private TextView value;
+        private TextView league;
         private Button remove;
 
         private ViewHolder(@NonNull View itemView) {
@@ -74,6 +77,7 @@ public class AddBetRecyclerView extends RecyclerView.Adapter<AddBetRecyclerView.
             this.home = itemView.findViewById(R.id.home_bet_add);
             this.away = itemView.findViewById(R.id.away_bet_add);
             this.value = itemView.findViewById(R.id.value_bet_add);
+            this.league = itemView.findViewById(R.id.league_bet_add);
             this.remove = itemView.findViewById(R.id.button_remove_bet);
         }
     }

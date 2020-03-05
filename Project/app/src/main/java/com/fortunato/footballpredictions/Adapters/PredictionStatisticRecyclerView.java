@@ -33,6 +33,8 @@ public class PredictionStatisticRecyclerView extends RecyclerView.Adapter<Predic
     private List<Bet_Item> bets;
     private Bet_Item it;
 
+    private String league;
+
     private boolean flag_1 = false;
     private boolean flag_x = false;
     private boolean flag_2 = false;
@@ -41,10 +43,11 @@ public class PredictionStatisticRecyclerView extends RecyclerView.Adapter<Predic
 
 
 
-    public PredictionStatisticRecyclerView(List<BaseType> list, PredictionStatisticActivity parent) {
+    public PredictionStatisticRecyclerView(List<BaseType> list, PredictionStatisticActivity parent, String league) {
 
         this.list = list;
         this.parent = parent;
+        this.league = league;
     }
 
     @NonNull
@@ -121,7 +124,7 @@ public class PredictionStatisticRecyclerView extends RecyclerView.Adapter<Predic
                     flag_1 = false;
                     gr.clearCheck();
                     btn_1.setChecked(false);
-                    remove_elem_list(team1, team2, "1");
+                    remove_elem_list(team1, team2, "1", league);
                 }
                 else{
                     flag_1 = true;
@@ -129,7 +132,7 @@ public class PredictionStatisticRecyclerView extends RecyclerView.Adapter<Predic
                     btn_1.setChecked(true);
                     flag_x = false;
                     flag_2 = false;
-                    add_elem_list(team1, team2, "1", view);
+                    add_elem_list(team1, team2, "1", view, league);
                 }
             }
 
@@ -141,7 +144,7 @@ public class PredictionStatisticRecyclerView extends RecyclerView.Adapter<Predic
                     flag_x = false;
                     gr.clearCheck();
                     btn_x.setChecked(false);
-                    remove_elem_list(team1, team2, "X");
+                    remove_elem_list(team1, team2, "X", league);
                 }
                 else{
                     flag_x = true;
@@ -149,7 +152,7 @@ public class PredictionStatisticRecyclerView extends RecyclerView.Adapter<Predic
                     btn_x.setChecked(true);
                     flag_1 = false;
                     flag_2 = false;
-                    add_elem_list(team1, team2, "X", view);
+                    add_elem_list(team1, team2, "X", view, league);
                 }
             }
         });
@@ -160,7 +163,7 @@ public class PredictionStatisticRecyclerView extends RecyclerView.Adapter<Predic
                     flag_2 = false;
                     gr.clearCheck();
                     btn_2.setChecked(false);
-                    remove_elem_list(team1, team2, "2");
+                    remove_elem_list(team1, team2, "2", league);
                 }
                 else{
                     flag_2 = true;
@@ -168,7 +171,7 @@ public class PredictionStatisticRecyclerView extends RecyclerView.Adapter<Predic
                     btn_2.setChecked(true);
                     flag_1 = false;
                     flag_x = false;
-                    add_elem_list(team1, team2, "2", view);
+                    add_elem_list(team1, team2, "2", view, league);
                 }
             }
         });
@@ -252,9 +255,9 @@ public class PredictionStatisticRecyclerView extends RecyclerView.Adapter<Predic
         }
     }
 
-    public void add_elem_list(String t1, String t2, String value, View view){
+    public void add_elem_list(String t1, String t2, String value, View view, String league){
         bets = SingletonCurrentBet.getInstance();
-        it = new Bet_Item(t1, t2, value);
+        it = new Bet_Item(t1, t2, value, league);
         if(bets.contains(it)) {
             int index = bets.indexOf(it);
             Bet_Item it2 = bets.get(index);
@@ -269,9 +272,9 @@ public class PredictionStatisticRecyclerView extends RecyclerView.Adapter<Predic
             bets.add(it);
         }
     }
-    public void remove_elem_list(String t1, String t2, String value){
+    public void remove_elem_list(String t1, String t2, String value, String league){
         bets = SingletonCurrentBet.getInstance();
-        it = new Bet_Item(t1, t2, value);
+        it = new Bet_Item(t1, t2, value, league);
         if(bets.contains(it)) {
             int index = bets.indexOf(it);
             Bet_Item it2 = bets.get(index);

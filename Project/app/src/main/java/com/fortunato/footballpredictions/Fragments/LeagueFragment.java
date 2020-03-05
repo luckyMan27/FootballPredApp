@@ -152,10 +152,10 @@ public class LeagueFragment extends BaseFragment {
         leagueRecyclerView.notifyDataSetChanged();
     }
 
-    public void modifyContent(String url, int requestType, String leagueId){
+    public void modifyContent(String url, int requestType, String leagueId, String leagueName){
         if(!reqLigueId.equals(leagueId)) {
             reqLigueId = leagueId;
-            mFragment = new MatchFragment(url, requestType, leagueId);
+            mFragment = new MatchFragment(url, requestType, leagueId, leagueName);
             getFragmentManager()
                     .beginTransaction()
                     .replace(R.id.fragment_container, mFragment)

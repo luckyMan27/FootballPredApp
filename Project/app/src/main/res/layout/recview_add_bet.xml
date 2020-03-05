@@ -26,8 +26,9 @@
                 android:layout_height="match_parent"
                 android:padding="8dp"
                 android:text="home_bet"
+                android:textSize="9dp"
                 android:layout_weight="1"
-                android:textAlignment="textStart"
+                android:textAlignment="center"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
 
@@ -37,16 +38,28 @@
                 android:layout_height="match_parent"
                 android:padding="8dp"
                 android:text="away"
-                android:textAlignment="textStart"
+                android:textSize="9dp"
+                android:textAlignment="center"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
             <TextView
                 android:id="@+id/value_bet_add"
-                android:layout_width="100dp"
+                android:layout_width="40dp"
                 android:layout_height="match_parent"
                 android:padding="8dp"
                 android:text="value"
-                android:textAlignment="textStart"
+                android:textSize="9dp"
+                android:textAlignment="center"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+
+            <TextView
+                android:id="@+id/league_bet_add"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:padding="8dp"
+                android:text="league"
+                android:textSize="9dp"
+                android:textAlignment="center"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
             <Button
@@ -57,6 +70,8 @@
                 android:bottomLeftRadius="30dp"
                 android:bottomRightRadius="30dp"
                 android:text="Remove"
+                android:textSize="10dp"
+                android:textAlignment="center"
                 android:topLeftRadius="30dp"
                 android:topRightRadius="30dp"/>
         </LinearLayout>

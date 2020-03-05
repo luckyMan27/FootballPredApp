@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
@@ -110,7 +111,7 @@ public class LeagueRecyclerView extends RecyclerView.Adapter<LeagueRecyclerView.
                 leagueFragment = (LeagueFragment) fragment;
                 if(obj instanceof League){
                     League league = (League) obj;
-                    leagueFragment.modifyContent("", 2, league.getLeague_id());
+                    leagueFragment.modifyContent("", 2, league.getLeague_id(), league.getName());
                 }
             }
         }

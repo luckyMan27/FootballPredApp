@@ -39,8 +39,8 @@ public class InfoActivity extends AppCompatActivity {
                 "\u2022 Statium location\n";
 
         info3 = "Authors of the applcation: \n \n" +
-                "\u2022 Author1 \n" +
-                "\u2022 Author2";
+                "\u2022 Alexandru Sarpe \n" +
+                "\u2022 Fortunato Tocci";
 
         desc1.setText(info1);
         desc2.setText(info2);

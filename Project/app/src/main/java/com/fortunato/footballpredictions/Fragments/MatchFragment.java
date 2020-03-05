@@ -43,13 +43,15 @@ public class MatchFragment extends BaseFragment {
     private String url;
     private int requestType;
     private String leagueId;
+    private String leagueName;
 
     public MatchFragment() { }
 
-    public MatchFragment(String url, int requestType, String leagueId) {
+    public MatchFragment(String url, int requestType, String leagueId, String leagueName) {
         this.url = url;
         this.requestType = requestType;
         this.leagueId = leagueId;
+        this.leagueName = leagueName;
     }
 
     @Override
@@ -101,7 +103,7 @@ public class MatchFragment extends BaseFragment {
 
         recyclerView.setHasFixedSize(true);
 
-        matchRecyclerView = new MatchRecyclerView(items);
+        matchRecyclerView = new MatchRecyclerView(items, leagueName);
         recyclerView.setAdapter(matchRecyclerView);
 
         if(MainActivity.NETWORK_CONNECTION == false){

@@ -141,5 +141,8 @@ public class BetFragment extends Fragment {
         return progBar;
     }
 
+    public void notifyNoBets(){
+        Toast.makeText(this.getContext(), "No items present", Toast.LENGTH_SHORT).show();;
+    }
 }
 

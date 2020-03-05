@@ -31,6 +31,8 @@ public class League extends BaseType implements Serializable {
     private String season_end = null;*/
     private Boolean predictions;
 
+    public League(){}
+
     public League(JSONObject jsonObject){
         JSONObject app;
 
@@ -93,10 +95,12 @@ public class League extends BaseType implements Serializable {
     public String getLeague_id() {
         return league_id;
     }
+    public void setLeague_id(String id) {league_id = id;}
 
     public String getName() {
         return name;
     }
+    public void setName(String name){this.name = name;};
 
     public String getUrlImg() {
         return urlImg;
@@ -104,6 +108,9 @@ public class League extends BaseType implements Serializable {
 
     public void setUrlImg(String urlImg) {
         this.urlImg = urlImg;
+        if(urlImg != null && !urlImg.equals("null")){
+            loadImage = new LoadImage(urlImg, null,League.this);
+        }
     }
 
     public void setLoadImage(LoadImage loadImage) {
@@ -132,6 +139,9 @@ public class League extends BaseType implements Serializable {
 
     public Boolean getPredictions() {
         return predictions;
+    }
+    public void setPredictions(Boolean b){
+        predictions = b;
     }
 
     public LoadImage getLoadImage() {

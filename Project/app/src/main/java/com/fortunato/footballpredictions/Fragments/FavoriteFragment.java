@@ -21,8 +21,18 @@ import com.fortunato.footballpredictions.DataStructures.League;
 import com.fortunato.footballpredictions.DataStructures.SingletonFavorite;
 import com.fortunato.footballpredictions.Networks.NetworkHome;
 import com.fortunato.footballpredictions.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import org.json.JSONArray;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -92,24 +102,26 @@ public class FavoriteFragment extends BaseFragment {
         favoriteRecyclerView = new FavoriteRecyclerView(items);
         recyclerView.setAdapter(favoriteRecyclerView);
 
-        if(MainActivity.NETWORK_CONNECTION == false){
-            Toast.makeText(getContext(), "Network Connection is unavailable!", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
         items.clear();
-        progBar.setVisibility(View.VISIBLE);
+
         List<BaseType> favoriteList = SingletonFavorite.getInstance();
-        Thread tNet;
-        for(BaseType obj : favoriteList){
-            if(obj instanceof League) {
-                League fixture = (League) obj;
-                NetworkHome networkHome = new NetworkHome("", 2,
-                        fixture.getLeague_id(), FavoriteFragment.this, getActivity());
-                tNet = new Thread(networkHome);
-                tNet.start();
+        if(favoriteList.isEmpty()){
+            Toast.makeText(getContext(), "No favorite items", Toast.LENGTH_SHORT).show();
+        }
+        else{
+            progBar.setVisibility(View.VISIBLE);
+            Thread tNet;
+            for(BaseType obj : favoriteList){
+                if(obj instanceof League) {
+                    League fixture = (League) obj;
+                    NetworkHome networkHome = new NetworkHome("", 2,
+                            fixture.getLeague_id(), FavoriteFragment.this, getActivity());
+                    tNet = new Thread(networkHome);
+                    tNet.start();
+                }
             }
         }
+
     }
 
     public void addItem(BaseType object){

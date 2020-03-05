@@ -31,6 +31,7 @@ public class PredictionStatisticActivity extends AppCompatActivity {
     private String fixtureId;
     private String home;
     private String venue;
+    private String leagueName;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -40,6 +41,7 @@ public class PredictionStatisticActivity extends AppCompatActivity {
         fixtureId = intent.getStringExtra("fixture_id");
         home = intent.getStringExtra("home_id");
         venue = intent.getStringExtra("venue");
+        leagueName = intent.getStringExtra("league");
         setTitle(intent.getStringExtra("teams_match"));
 
 
@@ -65,7 +67,7 @@ public class PredictionStatisticActivity extends AppCompatActivity {
         layoutManager.setOrientation(RecyclerView.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
 
-        recyclerViewAdp = new PredictionStatisticRecyclerView(items, this);
+        recyclerViewAdp = new PredictionStatisticRecyclerView(items, this, leagueName);
         recyclerView.setAdapter(recyclerViewAdp);
 
         recyclerView.setHasFixedSize(true);

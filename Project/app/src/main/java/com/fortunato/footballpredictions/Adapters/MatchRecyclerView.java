@@ -22,9 +22,12 @@ import java.util.List;
 public class MatchRecyclerView extends RecyclerView.Adapter<MatchRecyclerView.ViewHolder> {
 
     private List<BaseType> list;
+    private String leagueName;
 
-    public MatchRecyclerView(List<BaseType> list) {
+    public MatchRecyclerView(List<BaseType> list, String leagueName) {
+
         this.list = list;
+        this.leagueName = leagueName;
     }
 
     @NonNull
@@ -107,6 +110,7 @@ public class MatchRecyclerView extends RecyclerView.Adapter<MatchRecyclerView.Vi
                 intent.putExtra("teams_match", fixture.gethTeam_name()+" - "+fixture.getaTeam_name());
                 intent.putExtra("home_id", fixture.gethTeam_id());
                 intent.putExtra("venue", fixture.getVenue());
+                intent.putExtra("league", leagueName);
                 v.getContext().startActivity(intent);
             }
         }

@@ -51,6 +51,8 @@ public class NetworkBackend implements Runnable {
 
     private String body;
 
+    private boolean flag_no_bets = false;
+
     public NetworkBackend(BetFragment f, List<BaseType> objlist, int type, String date, String description, String uid, Activity a, String id) {
         this.objlist = objlist;
         this.uid = uid;
@@ -155,6 +157,9 @@ public class NetworkBackend implements Runnable {
             public void run() {
                 f.flush();
                 f.getProgBar().setVisibility(View.GONE);
+                if(flag_no_bets){
+                    f.notifyNoBets();
+                }
             }
         });
     }
@@ -171,8 +176,9 @@ public class NetworkBackend implements Runnable {
                         list.add(bet);
                     }
                 }
+                flag_no_bets = false;
             } else {
-                Toast.makeText(a, "No items present", Toast.LENGTH_SHORT).show();;
+                flag_no_bets = true;
             }
             Log.i("list",list.toString());
 

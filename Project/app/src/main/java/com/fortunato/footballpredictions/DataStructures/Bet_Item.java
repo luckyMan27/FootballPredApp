@@ -12,6 +12,7 @@ public class Bet_Item extends BaseType implements Serializable {
     private String home;
     private String away;
     private String value;
+    private String league;
 
     public Bet_Item(){}
 
@@ -20,16 +21,18 @@ public class Bet_Item extends BaseType implements Serializable {
             this.home = obj.getString("home");
             this.away = obj.getString("away");
             this.value = obj.getString("value");
+            this.league = obj.getString("league");
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
     }
 
-    public Bet_Item(String home, String away, String value){
+    public Bet_Item(String home, String away, String value, String league){
         this.home = home;
         this.away = away;
         this.value = value;
+        this.league = league;
     }
 
     public String getHome() {
@@ -43,6 +46,10 @@ public class Bet_Item extends BaseType implements Serializable {
     public String getValue() {
         return value;
     }
+
+    public String getLeague() { return league; }
+
+    public void setLeague() { this.league = league; }
 
     public void setHome(String home) {
         this.home = home;
@@ -58,7 +65,7 @@ public class Bet_Item extends BaseType implements Serializable {
 
     @Override
     public String toString() {
-        return "{\"home\" :\"" + home + "\",\"away\": \""+ away + "\", \"value\": \""+ value +"\" }";
+        return "{\"home\" :\"" + home + "\",\"away\": \""+ away + "\", \"value\": \""+ value +"\", \"league\": \""+ league +"\"}";
     }
 
     @Override

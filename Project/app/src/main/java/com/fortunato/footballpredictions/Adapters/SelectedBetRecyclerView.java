@@ -35,6 +35,7 @@ public class SelectedBetRecyclerView extends RecyclerView.Adapter<SelectedBetRec
         TextView home = holder.home;
         TextView away = holder.away;
         TextView value = holder.value;
+        TextView league = holder.league;
 
 
         BaseType obj = list.get(position);
@@ -43,17 +44,20 @@ public class SelectedBetRecyclerView extends RecyclerView.Adapter<SelectedBetRec
             home.setText(bet.getHome());
             away.setText(bet.getAway());
             value.setText(bet.getValue());
+            league.setText(bet.getLeague());
             if(position %2 == 1)
             {
                 home.setBackgroundColor(Color.parseColor("#FFFFFF"));
                 away.setBackgroundColor(Color.parseColor("#FFFFFF"));
                 value.setBackgroundColor(Color.parseColor("#FFFFFF"));
+                league.setBackgroundColor(Color.parseColor("#FFFFFF"));
             }
             else
             {
                 home.setBackgroundColor(Color.parseColor("#D7D7D7"));
                 away.setBackgroundColor(Color.parseColor("#D7D7D7"));
                 value.setBackgroundColor(Color.parseColor("#D7D7D7"));
+                league.setBackgroundColor(Color.parseColor("#D7D7D7"));
             }
         }
     }
@@ -67,16 +71,15 @@ public class SelectedBetRecyclerView extends RecyclerView.Adapter<SelectedBetRec
         private TextView home;
         private TextView away;
         private TextView value;
+        private TextView league;
 
         private ViewHolder(@NonNull View itemView) {
             super(itemView);
             this.home = itemView.findViewById(R.id.home_bet);
             this.away = itemView.findViewById(R.id.away_bet);
             this.value = itemView.findViewById(R.id.value_bet);
-
+            this.league = itemView.findViewById(R.id.league);
         }
-
-
     }
 }
 
