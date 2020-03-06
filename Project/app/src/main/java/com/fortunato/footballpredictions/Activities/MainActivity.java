@@ -179,6 +179,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             return;
         }
         providers = Arrays.asList(
+                new AuthUI.IdpConfig.EmailBuilder().build(),
                 new AuthUI.IdpConfig.FacebookBuilder().build(),
                 new AuthUI.IdpConfig.GoogleBuilder().build());
         if(userAuth.getCurrentUser()==null)
@@ -211,13 +212,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             return;
         }
-        LoadImage loadImage = new LoadImage(userAuth.getCurrentUser().getPhotoUrl().toString(), null, MainActivity.this);
-        loadImage.start();
+        LoadImage loadImage = null;
+        if(userAuth.getCurrentUser().getPhotoUrl() != null){
+            loadImage = new LoadImage(userAuth.getCurrentUser().getPhotoUrl().toString(), null, MainActivity.this);
+            loadImage.start();
+        }
         try {
-            loadImage.join();
+            if(loadImage != null){
+                loadImage.join();
+                userImg.setImageBitmap(userBitmap);
+            }
             userEmail.setText(userAuth.getCurrentUser().getEmail());
             userName.setText(userAuth.getCurrentUser().getDisplayName());
-            userImg.setImageBitmap(userBitmap);
+
             loginB.setEnabled(false);
             loginB.setVisibility(View.INVISIBLE);
             logoutB.setEnabled(true);
