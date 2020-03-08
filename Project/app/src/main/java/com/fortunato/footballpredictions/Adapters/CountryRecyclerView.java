@@ -77,8 +77,7 @@ public class CountryRecyclerView extends RecyclerView.Adapter<CountryRecyclerVie
 
             if(obj instanceof Country){
                 Country country = (Country) obj;
-                String url = "leagues/country/"+country.getCountry()
-                        +"/"+Calendar.getInstance().get(Calendar.YEAR);
+                String url = "leagues/current/"+country.getCountry();
                 fragment.modifyContent(url, 1, "", country.getCountry());
 
             }
