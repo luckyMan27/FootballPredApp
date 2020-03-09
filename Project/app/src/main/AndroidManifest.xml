@@ -19,25 +19,25 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-
-        <activity android:name=".Activities.InfoActivity"
-            android:parentActivityName=".Activities.MainActivity"/>
-
-        <activity android:name=".Activities.StadiumActivity"
-            android:parentActivityName=".Activities.PredictionStatisticActivity"/>
-
-        <activity android:name=".Activities.ShowBetActivity"
-            android:parentActivityName=".Activities.MainActivity"/>
-
+        <activity
+            android:name=".Activities.InfoUser"
+            android:parentActivityName=".Activities.MainActivity" />
+        <activity
+            android:name=".Activities.InfoActivity"
+            android:parentActivityName=".Activities.MainActivity" />
+        <activity
+            android:name=".Activities.StadiumActivity"
+            android:parentActivityName=".Activities.PredictionStatisticActivity" />
+        <activity
+            android:name=".Activities.ShowBetActivity"
+            android:parentActivityName=".Activities.MainActivity" />
         <activity
             android:name=".Activities.AddBetActivity"
             android:label="@string/title_activity_add_bet"
-            android:parentActivityName=".Activities.MainActivity"/>
-
+            android:parentActivityName=".Activities.MainActivity" />
         <activity
             android:name=".Activities.PredictionStatisticActivity"
             android:parentActivityName=".Activities.MainActivity" />
-
         <activity
             android:name=".Activities.MainActivity"
             android:label="@string/app_name"

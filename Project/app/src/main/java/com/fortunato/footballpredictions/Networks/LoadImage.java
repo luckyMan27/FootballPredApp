@@ -10,6 +10,7 @@ import android.util.Log;
 
 import com.caverock.androidsvg.SVG;
 import com.caverock.androidsvg.SVGParseException;
+import com.fortunato.footballpredictions.Activities.InfoUser;
 import com.fortunato.footballpredictions.Activities.MainActivity;
 import com.fortunato.footballpredictions.DataStructures.BaseType;
 import com.fortunato.footballpredictions.DataStructures.Country;
@@ -52,7 +53,10 @@ public class LoadImage extends Thread{
                 parsePNGMatch();
             } else if(obj instanceof MainActivity){
                 parsePNG();
+            } else if(obj instanceof InfoUser){
+                parsePNGUser();
             }
+
         }
     }
 
@@ -68,6 +72,20 @@ public class LoadImage extends Thread{
         }
         MainActivity mainActivity = (MainActivity) obj;
         mainActivity.setUserBitmap(bmapImg);
+    }
+
+    private void parsePNGUser() {
+        InputStream is;
+        Bitmap bmapImg = null;
+        try {
+            is = (InputStream) new URL(urlHome).getContent();
+            bmapImg = BitmapFactory.decodeStream(is);
+            is.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        InfoUser info = (InfoUser) obj;
+        info.setUserBitmap(bmapImg);
     }
 
     private Response getData(){

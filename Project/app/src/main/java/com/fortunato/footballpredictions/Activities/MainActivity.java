@@ -161,6 +161,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         this.startActivity(intent);
     }
 
+    private void start_info_user(){
+        Intent intent = new Intent(this, InfoUser.class);
+        this.startActivity(intent);
+    }
+
 
     private void logoutUser() {
         logoutB.setEnabled(false);
@@ -302,7 +307,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.draw_menu_account:
                 isNetworkAvailable();
-                showSigninOptions();
+                if(userAuth.getCurrentUser()==null){
+                    Toast.makeText(MainActivity.this, "Please log in to see account informations", Toast.LENGTH_SHORT).show();
+                }
+                else start_info_user();
+                //showSigninOptions();
                 break;
 
             case R.id.draw_menu_bets:

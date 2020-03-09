@@ -141,6 +141,9 @@ public class FavoriteFragment extends BaseFragment {
         }
         else{
             Toast.makeText(getContext(), "Authenticate to see Favorites", Toast.LENGTH_SHORT).show();
+            if (progBar != null) {
+                progBar.setVisibility(View.GONE);
+            }
         }
 
         if(MainActivity.NETWORK_CONNECTION == false){

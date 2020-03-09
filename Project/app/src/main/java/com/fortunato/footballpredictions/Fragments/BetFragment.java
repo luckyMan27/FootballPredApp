@@ -120,6 +120,9 @@ public class BetFragment extends Fragment {
         }
         else{
             Toast.makeText(getContext(), "Authenticate to see Bets", Toast.LENGTH_SHORT).show();
+            if (progBar != null) {
+                progBar.setVisibility(View.GONE);
+            }
         }
     }
 
