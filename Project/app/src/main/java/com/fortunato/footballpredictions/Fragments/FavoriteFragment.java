@@ -19,6 +19,7 @@ import com.fortunato.footballpredictions.Adapters.FavoriteRecyclerView;
 import com.fortunato.footballpredictions.DataStructures.BaseType;
 import com.fortunato.footballpredictions.DataStructures.League;
 import com.fortunato.footballpredictions.DataStructures.SingletonFavorite;
+import com.fortunato.footballpredictions.Networks.LoadImage;
 import com.fortunato.footballpredictions.Networks.NetworkHome;
 import com.fortunato.footballpredictions.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -99,29 +100,53 @@ public class FavoriteFragment extends BaseFragment {
 
         recyclerView.setHasFixedSize(true);
 
-        favoriteRecyclerView = new FavoriteRecyclerView(items);
-        recyclerView.setAdapter(favoriteRecyclerView);
+        FirebaseAuth userAuth = FirebaseAuth.getInstance();
+        progBar.setVisibility(View.VISIBLE);
+        if(userAuth.getCurrentUser()!=null){
+            final String currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
+            DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("users").child(currentFirebaseUser);
 
-        items.clear();
+            ref.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    LinkedList<BaseType> list = new LinkedList<BaseType>();;
+                    if (progBar != null) {
+                        progBar.setVisibility(View.GONE);
+                    }
+                    for(DataSnapshot data_s : dataSnapshot.getChildren()){
+                        String dbId = data_s.getKey();
+                        League l = data_s.getValue(League.class);
+                        l.setDbId(dbId);
+                        if(l.getLoadImage()!=null) l.getLoadImage().run();
+                        else if(l.getUrlImg()!=null && !l.getUrlImg().equals("null")){
+                            l.setLoadImage( new LoadImage(l.getUrlImg(), null, l));
+                            l.getLoadImage().start();
+                        }
+                        list.add(l);
+                    }
+                    if(list.isEmpty()){
+                        Toast.makeText(getContext(), "No favorite items", Toast.LENGTH_SHORT).show();
+                    }
+                    //Collections.reverse(list);
+                    SingletonFavorite.setInstance(list);
+                    favoriteRecyclerView = new FavoriteRecyclerView(list, FavoriteFragment.this);
+                    recyclerView.setAdapter(favoriteRecyclerView);
+                }
 
-        List<BaseType> favoriteList = SingletonFavorite.getInstance();
-        if(favoriteList.isEmpty()){
-            Toast.makeText(getContext(), "No favorite items", Toast.LENGTH_SHORT).show();
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    //Toast.makeText(getContext(), databaseError.toString(), Toast.LENGTH_SHORT).show();
+                }
+            });
         }
         else{
-            progBar.setVisibility(View.VISIBLE);
-            Thread tNet;
-            for(BaseType obj : favoriteList){
-                if(obj instanceof League) {
-                    League fixture = (League) obj;
-                    NetworkHome networkHome = new NetworkHome("", 2,
-                            fixture.getLeague_id(), FavoriteFragment.this, getActivity());
-                    tNet = new Thread(networkHome);
-                    tNet.start();
-                }
-            }
+            Toast.makeText(getContext(), "Authenticate to see Favorites", Toast.LENGTH_SHORT).show();
         }
 
+        if(MainActivity.NETWORK_CONNECTION == false){
+            Toast.makeText(getContext(), "Network Connection is unavailable!", Toast.LENGTH_SHORT).show();
+            return;
+        }
     }
 
     public void addItem(BaseType object){
@@ -134,5 +159,14 @@ public class FavoriteFragment extends BaseFragment {
 
     public void flush(){
         favoriteRecyclerView.notifyDataSetChanged();
+    }
+
+    public void modifyContent(String url, int requestType, String leagueId, String leagueName){
+        MatchFragment mFragment = new MatchFragment(url, requestType, leagueId, leagueName);
+            getFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_container, mFragment)
+                    .addToBackStack(null)
+                    .commit();
     }
 }

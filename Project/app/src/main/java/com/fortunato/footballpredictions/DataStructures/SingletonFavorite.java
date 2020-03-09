@@ -15,4 +15,8 @@ public class SingletonFavorite {
         }
         else return instance;
     }
+
+    public static void setInstance(List<BaseType> instance) {
+        SingletonFavorite.instance = instance;
+    }
 }

@@ -18,6 +18,9 @@ import com.fortunato.footballpredictions.DataStructures.League;
 import com.fortunato.footballpredictions.DataStructures.SingletonFavorite;
 import com.fortunato.footballpredictions.Fragments.LeagueFragment;
 import com.fortunato.footballpredictions.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.List;
 
@@ -89,12 +92,54 @@ public class LeagueRecyclerView extends RecyclerView.Adapter<LeagueRecyclerView.
                     Object obj = list.get(position);
 
                     List<BaseType> favoriteList = SingletonFavorite.getInstance();
-
+                    /*
                     if(obj instanceof League) {
                         League fixture = (League) obj;
                         if(favoriteList!=null && favoriteList.contains(fixture))
                             favoriteList.remove(fixture);
                         else favoriteList.add(fixture);
+                    }
+
+                     */
+                    if (obj instanceof League) {
+                        League fixture = (League) obj;
+                        if (favoriteList != null && favoriteList.contains(fixture)) {
+                            //remove
+
+                            String currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                            DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("users").child(currentFirebaseUser).child(fixture.getLeague_id());
+                            ref.removeValue();
+
+
+                        } else {
+                            //add
+                            if (FirebaseAuth.getInstance().getCurrentUser() == null) {
+                                Toast.makeText(fragment.getContext(), "Please log in", Toast.LENGTH_SHORT).show();
+                                return;
+                            }
+                            String currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                            FirebaseDatabase database = FirebaseDatabase.getInstance();
+
+                            long millisec = System.currentTimeMillis();
+                            DatabaseReference entry = database.getReference("users").child(currentFirebaseUser).child(String.valueOf(millisec));
+
+                            DatabaseReference id = entry.child("league_id");
+                            id.setValue(fixture.getLeague_id());
+
+                            DatabaseReference name = entry.child("name");
+                            name.setValue(fixture.getName());
+
+                            DatabaseReference urlImg = entry.child("urlImg");
+                            urlImg.setValue(fixture.getUrlImg());
+
+                            DatabaseReference country = entry.child("country");
+                            country.setValue(fixture.getCountry());
+
+                            DatabaseReference cov = entry.child("coverage");
+                            DatabaseReference pred = cov.child("prediction");
+                            pred.setValue(fixture.getPredictions());
+                        }
+
                     }
                 }
             });

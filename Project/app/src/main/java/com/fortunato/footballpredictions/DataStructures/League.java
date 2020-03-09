@@ -25,6 +25,7 @@ public class League extends BaseType implements Serializable {
     private transient Bitmap logo;
     private String country;
     private transient LoadImage loadImage;
+    private String dbId;
     /*
     private String country_code = null;
     private String season_start = null;
@@ -108,9 +109,6 @@ public class League extends BaseType implements Serializable {
 
     public void setUrlImg(String urlImg) {
         this.urlImg = urlImg;
-        if(urlImg != null && !urlImg.equals("null")){
-            loadImage = new LoadImage(urlImg, null,League.this);
-        }
     }
 
     public void setLoadImage(LoadImage loadImage) {
@@ -150,6 +148,14 @@ public class League extends BaseType implements Serializable {
 
     public void setLogo(Bitmap logo) {
         this.logo = logo;
+    }
+
+    public void setDbId(String dbId) {
+        this.dbId = dbId;
+    }
+
+    public String getDbId(){
+        return dbId;
     }
 
     private void writeObject(ObjectOutputStream os){
