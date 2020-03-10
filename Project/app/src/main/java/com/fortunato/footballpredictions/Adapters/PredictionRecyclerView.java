@@ -14,7 +14,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.fortunato.footballpredictions.Activities.PredictionStatisticActivity;
+import com.fortunato.footballpredictions.Activities.PredictionActivity;
 import com.fortunato.footballpredictions.DataStructures.BaseType;
 import com.fortunato.footballpredictions.DataStructures.Bet_Item;
 import com.fortunato.footballpredictions.DataStructures.FixturePrediction;
@@ -23,7 +23,7 @@ import com.fortunato.footballpredictions.R;
 
 import java.util.List;
 
-public class PredictionStatisticRecyclerView extends RecyclerView.Adapter<PredictionStatisticRecyclerView.ViewHolder> {
+public class PredictionRecyclerView extends RecyclerView.Adapter<PredictionRecyclerView.ViewHolder> {
 
     private List<BaseType> list;
 
@@ -39,11 +39,11 @@ public class PredictionStatisticRecyclerView extends RecyclerView.Adapter<Predic
     private boolean flag_x = false;
     private boolean flag_2 = false;
 
-    private PredictionStatisticActivity parent;
+    private PredictionActivity parent;
 
 
 
-    public PredictionStatisticRecyclerView(List<BaseType> list, PredictionStatisticActivity parent, String league) {
+    public PredictionRecyclerView(List<BaseType> list, PredictionActivity parent, String league) {
 
         this.list = list;
         this.parent = parent;
@@ -52,15 +52,15 @@ public class PredictionStatisticRecyclerView extends RecyclerView.Adapter<Predic
 
     @NonNull
     @Override
-    public PredictionStatisticRecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public PredictionRecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.prediction_tab, parent, false);
-        return new PredictionStatisticRecyclerView.ViewHolder(view);
+        return new PredictionRecyclerView.ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull PredictionStatisticRecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull PredictionRecyclerView.ViewHolder holder, int position) {
         TextView tTitle = holder.titlePred;
         TextView tPred = holder.textPred;
         TextView tTitle1 = holder.titlePred1;

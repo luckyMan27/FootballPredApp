@@ -17,14 +17,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.fortunato.footballpredictions.Activities.MainActivity;
 import com.fortunato.footballpredictions.Adapters.LeagueRecyclerView;
 import com.fortunato.footballpredictions.DataStructures.BaseType;
-import com.fortunato.footballpredictions.DataStructures.Country;
 import com.fortunato.footballpredictions.DataStructures.League;
 import com.fortunato.footballpredictions.Networks.LoadImage;
 import com.fortunato.footballpredictions.Networks.NetworkHome;
 import com.fortunato.footballpredictions.R;
 import com.fortunato.footballpredictions.tools.SaveData;
 
-import java.io.Serializable;
 import java.util.List;
 
 public class LeagueFragment extends BaseFragment {
@@ -67,7 +65,6 @@ public class LeagueFragment extends BaseFragment {
         handleData = new SaveData(getContext());
         if(savedInstanceState != null){
             flagNetwork = savedInstanceState.getBoolean(NETFLAG);
-            items = (List<League>)savedInstanceState.get(STATE_ITEMS);
             recyclerLayout = savedInstanceState.getParcelable(RECYCLER_LAYOUT);
         }
         if(items == null) {
@@ -78,7 +75,6 @@ public class LeagueFragment extends BaseFragment {
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putSerializable(STATE_ITEMS, (Serializable) items);
         outState.putParcelable(RECYCLER_LAYOUT, recyclerView.getLayoutManager().onSaveInstanceState());
         outState.putBoolean(NETFLAG, flagNetwork);
     }

@@ -27,7 +27,7 @@
             android:parentActivityName=".Activities.MainActivity" />
         <activity
             android:name=".Activities.StadiumActivity"
-            android:parentActivityName=".Activities.PredictionStatisticActivity" />
+            android:parentActivityName=".Activities.PredictionActivity" />
         <activity
             android:name=".Activities.ShowBetActivity"
             android:parentActivityName=".Activities.MainActivity" />
@@ -36,7 +36,7 @@
             android:label="@string/title_activity_add_bet"
             android:parentActivityName=".Activities.MainActivity" />
         <activity
-            android:name=".Activities.PredictionStatisticActivity"
+            android:name=".Activities.PredictionActivity"
             android:parentActivityName=".Activities.MainActivity" />
         <activity
             android:name=".Activities.MainActivity"

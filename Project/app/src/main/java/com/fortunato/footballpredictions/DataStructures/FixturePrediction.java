@@ -18,7 +18,7 @@ public class FixturePrediction extends BaseType{
     private String winPercDraws = null;
     private PredictionStatisticTeam home = null;
     private PredictionStatisticTeam away = null;
-    private PredictionStatisticComparison cmp = null;
+    //private PredictionStatisticComparison cmp = null;
 
     public FixturePrediction(JSONObject jsonObject) {
         JSONObject app;
@@ -38,7 +38,7 @@ public class FixturePrediction extends BaseType{
             home = new PredictionStatisticTeam(parent.getJSONObject("home"));
             away = new PredictionStatisticTeam(parent.getJSONObject("away"));
 
-            cmp = new PredictionStatisticComparison(jsonObject.getJSONObject("comparison"));
+            //cmp = new PredictionStatisticComparison(jsonObject.getJSONObject("comparison"));
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -81,7 +81,7 @@ public class FixturePrediction extends BaseType{
                 ", WinPercDraws='" + winPercDraws + '\'' +
                 ", home=" + home +
                 ", away=" + away +
-                ", hToh=" + cmp +
+                //", hToh=" + cmp +
                 '}';
     }
 
@@ -125,7 +125,7 @@ public class FixturePrediction extends BaseType{
         return away;
     }
 
-    public PredictionStatisticComparison gethToh() {
+    /*public PredictionStatisticComparison gethToh() {
         return cmp;
-    }
+    }*/
 }

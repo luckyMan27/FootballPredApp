@@ -12,7 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.fortunato.footballpredictions.Activities.PredictionStatisticActivity;
+import com.fortunato.footballpredictions.Activities.PredictionActivity;
 import com.fortunato.footballpredictions.DataStructures.BaseType;
 import com.fortunato.footballpredictions.DataStructures.LeagueFixture;
 import com.fortunato.footballpredictions.R;
@@ -21,10 +21,10 @@ import java.util.List;
 
 public class MatchRecyclerView extends RecyclerView.Adapter<MatchRecyclerView.ViewHolder> {
 
-    private List<BaseType> list;
+    private List<LeagueFixture> list;
     private String leagueName;
 
-    public MatchRecyclerView(List<BaseType> list, String leagueName) {
+    public MatchRecyclerView(List<LeagueFixture> list, String leagueName) {
 
         this.list = list;
         this.leagueName = leagueName;
@@ -105,7 +105,7 @@ public class MatchRecyclerView extends RecyclerView.Adapter<MatchRecyclerView.Vi
 
             if(obj instanceof LeagueFixture){
                 LeagueFixture fixture = (LeagueFixture) obj;
-                Intent intent = new Intent(v.getContext(), PredictionStatisticActivity.class);
+                Intent intent = new Intent(v.getContext(), PredictionActivity.class);
                 intent.putExtra("fixture_id", fixture.getFixture_id());
                 intent.putExtra("teams_match", fixture.gethTeam_name()+" - "+fixture.getaTeam_name());
                 intent.putExtra("home_id", fixture.gethTeam_id());

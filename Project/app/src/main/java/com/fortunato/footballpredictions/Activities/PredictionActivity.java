@@ -11,19 +11,19 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.fortunato.footballpredictions.Adapters.PredictionStatisticRecyclerView;
+import com.fortunato.footballpredictions.Adapters.PredictionRecyclerView;
 import com.fortunato.footballpredictions.DataStructures.BaseType;
-import com.fortunato.footballpredictions.Networks.NetworkPredStat;
+import com.fortunato.footballpredictions.Networks.NetworkPred;
 import com.fortunato.footballpredictions.R;
 
 import java.util.LinkedList;
 import java.util.List;
 
-public class PredictionStatisticActivity extends AppCompatActivity {
+public class PredictionActivity extends AppCompatActivity {
 
     private List<BaseType> items = null;
     private RecyclerView recyclerView = null;
-    private PredictionStatisticRecyclerView recyclerViewAdp = null;
+    private PredictionRecyclerView recyclerViewAdp = null;
 
 
     private Boolean flagNetwork = true;
@@ -36,7 +36,7 @@ public class PredictionStatisticActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_pred_stat);
+        setContentView(R.layout.activity_pred);
         Intent intent = getIntent();
         fixtureId = intent.getStringExtra("fixture_id");
         home = intent.getStringExtra("home_id");
@@ -67,14 +67,14 @@ public class PredictionStatisticActivity extends AppCompatActivity {
         layoutManager.setOrientation(RecyclerView.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
 
-        recyclerViewAdp = new PredictionStatisticRecyclerView(items, this, leagueName);
+        recyclerViewAdp = new PredictionRecyclerView(items, this, leagueName);
         recyclerView.setAdapter(recyclerViewAdp);
 
         recyclerView.setHasFixedSize(true);
 
         if(flagNetwork){
             progBar.setVisibility(View.VISIBLE);
-            NetworkPredStat netTools = new NetworkPredStat("predictions/"+fixtureId, 0, this);
+            NetworkPred netTools = new NetworkPred("predictions/"+fixtureId, 0, this);
             Thread tNet = new Thread(netTools);
             tNet.start();
             flagNetwork = false;

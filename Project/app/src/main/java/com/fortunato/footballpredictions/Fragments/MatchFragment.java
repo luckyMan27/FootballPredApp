@@ -2,6 +2,7 @@ package com.fortunato.footballpredictions.Fragments;
 
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.fortunato.footballpredictions.Activities.MainActivity;
 import com.fortunato.footballpredictions.Adapters.MatchRecyclerView;
 import com.fortunato.footballpredictions.DataStructures.BaseType;
+import com.fortunato.footballpredictions.DataStructures.LeagueFixture;
 import com.fortunato.footballpredictions.Networks.NetworkHome;
 import com.fortunato.footballpredictions.R;
 
@@ -30,7 +32,7 @@ public class MatchFragment extends BaseFragment {
     private static final String RECYCLER_LAYOUT = "recLayout";
     private static final String NETFLAG = "netFlag";
 
-    private List<BaseType> items = null;
+    private List<LeagueFixture> items = null;
     private Boolean flagNetwork = true;
     private ProgressBar progBar = null;
 
@@ -59,7 +61,7 @@ public class MatchFragment extends BaseFragment {
         super.onActivityCreated(savedInstanceState);
         if(savedInstanceState != null){
             flagNetwork = savedInstanceState.getBoolean(NETFLAG);
-            items = (List<BaseType>)savedInstanceState.get(STATE_ITEMS);
+            items = (List<LeagueFixture>)savedInstanceState.get(STATE_ITEMS);
             recyclerLayout = savedInstanceState.getParcelable(RECYCLER_LAYOUT);
         }
         if(items == null) {
@@ -122,7 +124,7 @@ public class MatchFragment extends BaseFragment {
     }
 
     public void addItem(BaseType object){
-        items.add(object);
+        items.add((LeagueFixture)object);
     }
 
     public ProgressBar getProgBar() {

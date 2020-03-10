@@ -43,21 +43,6 @@
 
                     </LinearLayout>
 
-                    <LinearLayout
-                        android:id="@+id/tab2"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical">
-
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/recviewStat"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:orientation="vertical"
-                            android:scrollbars="vertical"/>
-
-                    </LinearLayout>
-
                 </FrameLayout>
 
                 <ProgressBar

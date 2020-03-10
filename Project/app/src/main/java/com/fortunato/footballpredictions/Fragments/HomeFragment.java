@@ -2,7 +2,6 @@ package com.fortunato.footballpredictions.Fragments;
 
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +22,6 @@ import com.fortunato.footballpredictions.Networks.NetworkHome;
 import com.fortunato.footballpredictions.R;
 import com.fortunato.footballpredictions.tools.SaveData;
 
-import java.io.Serializable;
 import java.util.List;
 
 public class HomeFragment extends BaseFragment {
@@ -55,18 +53,17 @@ public class HomeFragment extends BaseFragment {
         handleData = new SaveData(getContext());
         if(savedInstanceState != null){
             flagNetwork = savedInstanceState.getBoolean(NETFLAG);
-            items = (List<Country>)savedInstanceState.get(STATE_ITEMS);
             recyclerLayout = savedInstanceState.getParcelable(RECYCLER_LAYOUT);
         }
         if(items == null) {
             items = handleData.loadCountries();
         }
+
     }
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putSerializable(STATE_ITEMS, (Serializable) items);
         outState.putParcelable(RECYCLER_LAYOUT, recyclerView.getLayoutManager().onSaveInstanceState());
         outState.putBoolean(NETFLAG, flagNetwork);
     }

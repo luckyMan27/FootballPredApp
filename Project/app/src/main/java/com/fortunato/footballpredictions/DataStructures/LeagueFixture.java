@@ -102,7 +102,7 @@ public class LeagueFixture extends BaseType implements Serializable {
     @NonNull
     @Override
     public String toString() {
-        return "Fixture = {" +
+        return "LeagueFixture = {" +
                 "fixture_id='" + fixture_id + '\'' +
                 ", league_id='" + league_id + '\'' +
                 ", event_timestamp='" + event_timestamp + '\'' +
