@@ -8,6 +8,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.content.Context;
 import android.content.Intent;
@@ -108,7 +109,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
 
-
         if(savedInstanceState != null){
             isNetworkAvailable();
             selectedFragment = getSupportFragmentManager().getFragment(savedInstanceState, FRAGMENT_USED);
@@ -120,16 +120,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                             .replace(R.id.fragment_container, home_frag)
                             .commit();
                     navigationView.setCheckedItem(R.id.nav_home);
-                }
-                if(selectedFragment instanceof FavoriteFragment) {
+                } else if(selectedFragment instanceof FavoriteFragment) {
                     fav_frag = (FavoriteFragment)selectedFragment;
                     getSupportFragmentManager()
                             .beginTransaction()
                             .replace(R.id.fragment_container, fav_frag)
                             .commit();
                     navigationView.setCheckedItem(R.id.nav_favorites);
-                }
-                if(selectedFragment instanceof BetFragment) {
+                } else if(selectedFragment instanceof BetFragment) {
                     bet_frag = (BetFragment)selectedFragment;
                     getSupportFragmentManager()
                             .beginTransaction()
@@ -139,11 +137,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }
             }
         } else {
-
             home_frag = new HomeFragment();
             selectedFragment = home_frag;
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container, selectedFragment).commit();
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_container, selectedFragment)
+                    .commit();
             navigationView.setCheckedItem(R.id.nav_home);
 
         }
@@ -263,14 +262,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         case R.id.nav_home:
                             if(home_frag == null) home_frag = new HomeFragment();
                             selectedFragment = home_frag;
+                            getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                            //getIntent().setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             break;
                         case R.id.nav_favorites:
                             if(fav_frag == null) fav_frag = new FavoriteFragment();
                             selectedFragment = fav_frag;
+                            getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                            //getIntent().setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             break;
                         case R.id.nav_bet:
                             if(bet_frag == null) bet_frag = new BetFragment();
                             selectedFragment = bet_frag;
+                            getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                            //getIntent().setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             break;
                     }
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
@@ -311,15 +316,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     Toast.makeText(MainActivity.this, "Please log in to see account informations", Toast.LENGTH_SHORT).show();
                 }
                 else start_info_user();
-                //showSigninOptions();
                 break;
 
             case R.id.draw_menu_bets:
                 start_addBet();
-                //Toast.makeText(this, "Bets", Toast.LENGTH_LONG).show();
                 break;
             case R.id.draw_menu_info:
-                //Toast.makeText(this, "Informations", Toast.LENGTH_LONG).show();
                 start_info();
                 break;
         }

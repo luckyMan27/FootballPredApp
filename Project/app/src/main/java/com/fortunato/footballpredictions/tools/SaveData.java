@@ -2,7 +2,6 @@ package com.fortunato.footballpredictions.tools;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.Log;
 
 import com.fortunato.footballpredictions.DataStructures.Bet;
 import com.fortunato.footballpredictions.DataStructures.Country;

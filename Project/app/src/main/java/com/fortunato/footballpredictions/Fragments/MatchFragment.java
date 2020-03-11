@@ -2,7 +2,6 @@ package com.fortunato.footballpredictions.Fragments;
 
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,7 +27,6 @@ import java.util.List;
 
 public class MatchFragment extends BaseFragment {
 
-    private static final String STATE_ITEMS = "items";
     private static final String RECYCLER_LAYOUT = "recLayout";
     private static final String NETFLAG = "netFlag";
 
@@ -61,7 +59,7 @@ public class MatchFragment extends BaseFragment {
         super.onActivityCreated(savedInstanceState);
         if(savedInstanceState != null){
             flagNetwork = savedInstanceState.getBoolean(NETFLAG);
-            items = (List<LeagueFixture>)savedInstanceState.get(STATE_ITEMS);
+            //items = (List<LeagueFixture>)savedInstanceState.get(STATE_ITEMS);
             recyclerLayout = savedInstanceState.getParcelable(RECYCLER_LAYOUT);
         }
         if(items == null) {
@@ -72,8 +70,8 @@ public class MatchFragment extends BaseFragment {
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putSerializable(STATE_ITEMS, (Serializable) items);
-        if(recyclerView.getLayoutManager()!=null)
+        //outState.putSerializable(STATE_ITEMS, (Serializable) items);
+        if(recyclerView!=null)
             outState.putParcelable(RECYCLER_LAYOUT, recyclerView.getLayoutManager().onSaveInstanceState());
         else outState.putParcelable(RECYCLER_LAYOUT, null);
         outState.putBoolean(NETFLAG, flagNetwork);
@@ -93,7 +91,7 @@ public class MatchFragment extends BaseFragment {
         recyclerView = container.findViewById(R.id.recView);
         progBar = container.findViewById(R.id.progBar);
         TextView titleText = container.findViewById(R.id.sportSelected);
-        titleText.setText("Games");
+        titleText.setText("Games - "+leagueName);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         layoutManager.setOrientation(RecyclerView.VERTICAL);

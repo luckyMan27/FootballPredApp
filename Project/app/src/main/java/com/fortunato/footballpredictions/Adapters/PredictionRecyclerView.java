@@ -1,7 +1,6 @@
 package com.fortunato.footballpredictions.Adapters;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -86,11 +85,9 @@ public class PredictionRecyclerView extends RecyclerView.Adapter<PredictionRecyc
 
         Button stadio_btn = holder.stadio_btn;
 
-
         BaseType obj = list.get(position);
         if(obj instanceof FixturePrediction){
             FixturePrediction prediction = (FixturePrediction) obj;
-            Log.d("Debug-predStatRecView", prediction.toString());
             tTitle.setText("Match Winner");
             tPred.setText((prediction.getMatchWinner().equals("1")) ? prediction.getHome().getTeamName() : prediction.getAway().getTeamName()) ;
             tTitle1.setText("Under/Over");

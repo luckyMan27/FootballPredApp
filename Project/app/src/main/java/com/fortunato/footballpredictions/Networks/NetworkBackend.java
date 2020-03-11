@@ -1,11 +1,7 @@
 package com.fortunato.footballpredictions.Networks;
 
 import android.app.Activity;
-import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
-
-
 
 import com.fortunato.footballpredictions.Activities.MainActivity;
 import com.fortunato.footballpredictions.DataStructures.BaseType;
@@ -180,7 +176,6 @@ public class NetworkBackend implements Runnable {
             } else {
                 flag_no_bets = true;
             }
-            Log.i("list",list.toString());
 
             Collections.reverse(list);
 

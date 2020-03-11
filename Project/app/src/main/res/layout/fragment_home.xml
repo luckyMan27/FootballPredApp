@@ -16,7 +16,7 @@
             android:id="@+id/sportSelected"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="Country"
+            android:text="Countries"
             android:textAlignment="center"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:padding="8dp"/>

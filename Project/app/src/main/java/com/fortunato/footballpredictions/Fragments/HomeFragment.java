@@ -26,7 +26,6 @@ import java.util.List;
 
 public class HomeFragment extends BaseFragment {
 
-    private static final String STATE_ITEMS = "items";
     private static final String RECYCLER_LAYOUT = "recLayout";
     private static final String NETFLAG = "netFlag";
 
@@ -79,6 +78,8 @@ public class HomeFragment extends BaseFragment {
     public void onStart() {
         super.onStart();
 
+        this.setRetainInstance(true);
+
         recyclerView = container.findViewById(R.id.recView);
         progBar = container.findViewById(R.id.progBar);
 
@@ -129,8 +130,7 @@ public class HomeFragment extends BaseFragment {
 
     private void loadImage(){
         for(Country country : items){
-            if(country.getLoadImage()!=null) country.getLoadImage().run();
-            else if(country.getUrlImg()!=null && !country.getUrlImg().equals("null")){
+            if(country.getUrlImg()!=null && !country.getUrlImg().equals("null") && country.getLoadImage() == null){
                 country.setLoadImage( new LoadImage(country.getUrlImg(), null, country));
                 country.getLoadImage().start();
             }
@@ -154,5 +154,6 @@ public class HomeFragment extends BaseFragment {
                     .addToBackStack(null)
                     .commit();
         }
+        getFragmentManager().executePendingTransactions();
     }
 }

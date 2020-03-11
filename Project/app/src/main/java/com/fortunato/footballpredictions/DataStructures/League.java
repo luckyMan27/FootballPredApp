@@ -2,7 +2,6 @@ package com.fortunato.footballpredictions.DataStructures;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 

@@ -1,7 +1,9 @@
 package com.fortunato.footballpredictions.Activities;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TabHost;
@@ -43,7 +45,6 @@ public class PredictionActivity extends AppCompatActivity {
         venue = intent.getStringExtra("venue");
         leagueName = intent.getStringExtra("league");
         setTitle(intent.getStringExtra("teams_match"));
-
 
         if(items == null) items = new LinkedList<>();
 

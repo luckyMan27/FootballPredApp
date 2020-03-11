@@ -26,7 +26,6 @@ import com.fortunato.footballpredictions.tools.SaveData;
 import java.util.List;
 
 public class LeagueFragment extends BaseFragment {
-    private static final String STATE_ITEMS = "items";
     private static final String RECYCLER_LAYOUT = "recLayout";
     private static final String NETFLAG = "netFlag";
 
@@ -75,7 +74,8 @@ public class LeagueFragment extends BaseFragment {
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putParcelable(RECYCLER_LAYOUT, recyclerView.getLayoutManager().onSaveInstanceState());
+        if(recyclerView != null)
+            outState.putParcelable(RECYCLER_LAYOUT, recyclerView.getLayoutManager().onSaveInstanceState());
         outState.putBoolean(NETFLAG, flagNetwork);
     }
 
@@ -93,7 +93,7 @@ public class LeagueFragment extends BaseFragment {
         recyclerView = container.findViewById(R.id.recView);
         progBar = container.findViewById(R.id.progBar);
         TextView titleText = container.findViewById(R.id.sportSelected);
-        titleText.setText("Leagues");
+        titleText.setText("Leagues - "+country);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         layoutManager.setOrientation(RecyclerView.VERTICAL);
@@ -164,5 +164,6 @@ public class LeagueFragment extends BaseFragment {
                     .addToBackStack(null)
                     .commit();
         }
+        getFragmentManager().executePendingTransactions();
     }
 }
