@@ -39,6 +39,7 @@ public class PredictionActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pred);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         Intent intent = getIntent();
         fixtureId = intent.getStringExtra("fixture_id");
         home = intent.getStringExtra("home_id");
@@ -56,7 +57,6 @@ public class PredictionActivity extends AppCompatActivity {
         tSpec.setIndicator("Predictions");
         tabHost.addTab(tSpec);
         tabPredictions();
-
 
     }
 

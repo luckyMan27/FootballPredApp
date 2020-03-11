@@ -8,7 +8,6 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 
 import android.content.Context;
 import android.content.Intent;
@@ -262,20 +261,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         case R.id.nav_home:
                             if(home_frag == null) home_frag = new HomeFragment();
                             selectedFragment = home_frag;
-                            getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-                            //getIntent().setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             break;
                         case R.id.nav_favorites:
                             if(fav_frag == null) fav_frag = new FavoriteFragment();
                             selectedFragment = fav_frag;
-                            getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-                            //getIntent().setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             break;
                         case R.id.nav_bet:
                             if(bet_frag == null) bet_frag = new BetFragment();
                             selectedFragment = bet_frag;
-                            getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-                            //getIntent().setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             break;
                     }
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,

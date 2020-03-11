@@ -164,6 +164,5 @@ public class LeagueFragment extends BaseFragment {
                     .addToBackStack(null)
                     .commit();
         }
-        getFragmentManager().executePendingTransactions();
     }
 }

@@ -154,6 +154,5 @@ public class HomeFragment extends BaseFragment {
                     .addToBackStack(null)
                     .commit();
         }
-        getFragmentManager().executePendingTransactions();
     }
 }
