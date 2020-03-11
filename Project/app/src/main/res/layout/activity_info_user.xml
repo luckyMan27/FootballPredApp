@@ -25,72 +25,103 @@
 
     </androidx.cardview.widget.CardView>
 
-    <ImageView
-        android:id="@+id/img_info_user"
-        android:layout_width="325dp"
-        android:layout_height="222dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="24dp"
-        android:src="@drawable/ic_defaultuser"
+    <ScrollView
+        android:id="@+id/scroll_info"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/title_info">
 
-    </ImageView>
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/info_user_name"
-        android:layout_width="397dp"
-        android:layout_height="65dp"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="4dp"
-        android:elevation="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/img_info_user">
-
-        <TextView
-            android:id="@+id/textInfoUserName"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="User Email"
-            android:fontFamily="Arial"
-            android:padding="5dp"
-            android:textColor="#181515"
-            android:textSize="14dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/img_info_user" />
+            android:layout_height="match_parent">
 
-    </androidx.cardview.widget.CardView>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/info_user_email"
-        android:layout_width="397dp"
-        android:layout_height="65dp"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="4dp"
-        android:elevation="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/info_user_name">
+                <ImageView
+                    android:id="@+id/img_info_user"
+                    android:layout_width="325dp"
+                    android:layout_height="222dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="24dp"
+                    android:src="@drawable/ic_defaultuser"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toTopOf="@id/info_user_name">
 
-        <TextView
-            android:id="@+id/textInfoUserEmail"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="User Email"
-            android:fontFamily="Arial"
-            android:padding="5dp"
-            android:textColor="#181515"
-            android:textSize="14dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/info_user_name" />
+                </ImageView>
 
-    </androidx.cardview.widget.CardView>
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/info_user_name"
+                    android:layout_width="0dp"
+                    android:layout_height="65dp"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginEnd="4dp"
+                    android:elevation="10dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/img_info_user"
+                    app:layout_constraintBottom_toTopOf="@id/info_user_email">
+
+                    <TextView
+                        android:id="@+id/textInfoUserName"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="User Email"
+                        android:fontFamily="Arial"
+                        android:padding="5dp"
+                        android:textColor="#181515"
+                        android:textSize="14dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/img_info_user" />
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/info_user_email"
+                    android:layout_width="0dp"
+                    android:layout_height="65dp"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="4dp"
+                    android:layout_marginBottom="50dp"
+                    android:elevation="10dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/info_user_name"
+                    app:layout_constraintBottom_toBottomOf="parent">
+
+                    <TextView
+                        android:id="@+id/textInfoUserEmail"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="User Email"
+                        android:fontFamily="Arial"
+                        android:padding="5dp"
+                        android:textColor="#181515"
+                        android:textSize="14dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/info_user_name"
+                        app:layout_constraintBottom_toBottomOf="parent"/>
+
+                </androidx.cardview.widget.CardView>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </FrameLayout>
+
+
+    </ScrollView>
+
+
 
 
 

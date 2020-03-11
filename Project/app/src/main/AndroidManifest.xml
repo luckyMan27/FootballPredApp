@@ -27,9 +27,13 @@
             android:parentActivityName=".Activities.MainActivity" />
         <activity
             android:name=".Activities.StadiumActivity"
-            android:parentActivityName=".Activities.PredictionActivity" />
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"
+            android:parentActivityName=".Activities.PredictionActivity"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".Activities.ShowBetActivity"
+
             android:parentActivityName=".Activities.MainActivity" />
         <activity
             android:name=".Activities.AddBetActivity"

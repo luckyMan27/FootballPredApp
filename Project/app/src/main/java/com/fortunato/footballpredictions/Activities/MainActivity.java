@@ -15,6 +15,7 @@ import android.graphics.Bitmap;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,6 +26,9 @@ import android.widget.Toast;
 
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.IdpResponse;
+import com.fortunato.footballpredictions.DataStructures.BaseType;
+import com.fortunato.footballpredictions.DataStructures.League;
+import com.fortunato.footballpredictions.DataStructures.SingletonFavorite;
 import com.fortunato.footballpredictions.Fragments.BetFragment;
 import com.fortunato.footballpredictions.Fragments.FavoriteFragment;
 import com.fortunato.footballpredictions.Fragments.HomeFragment;
@@ -33,7 +37,14 @@ import com.fortunato.footballpredictions.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -90,7 +101,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
         userAuth = FirebaseAuth.getInstance();
-        if(userAuth.getCurrentUser()!=null) showUserInfos();
+        if(userAuth.getCurrentUser()!=null){
+            showUserInfos();
+            fetchFavorites();
+        }
 
         loginB.setOnClickListener( new View.OnClickListener(){
             @Override
@@ -174,6 +188,34 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         userEmail.setText("No email");
         userImg.setImageResource(R.mipmap.ic_launcher);
 
+    }
+
+    private void fetchFavorites(){
+        final String currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("users").child(currentFirebaseUser);
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                LinkedList<BaseType> list = new LinkedList<BaseType>();
+                for (DataSnapshot data_s : dataSnapshot.getChildren()) {
+                    String dbId = data_s.getKey();
+                    League l = data_s.getValue(League.class);
+                    l.setDbId(dbId);
+                    if (l.getLoadImage() != null) l.getLoadImage().run();
+                    else if (l.getUrlImg() != null && !l.getUrlImg().equals("null")) {
+                        l.setLoadImage(new LoadImage(l.getUrlImg(), null, l));
+                        l.getLoadImage().start();
+                    }
+                    list.add(l);
+                }
+                SingletonFavorite.setInstance(list);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
     private void showSigninOptions() {

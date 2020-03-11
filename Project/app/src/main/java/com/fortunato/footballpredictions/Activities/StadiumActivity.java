@@ -6,11 +6,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -72,6 +74,7 @@ public class StadiumActivity extends AppCompatActivity implements SensorEventLis
     private ImageView arrow;
     private ImageView rose;
 
+
     private String distance = "Wait to calculate";
 
     private Address stadium_addr;
@@ -83,13 +86,15 @@ public class StadiumActivity extends AppCompatActivity implements SensorEventLis
 
     LocationCallback call;
 
+
+    @SuppressLint("SourceLockedOrientationActivity")
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stadium);
         Intent intent = getIntent();
-
+        setRequestedOrientation (ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         venue = intent.getStringExtra("venue");
 
         arrow = (ImageView)  findViewById(R.id.arrow);

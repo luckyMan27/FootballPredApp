@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import com.fortunato.footballpredictions.R;
 
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 public class InfoActivity extends AppCompatActivity {
@@ -25,6 +26,7 @@ public class InfoActivity extends AppCompatActivity {
         desc1 = findViewById(R.id.textInfoApp);
         desc2 = findViewById(R.id.textInfoApp2);
         desc3 = findViewById(R.id.textInfoApp3);
+
 
         info1 = "Football Prediction is an application dedicated to the football's world. " +
                 "The main focus of our application are the football pools.\n" +
