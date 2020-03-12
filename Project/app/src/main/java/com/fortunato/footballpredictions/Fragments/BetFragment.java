@@ -21,6 +21,8 @@ import com.fortunato.footballpredictions.DataStructures.BaseType;
 import com.fortunato.footballpredictions.DataStructures.Bet;
 import com.fortunato.footballpredictions.DataStructures.Bet_Item;
 import com.fortunato.footballpredictions.DataStructures.SingletonCurrentBet;
+import com.fortunato.footballpredictions.DataStructures.SingletonCurrentFragment;
+import com.fortunato.footballpredictions.DataStructures.SingletonFavorite;
 import com.fortunato.footballpredictions.Networks.NetworkBackend;
 import com.fortunato.footballpredictions.R;
 import com.fortunato.footballpredictions.tools.SaveData;
@@ -85,6 +87,7 @@ public class BetFragment extends Fragment {
     public void onStart() {
         super.onStart();
 
+        SingletonCurrentFragment.setCurrentId(this.getId());
 
         recyclerView = container.findViewById(R.id.recViewBet);
 
@@ -146,6 +149,11 @@ public class BetFragment extends Fragment {
 
     public void notifyNoBets(){
         Toast.makeText(this.getContext(), "No items present", Toast.LENGTH_SHORT).show();;
+    }
+
+    public void onResume() {
+        super.onResume();
+        SingletonCurrentFragment.setCurrentId(this.getId());
     }
 }
 

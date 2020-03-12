@@ -18,6 +18,7 @@ import com.fortunato.footballpredictions.Activities.MainActivity;
 import com.fortunato.footballpredictions.Adapters.FavoriteRecyclerView;
 import com.fortunato.footballpredictions.DataStructures.BaseType;
 import com.fortunato.footballpredictions.DataStructures.League;
+import com.fortunato.footballpredictions.DataStructures.SingletonCurrentFragment;
 import com.fortunato.footballpredictions.DataStructures.SingletonFavorite;
 import com.fortunato.footballpredictions.Networks.LoadImage;
 import com.fortunato.footballpredictions.Networks.NetworkHome;
@@ -72,7 +73,8 @@ public class FavoriteFragment extends BaseFragment {
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putSerializable(STATE_ITEMS, (Serializable) items);
-        outState.putParcelable(RECYCLER_LAYOUT, recyclerView.getLayoutManager().onSaveInstanceState());
+        if(recyclerView != null)
+            outState.putParcelable(RECYCLER_LAYOUT, recyclerView.getLayoutManager().onSaveInstanceState());
         outState.putBoolean(NETFLAG, flagNetwork);
     }
 
@@ -87,6 +89,7 @@ public class FavoriteFragment extends BaseFragment {
     public void onStart() {
         super.onStart();
 
+        SingletonCurrentFragment.setCurrentId(this.getId());
         progBar = container.findViewById(R.id.progBarFav);
         recyclerView = container.findViewById(R.id.recViewFav);
 
@@ -171,5 +174,10 @@ public class FavoriteFragment extends BaseFragment {
                     .replace(R.id.fragment_container, mFragment)
                     .addToBackStack(null)
                     .commit();
+    }
+
+    public void onResume() {
+        super.onResume();
+        SingletonCurrentFragment.setCurrentId(this.getId());
     }
 }

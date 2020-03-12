@@ -28,10 +28,13 @@ import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.IdpResponse;
 import com.fortunato.footballpredictions.DataStructures.BaseType;
 import com.fortunato.footballpredictions.DataStructures.League;
+import com.fortunato.footballpredictions.DataStructures.SingletonCurrentFragment;
 import com.fortunato.footballpredictions.DataStructures.SingletonFavorite;
 import com.fortunato.footballpredictions.Fragments.BetFragment;
 import com.fortunato.footballpredictions.Fragments.FavoriteFragment;
 import com.fortunato.footballpredictions.Fragments.HomeFragment;
+import com.fortunato.footballpredictions.Fragments.LeagueFragment;
+import com.fortunato.footballpredictions.Fragments.MatchFragment;
 import com.fortunato.footballpredictions.Networks.LoadImage;
 import com.fortunato.footballpredictions.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -58,6 +61,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private HomeFragment home_frag = null;
     private FavoriteFragment fav_frag = null;
     private BetFragment bet_frag = null;
+    private LeagueFragment league_frag = null;
+    private MatchFragment match_frag = null;
 
     private static final int MY_REQUEST_CODE = 7777;
 
@@ -124,7 +129,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         if(savedInstanceState != null){
             isNetworkAvailable();
-            selectedFragment = getSupportFragmentManager().getFragment(savedInstanceState, FRAGMENT_USED);
+            //selectedFragment = getSupportFragmentManager().getFragment(savedInstanceState, FRAGMENT_USED);
+            int fragId = SingletonCurrentFragment.getCurrentId();
+            selectedFragment = getSupportFragmentManager().findFragmentById(fragId);
+
+
             if(selectedFragment != null){
                 if(selectedFragment instanceof HomeFragment){
                     home_frag = (HomeFragment)selectedFragment;
@@ -145,6 +154,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     getSupportFragmentManager()
                             .beginTransaction()
                             .replace(R.id.fragment_container, bet_frag)
+                            .commit();
+                    navigationView.setCheckedItem(R.id.nav_bet);
+                }
+                else if(selectedFragment instanceof LeagueFragment) {
+                    league_frag = (LeagueFragment)selectedFragment;
+                    getSupportFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.fragment_container, league_frag)
+                            .commit();
+                    navigationView.setCheckedItem(R.id.nav_bet);
+                }
+                else if(selectedFragment instanceof MatchFragment) {
+                    match_frag = (MatchFragment)selectedFragment;
+                    getSupportFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.fragment_container, match_frag)
                             .commit();
                     navigationView.setCheckedItem(R.id.nav_bet);
                 }
@@ -291,7 +316,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        getSupportFragmentManager().putFragment(outState, FRAGMENT_USED, selectedFragment);
+        //getSupportFragmentManager().putFragment(outState, FRAGMENT_USED, selectedFragment);
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =

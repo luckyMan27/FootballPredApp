@@ -2,6 +2,7 @@ package com.fortunato.footballpredictions.Fragments;
 
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import com.fortunato.footballpredictions.Activities.MainActivity;
 import com.fortunato.footballpredictions.Adapters.LeagueRecyclerView;
 import com.fortunato.footballpredictions.DataStructures.BaseType;
 import com.fortunato.footballpredictions.DataStructures.League;
+import com.fortunato.footballpredictions.DataStructures.SingletonCurrentFragment;
 import com.fortunato.footballpredictions.Networks.LoadImage;
 import com.fortunato.footballpredictions.Networks.NetworkHome;
 import com.fortunato.footballpredictions.R;
@@ -79,6 +81,15 @@ public class LeagueFragment extends BaseFragment {
         outState.putBoolean(NETFLAG, flagNetwork);
     }
 
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // retain this fragment
+        setRetainInstance(true);
+    }
+
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -89,7 +100,7 @@ public class LeagueFragment extends BaseFragment {
     @Override
     public void onStart() {
         super.onStart();
-
+        SingletonCurrentFragment.setCurrentId(this.getId());
         recyclerView = container.findViewById(R.id.recView);
         progBar = container.findViewById(R.id.progBar);
         TextView titleText = container.findViewById(R.id.sportSelected);
@@ -164,5 +175,10 @@ public class LeagueFragment extends BaseFragment {
                     .addToBackStack(null)
                     .commit();
         }
+    }
+
+    public void onResume() {
+        super.onResume();
+        SingletonCurrentFragment.setCurrentId(this.getId());
     }
 }

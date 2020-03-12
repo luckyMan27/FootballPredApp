@@ -18,6 +18,7 @@ import com.fortunato.footballpredictions.Activities.MainActivity;
 import com.fortunato.footballpredictions.Adapters.MatchRecyclerView;
 import com.fortunato.footballpredictions.DataStructures.BaseType;
 import com.fortunato.footballpredictions.DataStructures.LeagueFixture;
+import com.fortunato.footballpredictions.DataStructures.SingletonCurrentFragment;
 import com.fortunato.footballpredictions.Networks.NetworkHome;
 import com.fortunato.footballpredictions.R;
 
@@ -73,9 +74,17 @@ public class MatchFragment extends BaseFragment {
         //outState.putSerializable(STATE_ITEMS, (Serializable) items);
         if(recyclerView!=null)
             outState.putParcelable(RECYCLER_LAYOUT, recyclerView.getLayoutManager().onSaveInstanceState());
-        else outState.putParcelable(RECYCLER_LAYOUT, null);
+        //else outState.putParcelable(RECYCLER_LAYOUT, null);
         outState.putBoolean(NETFLAG, flagNetwork);
     }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // retain this fragment
+        setRetainInstance(true);
+    }
+
 
     @Nullable
     @Override
@@ -87,7 +96,7 @@ public class MatchFragment extends BaseFragment {
     @Override
     public void onStart() {
         super.onStart();
-
+        SingletonCurrentFragment.setCurrentId(this.getId());
         recyclerView = container.findViewById(R.id.recView);
         progBar = container.findViewById(R.id.progBar);
         TextView titleText = container.findViewById(R.id.sportSelected);
@@ -131,5 +140,10 @@ public class MatchFragment extends BaseFragment {
 
     public void flush(){
         matchRecyclerView.notifyDataSetChanged();
+    }
+
+    public void onResume() {
+        super.onResume();
+        SingletonCurrentFragment.setCurrentId(this.getId());
     }
 }

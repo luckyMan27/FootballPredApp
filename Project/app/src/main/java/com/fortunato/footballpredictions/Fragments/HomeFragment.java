@@ -17,6 +17,7 @@ import com.fortunato.footballpredictions.Activities.MainActivity;
 import com.fortunato.footballpredictions.Adapters.CountryRecyclerView;
 import com.fortunato.footballpredictions.DataStructures.BaseType;
 import com.fortunato.footballpredictions.DataStructures.Country;
+import com.fortunato.footballpredictions.DataStructures.SingletonCurrentFragment;
 import com.fortunato.footballpredictions.Networks.LoadImage;
 import com.fortunato.footballpredictions.Networks.NetworkHome;
 import com.fortunato.footballpredictions.R;
@@ -79,7 +80,7 @@ public class HomeFragment extends BaseFragment {
         super.onStart();
 
         this.setRetainInstance(true);
-
+        SingletonCurrentFragment.setCurrentId(this.getId());
         recyclerView = container.findViewById(R.id.recView);
         progBar = container.findViewById(R.id.progBar);
 
@@ -154,5 +155,10 @@ public class HomeFragment extends BaseFragment {
                     .addToBackStack(null)
                     .commit();
         }
+    }
+
+    public void onResume() {
+        super.onResume();
+        SingletonCurrentFragment.setCurrentId(this.getId());
     }
 }
