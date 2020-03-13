@@ -111,6 +111,21 @@ public class PredictionRecyclerView extends RecyclerView.Adapter<PredictionRecyc
             team1 = prediction.getHome().getTeamName();
             team2 = prediction.getAway().getTeamName();
 
+            int res = verify_elem(team1, team2, "1", league);
+
+            if(res == 1){
+                gr.clearCheck();
+                btn_1.setChecked(true);
+            }
+            else if(res == 2){
+                gr.clearCheck();
+                btn_2.setChecked(true);
+            }
+            else if(res == 3){
+                gr.clearCheck();
+                btn_x.setChecked(true);
+            }
+
         }
 
 
@@ -279,5 +294,23 @@ public class PredictionRecyclerView extends RecyclerView.Adapter<PredictionRecyc
                 bets.remove(it2);
             }
         }
+    }
+
+    public int verify_elem(String t1, String t2, String value, String league){
+        bets = SingletonCurrentBet.getInstance();
+        it = new Bet_Item(t1, t2, value, league);
+        if(bets.contains(it)){
+            String value_of = bets.get(bets.indexOf(it)).getValue();
+            if(value_of == "1"){
+                return 1;
+            }
+            else if(value_of == "2"){
+                return 2;
+            }
+            else if(value_of == "X"){
+                return 3;
+            }
+        }
+        return 0;
     }
 }
