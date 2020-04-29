@@ -211,7 +211,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         loginB.setVisibility(View.VISIBLE);
         userName.setText("No name");
         userEmail.setText("No email");
-        userImg.setImageResource(R.mipmap.ic_launcher);
+        userImg.setImageResource(R.drawable.ic_defaultuser);
 
     }
 

@@ -25,6 +25,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Looper;
 import android.util.Log;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.location.Geocoder;
@@ -121,24 +122,24 @@ public class StadiumActivity extends AppCompatActivity implements SensorEventLis
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
         if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            Log.i("permission","not granted");
+            Toast.makeText(this, "Permissions not granted", Toast.LENGTH_SHORT).show();
             return;
         }
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-        Log.i("location", "wait to listen");
+
         fusedLocationClient.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
             @Override
             public void onSuccess(Location location) {
-                // Got last known location. In some rare situations this can be null.
+
                 if (location != null) {
-                    Log.i("location", location.toString());
+
                     current = location;
                 }
             }
         });
     }
-    /////////////////////////////////////////////////////
+
     protected void createLocationRequest(int value) {
         if(value == 0){
             locationRequest = LocationRequest.create();
@@ -161,14 +162,12 @@ public class StadiumActivity extends AppCompatActivity implements SensorEventLis
         createLocationRequest(0);
         builder.addLocationRequest(locationRequest);
 
-        Log.i("Location","request location");
         SettingsClient client = LocationServices.getSettingsClient(this);
         Task<LocationSettingsResponse> task = client.checkLocationSettings(builder.build());
 
         task.addOnSuccessListener(this, new OnSuccessListener<LocationSettingsResponse>() {
             @Override
             public void onSuccess(LocationSettingsResponse locationSettingsResponse) {
-                Log.i("Location", "location gained");
                 createLocationRequest(1);
                 fusedLocationClient.requestLocationUpdates(locationRequest,
                         call,
@@ -181,24 +180,20 @@ public class StadiumActivity extends AppCompatActivity implements SensorEventLis
             @Override
             public void onFailure(@NonNull Exception e) {
                 if (e instanceof ResolvableApiException) {
-                    // Location settings are not satisfied, but this can be fixed
-                    // by showing the user a dialog.
+
                     try {
-                        // Show the dialog by calling startResolutionForResult(),
-                        // and check the result in onActivityResult().
+
                         ResolvableApiException resolvable = (ResolvableApiException) e;
                         resolvable.startResolutionForResult(StadiumActivity.this,
                                 REQUEST_CHECK_SETTINGS);
                     } catch (IntentSender.SendIntentException sendEx) {
-                        // Ignore the error.
+
                     }
                 }
             }
         });
 
     }
-
-    ////////////////////////////////////////////////////
 
     public void setCallback(){
         call = new LocationCallback() {
@@ -217,11 +212,8 @@ public class StadiumActivity extends AppCompatActivity implements SensorEventLis
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        // Check which request we're responding to
-        Log.i("on result","ok");
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CHECK_SETTINGS) {
-            // Make sure the request was successful
             if (resultCode == RESULT_OK) {
                 createLocationRequest(1);
                 fusedLocationClient.requestLocationUpdates(locationRequest,
@@ -266,7 +258,6 @@ public class StadiumActivity extends AppCompatActivity implements SensorEventLis
         }
         if(list.size() > 0) {
             stadium_addr = list.get(0);
-            Log.i("stadio", String.valueOf(stadium_addr.getLatitude()) + " " + String.valueOf(stadium_addr.getLongitude()));
 
             stadium = new Location("stadium");
 
@@ -391,5 +382,14 @@ public class StadiumActivity extends AppCompatActivity implements SensorEventLis
         super.onResume();
         start();
         fusedLocationClient.requestLocationUpdates(locationRequest, call, Looper.getMainLooper());
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
+        return false;
     }
 }

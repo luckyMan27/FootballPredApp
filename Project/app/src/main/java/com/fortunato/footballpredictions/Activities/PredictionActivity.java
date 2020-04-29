@@ -4,6 +4,7 @@ import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TabHost;
@@ -39,7 +40,6 @@ public class PredictionActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pred);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         Intent intent = getIntent();
         fixtureId = intent.getStringExtra("fixture_id");
         home = intent.getStringExtra("home_id");
@@ -99,5 +99,14 @@ public class PredictionActivity extends AppCompatActivity {
         intent.putExtra("home_id", home);
         intent.putExtra("venue", venue);
         this.startActivity(intent);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
+        return false;
     }
 }

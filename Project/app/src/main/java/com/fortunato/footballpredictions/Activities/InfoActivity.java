@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import com.fortunato.footballpredictions.R;
 
+import android.view.MenuItem;
 import android.widget.TextView;
 
 public class InfoActivity extends AppCompatActivity {
@@ -46,5 +47,14 @@ public class InfoActivity extends AppCompatActivity {
         desc1.setText(info1);
         desc2.setText(info2);
         desc3.setText(info3);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
+        return false;
     }
 }
