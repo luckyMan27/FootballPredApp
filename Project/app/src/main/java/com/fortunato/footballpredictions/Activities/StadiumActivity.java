@@ -57,7 +57,7 @@ public class StadiumActivity extends AppCompatActivity implements SensorEventLis
     protected static final int REQUEST_CHECK_SETTINGS = 0x1;
     int mAzimuth;
     private SensorManager mSensorManager;
-    private Sensor mRotationV, mAccelerometer, mMagnetometer;
+    private Sensor mAccelerometer, mMagnetometer;
     boolean haveSensor = false, haveSensor2 = false;
     float[] rMat = new float[9];
     float[] orientation = new float[3];
@@ -373,10 +373,7 @@ public class StadiumActivity extends AppCompatActivity implements SensorEventLis
     }
 
     public void stop() {
-        if (haveSensor) {
-            mSensorManager.unregisterListener(this, mRotationV);
-        }
-        else {
+        if(haveSensor && haveSensor2) {
             mSensorManager.unregisterListener(this, mAccelerometer);
             mSensorManager.unregisterListener(this, mMagnetometer);
         }
@@ -387,8 +384,6 @@ public class StadiumActivity extends AppCompatActivity implements SensorEventLis
         super.onPause();
         stop();
         fusedLocationClient.removeLocationUpdates(call);
-
-
     }
 
     @Override

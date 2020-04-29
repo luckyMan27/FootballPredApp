@@ -6,7 +6,6 @@ import android.os.Bundle;
 
 import com.fortunato.footballpredictions.R;
 
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 public class InfoActivity extends AppCompatActivity {
