@@ -67,7 +67,7 @@ public class LoadImage extends Thread{
             bmapImg = BitmapFactory.decodeStream(is);
             is.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
         }
         MainActivity mainActivity = (MainActivity) obj;
         mainActivity.setUserBitmap(bmapImg);
@@ -81,7 +81,7 @@ public class LoadImage extends Thread{
             bmapImg = BitmapFactory.decodeStream(is);
             is.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
         }
         InfoUser info = (InfoUser) obj;
         info.setUserBitmap(bmapImg);
@@ -98,7 +98,7 @@ public class LoadImage extends Thread{
         try {
             response = client.newCall(request).execute();
         } catch (IOException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
         }
 
         return response;
@@ -122,10 +122,10 @@ public class LoadImage extends Thread{
                 try {
                     stream.close();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    //e.printStackTrace();
                 }
             } catch (SVGParseException e) {
-                e.printStackTrace();
+                //e.printStackTrace();
             }
 
             Country country = (Country) obj;
@@ -141,7 +141,7 @@ public class LoadImage extends Thread{
             bmap = BitmapFactory.decodeStream(is);
             is.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
         }
         
         League league = (League) obj;
@@ -156,7 +156,7 @@ public class LoadImage extends Thread{
             bmap = BitmapFactory.decodeStream(is);
             is.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
         }
 
         LeagueFixture leagueFixture = (LeagueFixture) obj;
@@ -167,7 +167,7 @@ public class LoadImage extends Thread{
             bmap = BitmapFactory.decodeStream(is);
             is.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
         }
 
         leagueFixture.setaLogo(bmap);

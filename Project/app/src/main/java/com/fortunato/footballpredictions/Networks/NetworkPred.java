@@ -50,7 +50,7 @@ public class NetworkPred implements Runnable {
                         response.close();
                     }
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    //e.printStackTrace();
                 }
                 break;
             case 1:
@@ -78,7 +78,7 @@ public class NetworkPred implements Runnable {
         try {
             response = client.newCall(request).execute();
         } catch (IOException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
         }
 
         return response;
@@ -111,11 +111,11 @@ public class NetworkPred implements Runnable {
                     if (!prediction.isEmpty()) list.add(prediction);
                 }
             } else {
-                throw new RuntimeException("Unable to download data!");
+                //throw new RuntimeException("Unable to download data!");
             }
             notifyUpdate();
         } catch (JSONException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
         }
     }
 }

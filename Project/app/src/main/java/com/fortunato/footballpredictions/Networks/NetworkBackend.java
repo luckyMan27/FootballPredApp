@@ -119,7 +119,7 @@ public class NetworkBackend implements Runnable {
         try (Response response = client.newCall(request).execute()) {
             resp = response;
         } catch (IOException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
         }
 
         return resp;
@@ -137,7 +137,7 @@ public class NetworkBackend implements Runnable {
         try (Response response = client.newCall(request).execute()) {
             resp = response;
         } catch (IOException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
         }
 
         return resp;
@@ -182,7 +182,7 @@ public class NetworkBackend implements Runnable {
             notifyUpdate();
         }
         catch (JSONException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
         }
     }
 
@@ -203,7 +203,7 @@ public class NetworkBackend implements Runnable {
                 response.close();
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
         }
 
         return body;

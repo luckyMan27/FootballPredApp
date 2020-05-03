@@ -59,7 +59,7 @@ public class NetworkHome implements Runnable {
                         response.close();
                     }
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    //e.printStackTrace();
                 }
                 break;
             case 1:
@@ -70,7 +70,7 @@ public class NetworkHome implements Runnable {
                         response.close();
                     }
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    //e.printStackTrace();
                 }
                 break;
             case 2:
@@ -89,7 +89,7 @@ public class NetworkHome implements Runnable {
                         response.close();
                     }
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    //e.printStackTrace();
                 }
                 break;
         }
@@ -116,7 +116,7 @@ public class NetworkHome implements Runnable {
         try {
             response = client.newCall(request).execute();
         } catch (IOException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
         }
 
         return response;
@@ -156,11 +156,11 @@ public class NetworkHome implements Runnable {
                 }
             } else {
                 // Set a dialog bar
-                throw new RuntimeException("Unable to download data!");
+                //throw new RuntimeException("Unable to download data!");
             }
             notifyUpdate();
         } catch (JSONException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
         }
     }
 
@@ -182,11 +182,11 @@ public class NetworkHome implements Runnable {
                     }
                 }
             } else {
-                throw new RuntimeException("Unable to download data!");
+                //throw new RuntimeException("Unable to download data!");
             }
             notifyUpdate();
         } catch (JSONException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
         }
     }
 
@@ -204,11 +204,11 @@ public class NetworkHome implements Runnable {
                     if (!fixture.isEmpty()) list.add(fixture);
                 }
             } else {
-                throw new RuntimeException("Unable to download data!");
+                //throw new RuntimeException("Unable to download data!");
             }
             notifyUpdate();
         } catch (JSONException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
         }
     }
 
@@ -221,10 +221,10 @@ public class NetworkHome implements Runnable {
                 JSONArray app = jsonObject.getJSONArray("fixtures");
                 result =  app.getString(0);
             }else{
-                throw new RuntimeException("Unable to get current regular season!");
+                //throw new RuntimeException("Unable to get current regular season!");
             }
         } catch (JSONException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
         }
 
         return result;
